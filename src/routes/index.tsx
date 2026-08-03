@@ -1,12 +1,24 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Monitor, Smartphone, Tablet } from "lucide-react";
 
 import heroDashboard from "@/assets/hero-dashboard.jpg";
 import { CTABand } from "@/components/site/CTABand";
 import { FeatureIcon } from "@/components/site/FeatureIcon";
+import { PhoneMockup } from "@/components/site/PhoneMockup";
 import { Section, SectionHeading } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
-import { HERO_SUBHEADING, HOME_FEATURES, INDUSTRIES, PORTAL_URL, POSITIONING, TAGLINE } from "@/content/site";
+import {
+  HERO_SUBHEADING,
+  HOME_FEATURES,
+  INDUSTRIES,
+  MOBILE_HIGHLIGHTS,
+  MOBILE_PANEL_ROWS,
+  PORTAL_URL,
+  POSITIONING,
+  STAKEHOLDERS,
+  TAGLINE,
+} from "@/content/site";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
