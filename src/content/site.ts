@@ -279,7 +279,43 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
   },
 ];
 
+export const STAKEHOLDERS: { id: string; icon: IconName; title: string; description: string }[] = [
+  {
+    id: "owners",
+    icon: "health",
+    title: "Owners & Developers",
+    description: "Portfolio visibility into progress, cost and risk at every step of delivery, without chasing reports.",
+  },
+  {
+    id: "head-contractors",
+    icon: "projects",
+    title: "Head Contractors",
+    description: "Run the whole project from the palm of your hand — programme, tasks, defects and financials in one place.",
+  },
+  {
+    id: "subcontractors",
+    icon: "tasks",
+    title: "Subcontractors",
+    description: "Connect site and office in real time so assigned work, evidence and close-out never sit in an inbox.",
+  },
+];
+
+export const MOBILE_HIGHLIGHTS: string[] = [
+  "Capture defects on site with photos and location",
+  "Update task progress the moment work is done",
+  "Open the current drawing revision from your pocket",
+  "Works on iPhone, Android, tablet and desktop",
+];
+
+export const MOBILE_PANEL_ROWS: { name: string; meta: string; value: string; tone?: "good" | "warn" | "bad" }[] = [
+  { name: "Northpoint Residences", meta: "Level 4 · Framing", value: "48%", tone: "warn" },
+  { name: "Defect 214 — Façade", meta: "Assigned to you", value: "Open", tone: "bad" },
+  { name: "Concrete Pour — L3", meta: "Due Friday", value: "High", tone: "warn" },
+  { name: "Site Safety Walk", meta: "Completed today", value: "Done", tone: "good" },
+];
+
 export type Industry = {
+
   id: string;
   title: string;
   description: string;
