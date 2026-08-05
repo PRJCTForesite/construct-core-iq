@@ -140,13 +140,26 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const isAppSurface = pathname.startsWith("/app") || pathname.startsWith("/login");
+
+  if (isAppSurface) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <div className="min-h-screen bg-background">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </div>
+        <Toaster />
+      </QueryClientProvider>
+    );
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col bg-background">
         <SiteHeader />
         <main className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
         <SiteFooter />
@@ -154,5 +167,4 @@ function RootComponent() {
       <Toaster />
     </QueryClientProvider>
   );
-
 }

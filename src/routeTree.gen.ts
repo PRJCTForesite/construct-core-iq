@@ -19,9 +19,17 @@ import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAiInsightsRouteImport } from './routes/app.ai-insights'
+import { Route as AppCalendarRouteImport } from './routes/app.calendar'
+import { Route as AppClientsRouteImport } from './routes/app.clients'
 import { Route as AppCommunicationsRouteImport } from './routes/app.communications'
 import { Route as AppDefectsRouteImport } from './routes/app.defects'
+import { Route as AppDocumentsRouteImport } from './routes/app.documents'
 import { Route as AppFinancialsRouteImport } from './routes/app.financials'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppTasksRouteImport } from './routes/app.tasks'
+import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
 import { Route as AppProjectsIndexRouteImport } from './routes/app.projects.index'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/app.projects.$projectId'
@@ -76,6 +84,21 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAiInsightsRoute = AppAiInsightsRouteImport.update({
+  id: '/ai-insights',
+  path: '/ai-insights',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCalendarRoute = AppCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppClientsRoute = AppClientsRouteImport.update({
+  id: '/clients',
+  path: '/clients',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCommunicationsRoute = AppCommunicationsRouteImport.update({
   id: '/communications',
   path: '/communications',
@@ -86,9 +109,34 @@ const AppDefectsRoute = AppDefectsRouteImport.update({
   path: '/defects',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDocumentsRoute = AppDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppFinancialsRoute = AppFinancialsRouteImport.update({
   id: '/financials',
   path: '/financials',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTasksRoute = AppTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTradesRoute = AppTradesRouteImport.update({
+  id: '/trades',
+  path: '/trades',
   getParentRoute: () => AppRoute,
 } as any)
 const AppWorkspaceRoute = AppWorkspaceRouteImport.update({
@@ -117,9 +165,17 @@ export interface FileRoutesByFullPath {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/calendar': typeof AppCalendarRoute
+  '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
+  '/app/documents': typeof AppDocumentsRoute
   '/app/financials': typeof AppFinancialsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tasks': typeof AppTasksRoute
+  '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
@@ -134,9 +190,17 @@ export interface FileRoutesByTo {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/calendar': typeof AppCalendarRoute
+  '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
+  '/app/documents': typeof AppDocumentsRoute
   '/app/financials': typeof AppFinancialsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tasks': typeof AppTasksRoute
+  '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/app': typeof AppIndexRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
@@ -153,9 +217,17 @@ export interface FileRoutesById {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/calendar': typeof AppCalendarRoute
+  '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
+  '/app/documents': typeof AppDocumentsRoute
   '/app/financials': typeof AppFinancialsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/tasks': typeof AppTasksRoute
+  '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
@@ -173,9 +245,17 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/app/ai-insights'
+    | '/app/calendar'
+    | '/app/clients'
     | '/app/communications'
     | '/app/defects'
+    | '/app/documents'
     | '/app/financials'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tasks'
+    | '/app/trades'
     | '/app/workspace'
     | '/app/'
     | '/app/projects/$projectId'
@@ -190,9 +270,17 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/app/ai-insights'
+    | '/app/calendar'
+    | '/app/clients'
     | '/app/communications'
     | '/app/defects'
+    | '/app/documents'
     | '/app/financials'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tasks'
+    | '/app/trades'
     | '/app/workspace'
     | '/app'
     | '/app/projects/$projectId'
@@ -208,9 +296,17 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/app/ai-insights'
+    | '/app/calendar'
+    | '/app/clients'
     | '/app/communications'
     | '/app/defects'
+    | '/app/documents'
     | '/app/financials'
+    | '/app/reports'
+    | '/app/settings'
+    | '/app/tasks'
+    | '/app/trades'
     | '/app/workspace'
     | '/app/'
     | '/app/projects/$projectId'
@@ -301,6 +397,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/ai-insights': {
+      id: '/app/ai-insights'
+      path: '/ai-insights'
+      fullPath: '/app/ai-insights'
+      preLoaderRoute: typeof AppAiInsightsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/calendar': {
+      id: '/app/calendar'
+      path: '/calendar'
+      fullPath: '/app/calendar'
+      preLoaderRoute: typeof AppCalendarRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/clients': {
+      id: '/app/clients'
+      path: '/clients'
+      fullPath: '/app/clients'
+      preLoaderRoute: typeof AppClientsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/communications': {
       id: '/app/communications'
       path: '/communications'
@@ -315,11 +432,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDefectsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/documents': {
+      id: '/app/documents'
+      path: '/documents'
+      fullPath: '/app/documents'
+      preLoaderRoute: typeof AppDocumentsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/financials': {
       id: '/app/financials'
       path: '/financials'
       fullPath: '/app/financials'
       preLoaderRoute: typeof AppFinancialsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tasks': {
+      id: '/app/tasks'
+      path: '/tasks'
+      fullPath: '/app/tasks'
+      preLoaderRoute: typeof AppTasksRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/trades': {
+      id: '/app/trades'
+      path: '/trades'
+      fullPath: '/app/trades'
+      preLoaderRoute: typeof AppTradesRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/workspace': {
@@ -347,9 +499,17 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAiInsightsRoute: typeof AppAiInsightsRoute
+  AppCalendarRoute: typeof AppCalendarRoute
+  AppClientsRoute: typeof AppClientsRoute
   AppCommunicationsRoute: typeof AppCommunicationsRoute
   AppDefectsRoute: typeof AppDefectsRoute
+  AppDocumentsRoute: typeof AppDocumentsRoute
   AppFinancialsRoute: typeof AppFinancialsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTasksRoute: typeof AppTasksRoute
+  AppTradesRoute: typeof AppTradesRoute
   AppWorkspaceRoute: typeof AppWorkspaceRoute
   AppIndexRoute: typeof AppIndexRoute
   AppProjectsProjectIdRoute: typeof AppProjectsProjectIdRoute
@@ -357,9 +517,17 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAiInsightsRoute: AppAiInsightsRoute,
+  AppCalendarRoute: AppCalendarRoute,
+  AppClientsRoute: AppClientsRoute,
   AppCommunicationsRoute: AppCommunicationsRoute,
   AppDefectsRoute: AppDefectsRoute,
+  AppDocumentsRoute: AppDocumentsRoute,
   AppFinancialsRoute: AppFinancialsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTasksRoute: AppTasksRoute,
+  AppTradesRoute: AppTradesRoute,
   AppWorkspaceRoute: AppWorkspaceRoute,
   AppIndexRoute: AppIndexRoute,
   AppProjectsProjectIdRoute: AppProjectsProjectIdRoute,
