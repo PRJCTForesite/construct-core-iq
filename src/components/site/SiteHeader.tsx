@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { NAV_LINKS, PORTAL_URL } from "@/content/site";
+import { NAV_LINKS } from "@/content/site";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <Button asChild variant="ghost" size="sm">
-            <a href={PORTAL_URL}>Login</a>
+            <Link to="/login">Login</Link>
           </Button>
           <Button asChild size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             <Link to="/contact">Book a Demo</Link>
@@ -59,7 +59,7 @@ export function SiteHeader() {
               ))}
               <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
                 <Button asChild variant="outline">
-                  <a href={PORTAL_URL}>Login</a>
+                  <Link to="/login">Login</Link>
                 </Button>
                 <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
                   <Link to="/contact" onClick={() => setOpen(false)}>
