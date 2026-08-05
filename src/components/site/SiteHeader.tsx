@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { NAV_LINKS, PORTAL_URL } from "@/content/site";
+import { NAV_LINKS } from "@/content/site";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
