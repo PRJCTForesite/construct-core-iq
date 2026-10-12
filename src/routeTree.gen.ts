@@ -19,6 +19,7 @@ import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAdministrationRouteImport } from './routes/app.administration'
 import { Route as AppAiInsightsRouteImport } from './routes/app.ai-insights'
 import { Route as AppCalendarRouteImport } from './routes/app.calendar'
 import { Route as AppClientsRouteImport } from './routes/app.clients'
@@ -31,6 +32,7 @@ import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
+import { Route as AppAdministrationIndexRouteImport } from './routes/app.administration.index'
 import { Route as AppProjectsIndexRouteImport } from './routes/app.projects.index'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/app.projects.$projectId'
 
@@ -82,6 +84,11 @@ const PricingRoute = PricingRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdministrationRoute = AppAdministrationRouteImport.update({
+  id: '/administration',
+  path: '/administration',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAiInsightsRoute = AppAiInsightsRouteImport.update({
@@ -144,6 +151,11 @@ const AppWorkspaceRoute = AppWorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdministrationIndexRoute = AppAdministrationIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAdministrationRoute,
+} as any)
 const AppProjectsIndexRoute = AppProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -165,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/clients': typeof AppClientsRoute
@@ -179,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/app/administration/': typeof AppAdministrationIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -204,6 +218,7 @@ export interface FileRoutesByTo {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app': typeof AppIndexRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/app/administration': typeof AppAdministrationIndexRoute
   '/app/projects': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesById {
@@ -217,6 +232,7 @@ export interface FileRoutesById {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/clients': typeof AppClientsRoute
@@ -231,6 +247,7 @@ export interface FileRoutesById {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
+  '/app/administration/': typeof AppAdministrationIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRouteTypes {
@@ -245,6 +262,7 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
     | '/app/clients'
@@ -259,6 +277,7 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app/'
     | '/app/projects/$projectId'
+    | '/app/administration/'
     | '/app/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -284,6 +303,7 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app'
     | '/app/projects/$projectId'
+    | '/app/administration'
     | '/app/projects'
   id:
     | '__root__'
@@ -296,6 +316,7 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
     | '/app/clients'
@@ -310,6 +331,7 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app/'
     | '/app/projects/$projectId'
+    | '/app/administration/'
     | '/app/projects/'
   fileRoutesById: FileRoutesById
 }
@@ -397,6 +419,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/administration': {
+      id: '/app/administration'
+      path: '/administration'
+      fullPath: '/app/administration'
+      preLoaderRoute: typeof AppAdministrationRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/ai-insights': {
       id: '/app/ai-insights'
       path: '/ai-insights'
@@ -481,6 +510,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppWorkspaceRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/administration/': {
+      id: '/app/administration/'
+      path: '/'
+      fullPath: '/app/administration/'
+      preLoaderRoute: typeof AppAdministrationIndexRouteImport
+      parentRoute: typeof AppAdministrationRoute
+    }
     '/app/projects/': {
       id: '/app/projects/'
       path: '/projects'
@@ -498,7 +534,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppAdministrationRouteChildren {
+  AppAdministrationIndexRoute: typeof AppAdministrationIndexRoute
+}
+
+const AppAdministrationRouteChildren: AppAdministrationRouteChildren = {
+  AppAdministrationIndexRoute: AppAdministrationIndexRoute,
+}
+
+const AppAdministrationRouteWithChildren =
+  AppAdministrationRoute._addFileChildren(AppAdministrationRouteChildren)
+
 interface AppRouteChildren {
+  AppAdministrationRoute: typeof AppAdministrationRouteWithChildren
   AppAiInsightsRoute: typeof AppAiInsightsRoute
   AppCalendarRoute: typeof AppCalendarRoute
   AppClientsRoute: typeof AppClientsRoute
@@ -517,6 +565,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdministrationRoute: AppAdministrationRouteWithChildren,
   AppAiInsightsRoute: AppAiInsightsRoute,
   AppCalendarRoute: AppCalendarRoute,
   AppClientsRoute: AppClientsRoute,
