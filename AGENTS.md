@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Application architecture
+- Keep Permissions Centre demo data and permission helpers in a dedicated content module, with state owned by its page; this isolates demonstration changes from real access enforcement.
+- Place Administration and Permissions Centre at named child routes of the existing app layout; this preserves all existing public and app URLs.
