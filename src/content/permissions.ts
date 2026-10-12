@@ -106,7 +106,7 @@ const PEOPLE: [string, Role, string, DirectoryUser["status"], number][] = [
 export const INITIAL_USERS: DirectoryUser[] = PEOPLE.map(
   ([name, role, organisation, status, count], i) => {
     const permissions = rolePermissions(role);
-    if (name === "Grace Miller") permissions.Financials = ["View", "Edit"];
+    if (name === "Grace Miller") permissions["Financials"] = ["View", "Edit"];
     return {
       id: `user-${i}`,
       name,

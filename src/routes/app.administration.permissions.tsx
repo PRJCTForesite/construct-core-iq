@@ -91,11 +91,11 @@ function PermissionsPage() {
   const organisations = [...new Set(users.map((u) => u.organisation))];
   const inactive = users.filter((u) => u.status === "Inactive");
   const unassigned = users.filter((u) => !u.assignments.length);
-  const financial = users.filter((u) => u.permissions.Financials?.includes("Administer"));
+  const financial = users.filter((u) => u.permissions["Financials"]?.includes("Administer"));
   const elevated = users.filter(
     (u) =>
       u.role === "Guest" &&
-      (u.permissions.Financials?.length || u.permissions.Administration?.length),
+      (u.permissions["Financials"]?.length || u.permissions["Administration"]?.length),
   );
   const conflicts = users.filter((u) =>
     Object.values(u.permissions).some(
@@ -265,8 +265,8 @@ function PermissionsPage() {
             key={s.label}
             label={s.label}
             value={String(s.value)}
-            icon={s.icon}
-            tone={s.label.includes("risk") && s.value > 0 ? "warn" : undefined}
+            {...(s.icon ? { icon: s.icon } : {})}
+            {...(s.label.includes("risk") && s.value > 0 ? { tone: "warn" as const } : {})}
           />
         ))}
       </div>
@@ -970,8 +970,8 @@ function PermissionsPage() {
                     <div>
                       <h4 className="text-sm font-medium">Project access</h4>
                       <p className="mt-2 text-sm text-muted-foreground">
-                        {draft.permissions.AI?.includes("View") &&
-                        draft.permissions.Projects?.includes("View")
+                        {draft.permissions["AI"]?.includes("View") &&
+                        draft.permissions["Projects"]?.includes("View")
                           ? draft.assignments
                               .filter((a) => a.rights.includes("View"))
                               .map((a) => a.project)
@@ -986,13 +986,13 @@ function PermissionsPage() {
                           <span className="text-sm">{module}</span>
                           <Pill
                             tone={
-                              draft.permissions.AI?.includes("View") &&
+                              draft.permissions["AI"]?.includes("View") &&
                               draft.permissions[module]?.includes("View")
                                 ? "good"
                                 : "muted"
                             }
                           >
-                            {draft.permissions.AI?.includes("View") &&
+                            {draft.permissions["AI"]?.includes("View") &&
                             draft.permissions[module]?.includes("View")
                               ? "Accessible"
                               : "No access"}
