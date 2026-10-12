@@ -8,6 +8,7 @@ import { INDUSTRIES } from "@/content/site";
 export const Route = createFileRoute("/industries")({
   head: () => ({
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Industries — Foresite for Every Construction Sector" },
       {
         name: "description",

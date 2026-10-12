@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Features — Foresite Construction Operating System" },
       {
         name: "description",

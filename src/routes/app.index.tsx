@@ -32,6 +32,10 @@ import {
 export const Route = createFileRoute("/app/")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Dashboard \u2014 Foresite OS" },
+      { property: "og:description", content: "Business health score, critical alerts, today's priorities and cashflow." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Dashboard — Foresite OS" },
       { name: "description", content: "Business health score, critical alerts, today's priorities and cashflow." },
       { name: "robots", content: "noindex" },

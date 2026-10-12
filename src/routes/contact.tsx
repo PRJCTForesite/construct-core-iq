@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Contact Foresite — Talk to Sales or Book a Demo" },
       {
         name: "description",

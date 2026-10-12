@@ -23,6 +23,10 @@ import {
 export const Route = createFileRoute("/app/financials")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Financials \u2014 Foresite OS" },
+      { property: "og:description", content: "Cashflow, invoice status, outstanding invoices and client payment risk." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Financials — Foresite OS" },
       { name: "description", content: "Cashflow, invoice status, outstanding invoices and client payment risk." },
       { name: "robots", content: "noindex" },

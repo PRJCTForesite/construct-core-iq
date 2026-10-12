@@ -23,6 +23,7 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Foresite — The Construction Operating System" },
       {
         name: "description",

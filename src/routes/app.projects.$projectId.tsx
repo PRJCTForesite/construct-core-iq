@@ -17,6 +17,10 @@ import { PROJECT_DETAIL, PROJECT_ROWS } from "@/content/app";
 export const Route = createFileRoute("/app/projects/$projectId")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Project overview \u2014 Foresite OS" },
+      { property: "og:description", content: "Project programme, budget, defects, photos and activity in one view." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Project overview — Foresite OS" },
       { name: "description", content: "Project programme, budget, defects, photos and activity in one view." },
       { name: "robots", content: "noindex" },

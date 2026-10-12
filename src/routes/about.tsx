@@ -7,6 +7,7 @@ import { POSITIONING, ROADMAP } from "@/content/site";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "About Foresite — Why We Built a Construction OS" },
       {
         name: "description",

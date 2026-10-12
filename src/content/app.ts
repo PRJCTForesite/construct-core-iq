@@ -45,6 +45,7 @@ export const APP_NAV: NavItem[] = [
   { label: "Trades", to: "/app/trades", icon: "trades" },
   { label: "Reports", to: "/app/reports", icon: "reports" },
   { label: "AI Insights", to: "/app/ai-insights", icon: "ai" },
+  { label: "Administration", to: "/app/administration", icon: "settings" },
   { label: "Settings", to: "/app/settings", icon: "settings" },
 ];
 

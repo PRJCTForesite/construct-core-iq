@@ -13,6 +13,8 @@ import { BRAND } from "@/content/site";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Sign in — Foresite Construction Operating System" },
       {
         name: "description",
