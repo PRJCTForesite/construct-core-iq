@@ -254,12 +254,12 @@ function PermissionsPage() {
       </div>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
         {[
-          { label: "Organisation users", value: users.length, icon: "clients" as const },
-          { label: "Role templates", value: ROLES.length, icon: "settings" as const },
-          { label: "Permission conflicts", value: conflicts.length },
-          { label: "Inactive users", value: inactive.length },
-          { label: "High-risk accounts", value: financial.length + elevated.length },
-          { label: "Unassigned accounts", value: unassigned.length },
+          { label: "Users", value: users.length, icon: "clients" as const },
+          { label: "Roles", value: ROLES.length, icon: "settings" as const },
+          { label: "Conflicts", value: conflicts.length },
+          { label: "Inactive", value: inactive.length },
+          { label: "High risk", value: financial.length + elevated.length },
+          { label: "Unassigned", value: unassigned.length },
         ].map((s) => (
           <StatTile
             key={s.label}
