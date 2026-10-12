@@ -8,6 +8,10 @@ import { PROJECT_ROWS } from "@/content/app";
 export const Route = createFileRoute("/app/projects/")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Projects \u2014 Foresite OS" },
+      { property: "og:description", content: "All active construction projects with status, progress, budget and AI flags." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Projects — Foresite OS" },
       { name: "description", content: "All active construction projects with status, progress, budget and AI flags." },
       { name: "robots", content: "noindex" },

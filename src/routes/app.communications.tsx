@@ -8,6 +8,10 @@ import { ACTIVE_THREAD, INBOX_THREADS } from "@/content/app";
 export const Route = createFileRoute("/app/communications")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "Communications \u2014 Foresite OS" },
+      { property: "og:description", content: "Unified inbox for email, SMS and calls with AI summaries and extracted actions." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Communications — Foresite OS" },
       { name: "description", content: "Unified inbox for email, SMS and calls with AI summaries and extracted actions." },
       { name: "robots", content: "noindex" },

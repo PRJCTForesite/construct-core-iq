@@ -4,6 +4,8 @@ import { AppShell } from "@/components/app/AppShell";
 export const Route = createFileRoute("/app")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Foresite OS — Your construction command centre" },
       {
         name: "description",

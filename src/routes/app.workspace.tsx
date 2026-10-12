@@ -21,6 +21,10 @@ import {
 export const Route = createFileRoute("/app/workspace")({
   head: () => ({
     meta: [
+      { property: "og:title", content: "My Workspace \u2014 Foresite OS" },
+      { property: "og:description", content: "Your AI daily brief, tasks, calls, approvals and pinned projects." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "My Workspace — Foresite OS" },
       { name: "description", content: "Your AI daily brief, tasks, calls, approvals and pinned projects." },
       { name: "robots", content: "noindex" },

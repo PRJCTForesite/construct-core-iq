@@ -9,6 +9,7 @@ import { APP_URL } from "@/content/site";
 export const Route = createFileRoute("/download")({
   head: () => ({
     meta: [
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "Download Foresite — Desktop and Mobile Apps" },
       {
         name: "description",
