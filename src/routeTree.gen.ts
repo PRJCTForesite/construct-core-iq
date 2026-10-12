@@ -33,6 +33,7 @@ import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
 import { Route as AppAdministrationIndexRouteImport } from './routes/app.administration.index'
+import { Route as AppAdministrationPermissionsRouteImport } from './routes/app.administration.permissions'
 import { Route as AppProjectsIndexRouteImport } from './routes/app.projects.index'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/app.projects.$projectId'
 
@@ -156,6 +157,12 @@ const AppAdministrationIndexRoute = AppAdministrationIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppAdministrationRoute,
 } as any)
+const AppAdministrationPermissionsRoute =
+  AppAdministrationPermissionsRouteImport.update({
+    id: '/permissions',
+    path: '/permissions',
+    getParentRoute: () => AppAdministrationRoute,
+  } as any)
 const AppProjectsIndexRoute = AppProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -191,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
+  '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration/': typeof AppAdministrationIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
@@ -217,6 +225,7 @@ export interface FileRoutesByTo {
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/app': typeof AppIndexRoute
+  '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration': typeof AppAdministrationIndexRoute
   '/app/projects': typeof AppProjectsIndexRoute
@@ -246,6 +255,7 @@ export interface FileRoutesById {
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
+  '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration/': typeof AppAdministrationIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/app/trades'
     | '/app/workspace'
     | '/app/'
+    | '/app/administration/permissions'
     | '/app/projects/$projectId'
     | '/app/administration/'
     | '/app/projects/'
@@ -302,6 +313,7 @@ export interface FileRouteTypes {
     | '/app/trades'
     | '/app/workspace'
     | '/app'
+    | '/app/administration/permissions'
     | '/app/projects/$projectId'
     | '/app/administration'
     | '/app/projects'
@@ -330,6 +342,7 @@ export interface FileRouteTypes {
     | '/app/trades'
     | '/app/workspace'
     | '/app/'
+    | '/app/administration/permissions'
     | '/app/projects/$projectId'
     | '/app/administration/'
     | '/app/projects/'
@@ -517,6 +530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdministrationIndexRouteImport
       parentRoute: typeof AppAdministrationRoute
     }
+    '/app/administration/permissions': {
+      id: '/app/administration/permissions'
+      path: '/permissions'
+      fullPath: '/app/administration/permissions'
+      preLoaderRoute: typeof AppAdministrationPermissionsRouteImport
+      parentRoute: typeof AppAdministrationRoute
+    }
     '/app/projects/': {
       id: '/app/projects/'
       path: '/projects'
@@ -535,10 +555,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppAdministrationRouteChildren {
+  AppAdministrationPermissionsRoute: typeof AppAdministrationPermissionsRoute
   AppAdministrationIndexRoute: typeof AppAdministrationIndexRoute
 }
 
 const AppAdministrationRouteChildren: AppAdministrationRouteChildren = {
+  AppAdministrationPermissionsRoute: AppAdministrationPermissionsRoute,
   AppAdministrationIndexRoute: AppAdministrationIndexRoute,
 }
 
