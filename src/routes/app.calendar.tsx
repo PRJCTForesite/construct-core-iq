@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "@/components/app/ComingSoon";
+import { CalendarModule } from "@/components/platform/CalendarModule";
 
 export const Route = createFileRoute("/app/calendar")({
   head: () => ({
@@ -13,5 +13,5 @@ export const Route = createFileRoute("/app/calendar")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <ComingSoon title="Calendar" icon="calendar" blurb="Site meetings, inspections and trade scheduling across every project." />,
+  component: () => <CalendarModule />,
 });

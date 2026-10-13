@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "@/components/app/ComingSoon";
+import { DirectoryModule } from "@/components/platform/RegisterModules";
 
 export const Route = createFileRoute("/app/trades")({
   head: () => ({
@@ -13,5 +13,5 @@ export const Route = createFileRoute("/app/trades")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <ComingSoon title="Trades" icon="trades" blurb="Subcontractor directory, insurances and assigned works." />,
+  component: () => <DirectoryModule kind="Trade" />,
 });

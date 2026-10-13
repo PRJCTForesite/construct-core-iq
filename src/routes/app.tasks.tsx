@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "@/components/app/ComingSoon";
+import { TasksModule } from "@/components/platform/RegisterModules";
 
 export const Route = createFileRoute("/app/tasks")({
   head: () => ({
@@ -13,5 +13,5 @@ export const Route = createFileRoute("/app/tasks")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <ComingSoon title="Tasks" icon="tasks" blurb="Every task across projects, trades and internal teams in one list." />,
+  component: () => <TasksModule />,
 });
