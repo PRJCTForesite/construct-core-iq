@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { usePlatform } from "@/components/platform/PlatformProvider";
+import { money } from "@/content/platform";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Plus, Search } from "lucide-react";
 
@@ -23,13 +26,16 @@ export const Route = createFileRoute("/app/projects/")({
 const STATUS_TONE: Record<string, Tone | undefined> = { "At Risk": "warn", Delayed: "bad", "On Track": "good" };
 
 function ProjectsPage() {
+ const store=usePlatform();
+ const [search,setSearch]=useState("");
+ const rows=store.records.filter(r=>r.kind==="Project" && r.title.toLowerCase().includes(search.toLowerCase())).map(r=>({...PROJECT_ROWS.find(x=>x.id===r.id),id:r.id,name:r.title,status:r.status,progress:r.progress,budget:store.can("Financials")?money(r.amount):"Access Restricted",milestone:r.notes}));
   return (
     <div className="space-y-6">
       <PageHeading
         title="Projects"
         meta="7 active · 2 at risk · 2 delayed"
         actions={
-          <Button size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+          <Button onClick={()=>store.create("Project")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             <Plus className="h-4 w-4" /> New Project
           </Button>
         }
@@ -40,13 +46,15 @@ function ProjectsPage() {
         <span className="sr-only">Search projects</span>
         <input
           type="search"
+          value={search}
+          onChange={e=>setSearch(e.target.value)}
           placeholder="Search projects, clients or addresses"
           className="h-10 w-full rounded-lg border border-input bg-card pl-9 pr-3 text-sm outline-none focus:border-azure focus:ring-2 focus:ring-azure/20"
         />
       </label>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {PROJECT_ROWS.map((row) => (
+        {rows.map((row) => (
           <Link key={row.id} to="/app/projects/$projectId" params={{ projectId: row.id }} className="group">
             <Panel className="h-full transition-colors group-hover:border-azure/40">
               <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">

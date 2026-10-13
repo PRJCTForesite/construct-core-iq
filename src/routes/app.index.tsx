@@ -1,3 +1,4 @@
+import { ProjectHealth } from "@/components/platform/ProjectExpansion";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Download, Filter, Flag, Sparkles, X } from "lucide-react";
 
@@ -78,6 +79,7 @@ function Sparkline() {
 function DashboardPage() {
   return (
     <div className="space-y-6">
+      <ProjectHealth />
       <PageHeading
         title={`Good morning, ${DEMO_USER.firstName}.`}
         meta={`${TODAY_LABEL} · 7 active projects · 3 items need your attention`}

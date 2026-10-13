@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "@/components/app/ComingSoon";
+import { DirectoryModule } from "@/components/platform/RegisterModules";
 
 export const Route = createFileRoute("/app/clients")({
   head: () => ({
@@ -13,5 +13,5 @@ export const Route = createFileRoute("/app/clients")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <ComingSoon title="Clients" icon="clients" blurb="Client records, portal access and communication history." />,
+  component: () => <DirectoryModule kind="Client" />,
 });

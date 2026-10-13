@@ -2,6 +2,7 @@ import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-route
 import { Bell, ChevronsUpDown, Menu, Plus, Search, Sparkles, LogOut } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
+import { GlobalSearch, QuickAdd, Notifications, RolePreview } from "@/components/platform/GlobalControls";
 import mark from "@/assets/foresite-mark.png";
 import { AppIcon } from "./AppIcon";
 import { Avatar } from "./primitives";
@@ -119,32 +120,14 @@ function TopBar({ crumb, searchPlaceholder, actions }: { crumb: ReactNode; searc
       </div>
 
       <div className="hidden min-w-0 lg:block">
-        <label className="relative block">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <span className="sr-only">Search</span>
-          <input
-            type="search"
-            placeholder={searchPlaceholder}
-            className="h-10 w-full rounded-lg border border-input bg-surface pl-9 pr-14 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-azure focus:ring-2 focus:ring-azure/20"
-          />
-          <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-border bg-background px-1.5 py-0.5 text-[0.625rem] text-muted-foreground">
-            ⌘K
-          </kbd>
-        </label>
+        <GlobalSearch />
       </div>
 
       <div className="flex shrink-0 items-center gap-2">
-        <Button variant="ghost" size="icon" aria-label="Notifications" className="hidden sm:inline-flex">
-          <Bell className="h-[1.1rem] w-[1.1rem]" />
-        </Button>
-        {actions ?? (
-          <Button size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Plus className="h-4 w-4" /> Quick Add
-          </Button>
-        )}
-        <Button variant="outline" size="sm" className="hidden sm:inline-flex">
-          <Sparkles className="h-4 w-4 text-azure" /> AI
-        </Button>
+        <div className="lg:hidden"><GlobalSearch /></div>
+        <Notifications />
+        {actions ?? <QuickAdd />}
+        <Button variant="outline" size="sm" asChild className="hidden sm:inline-flex"><Link to="/app/ai-insights"><Sparkles className="h-4 w-4 text-azure" /> AI</Link></Button>
         <Avatar initials={DEMO_USER.initials} />
       </div>
     </header>
@@ -193,7 +176,8 @@ export function AppShell({ children }: { children?: ReactNode }) {
           }
           searchPlaceholder={searchPlaceholder}
         />
-        <main className="flex-1 px-4 py-6 lg:px-6 lg:py-8">{children ?? <Outlet />}</main>
+        <RolePreview />
+         <main className="flex-1 px-4 py-6 lg:px-6 lg:py-8">{children ?? <Outlet />}</main>
       </div>
     </div>
   );

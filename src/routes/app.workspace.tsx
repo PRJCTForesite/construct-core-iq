@@ -1,3 +1,5 @@
+import { WorkspaceExpansion } from "@/components/platform/ProjectExpansion";
+import { usePlatform } from "@/components/platform/PlatformProvider";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone, Plus, Sparkles } from "lucide-react";
 
@@ -36,13 +38,15 @@ export const Route = createFileRoute("/app/workspace")({
 const PRIORITY_TONE = { High: "bad", Medium: "warn", Low: "info", Done: "good" } as const;
 
 function WorkspacePage() {
+ const store = usePlatform();
   return (
     <div className="space-y-6">
+      <WorkspaceExpansion />
       <PageHeading
         title="My Workspace"
         meta={`${DEMO_USER.name} · ${DEMO_USER.role} · ${TODAY_LABEL}`}
         actions={
-          <Button size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+          <Button onClick={() => store.create("Task")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             <Plus className="h-4 w-4" /> New Task
           </Button>
         }

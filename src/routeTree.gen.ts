@@ -22,6 +22,7 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAdministrationRouteImport } from './routes/app.administration'
 import { Route as AppAiInsightsRouteImport } from './routes/app.ai-insights'
 import { Route as AppCalendarRouteImport } from './routes/app.calendar'
+import { Route as AppClientPortalRouteImport } from './routes/app.client-portal'
 import { Route as AppClientsRouteImport } from './routes/app.clients'
 import { Route as AppCommunicationsRouteImport } from './routes/app.communications'
 import { Route as AppDefectsRouteImport } from './routes/app.defects'
@@ -34,6 +35,8 @@ import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
 import { Route as AppAdministrationIndexRouteImport } from './routes/app.administration.index'
 import { Route as AppAdministrationPermissionsRouteImport } from './routes/app.administration.permissions'
+import { Route as AppAiInsightsIndexRouteImport } from './routes/app.ai-insights.index'
+import { Route as AppAiInsightsProjectIdRouteImport } from './routes/app.ai-insights.$projectId'
 import { Route as AppProjectsIndexRouteImport } from './routes/app.projects.index'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/app.projects.$projectId'
 
@@ -102,6 +105,11 @@ const AppCalendarRoute = AppCalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => AppRoute,
 } as any)
+const AppClientPortalRoute = AppClientPortalRouteImport.update({
+  id: '/client-portal',
+  path: '/client-portal',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppClientsRoute = AppClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
@@ -163,6 +171,16 @@ const AppAdministrationPermissionsRoute =
     path: '/permissions',
     getParentRoute: () => AppAdministrationRoute,
   } as any)
+const AppAiInsightsIndexRoute = AppAiInsightsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAiInsightsRoute,
+} as any)
+const AppAiInsightsProjectIdRoute = AppAiInsightsProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => AppAiInsightsRoute,
+} as any)
 const AppProjectsIndexRoute = AppProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -185,8 +203,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
-  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
+  '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
@@ -199,8 +218,10 @@ export interface FileRoutesByFullPath {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
+  '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration/': typeof AppAdministrationIndexRoute
+  '/app/ai-insights/': typeof AppAiInsightsIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -212,8 +233,8 @@ export interface FileRoutesByTo {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
-  '/app/ai-insights': typeof AppAiInsightsRoute
   '/app/calendar': typeof AppCalendarRoute
+  '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
@@ -226,8 +247,10 @@ export interface FileRoutesByTo {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app': typeof AppIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
+  '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration': typeof AppAdministrationIndexRoute
+  '/app/ai-insights': typeof AppAiInsightsIndexRoute
   '/app/projects': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesById {
@@ -242,8 +265,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
-  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
+  '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
@@ -256,8 +280,10 @@ export interface FileRoutesById {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
+  '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration/': typeof AppAdministrationIndexRoute
+  '/app/ai-insights/': typeof AppAiInsightsIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRouteTypes {
@@ -275,6 +301,7 @@ export interface FileRouteTypes {
     | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
+    | '/app/client-portal'
     | '/app/clients'
     | '/app/communications'
     | '/app/defects'
@@ -287,8 +314,10 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app/'
     | '/app/administration/permissions'
+    | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
     | '/app/administration/'
+    | '/app/ai-insights/'
     | '/app/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -300,8 +329,8 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
-    | '/app/ai-insights'
     | '/app/calendar'
+    | '/app/client-portal'
     | '/app/clients'
     | '/app/communications'
     | '/app/defects'
@@ -314,8 +343,10 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app'
     | '/app/administration/permissions'
+    | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
     | '/app/administration'
+    | '/app/ai-insights'
     | '/app/projects'
   id:
     | '__root__'
@@ -331,6 +362,7 @@ export interface FileRouteTypes {
     | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
+    | '/app/client-portal'
     | '/app/clients'
     | '/app/communications'
     | '/app/defects'
@@ -343,8 +375,10 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app/'
     | '/app/administration/permissions'
+    | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
     | '/app/administration/'
+    | '/app/ai-insights/'
     | '/app/projects/'
   fileRoutesById: FileRoutesById
 }
@@ -453,6 +487,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCalendarRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/client-portal': {
+      id: '/app/client-portal'
+      path: '/client-portal'
+      fullPath: '/app/client-portal'
+      preLoaderRoute: typeof AppClientPortalRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/clients': {
       id: '/app/clients'
       path: '/clients'
@@ -537,6 +578,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdministrationPermissionsRouteImport
       parentRoute: typeof AppAdministrationRoute
     }
+    '/app/ai-insights/': {
+      id: '/app/ai-insights/'
+      path: '/'
+      fullPath: '/app/ai-insights/'
+      preLoaderRoute: typeof AppAiInsightsIndexRouteImport
+      parentRoute: typeof AppAiInsightsRoute
+    }
+    '/app/ai-insights/$projectId': {
+      id: '/app/ai-insights/$projectId'
+      path: '/$projectId'
+      fullPath: '/app/ai-insights/$projectId'
+      preLoaderRoute: typeof AppAiInsightsProjectIdRouteImport
+      parentRoute: typeof AppAiInsightsRoute
+    }
     '/app/projects/': {
       id: '/app/projects/'
       path: '/projects'
@@ -567,10 +622,25 @@ const AppAdministrationRouteChildren: AppAdministrationRouteChildren = {
 const AppAdministrationRouteWithChildren =
   AppAdministrationRoute._addFileChildren(AppAdministrationRouteChildren)
 
+interface AppAiInsightsRouteChildren {
+  AppAiInsightsProjectIdRoute: typeof AppAiInsightsProjectIdRoute
+  AppAiInsightsIndexRoute: typeof AppAiInsightsIndexRoute
+}
+
+const AppAiInsightsRouteChildren: AppAiInsightsRouteChildren = {
+  AppAiInsightsProjectIdRoute: AppAiInsightsProjectIdRoute,
+  AppAiInsightsIndexRoute: AppAiInsightsIndexRoute,
+}
+
+const AppAiInsightsRouteWithChildren = AppAiInsightsRoute._addFileChildren(
+  AppAiInsightsRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAdministrationRoute: typeof AppAdministrationRouteWithChildren
-  AppAiInsightsRoute: typeof AppAiInsightsRoute
+  AppAiInsightsRoute: typeof AppAiInsightsRouteWithChildren
   AppCalendarRoute: typeof AppCalendarRoute
+  AppClientPortalRoute: typeof AppClientPortalRoute
   AppClientsRoute: typeof AppClientsRoute
   AppCommunicationsRoute: typeof AppCommunicationsRoute
   AppDefectsRoute: typeof AppDefectsRoute
@@ -588,8 +658,9 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAdministrationRoute: AppAdministrationRouteWithChildren,
-  AppAiInsightsRoute: AppAiInsightsRoute,
+  AppAiInsightsRoute: AppAiInsightsRouteWithChildren,
   AppCalendarRoute: AppCalendarRoute,
+  AppClientPortalRoute: AppClientPortalRoute,
   AppClientsRoute: AppClientsRoute,
   AppCommunicationsRoute: AppCommunicationsRoute,
   AppDefectsRoute: AppDefectsRoute,

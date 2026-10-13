@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "@/components/app/ComingSoon";
+import { Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/app/ai-insights")({
   head: () => ({
@@ -13,5 +13,5 @@ export const Route = createFileRoute("/app/ai-insights")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <ComingSoon title="AI Insights" icon="ai" blurb="Forecasts, risk detection and recommended actions from your data." />,
+  component: () => <Outlet />,
 });
