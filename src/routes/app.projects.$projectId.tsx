@@ -39,7 +39,7 @@ function ProjectDetailPage() {
   const [tab,setTab] = useState("Overview");
   const live = store.records.find(r=>r.kind==="Project" && r.id===projectId);
   const row = PROJECT_ROWS.find((item) => item.id === projectId);
-  const project = { ...PROJECT_DETAIL, name: row?.name ?? PROJECT_DETAIL.name, status: row?.status ?? PROJECT_DETAIL.status };
+  const project = { ...PROJECT_DETAIL, name: live?.title ?? row?.name ?? PROJECT_DETAIL.name, status: live?.status ?? row?.status ?? PROJECT_DETAIL.status };
 
   return (
     <div className="space-y-6">
@@ -66,25 +66,19 @@ function ProjectDetailPage() {
               </p>
             </div>
           </div>
-          <Button size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+          <Button onClick={()=>store.create("Communication")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             Update client
           </Button>
         </div>
 
         <nav className="mt-5 -mb-1 flex gap-1 overflow-x-auto" aria-label="Project sections">
-          {project.tabs.map((tab, index) => (
-            <button
-              key={label}
-              className={`shrink-0 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                index === 0 ? "bg-azure/10 text-azure" : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {label}
-            </button>
+          {["Overview","Tasks","Programme","Communications","Documents","Financials","Variations","Defects","Photos","Timeline"].map(label => (
+            <Button key={label} variant={label===tab ? "secondary" : "ghost"} size="sm" onClick={()=>setTab(label)}>{label}</Button>
           ))}
         </nav>
       </div>
 
+      {tab !== "Overview" ? <ProjectTab project={project.name} tab={tab} /> : <>
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)]">
         <Panel title="Completion">
           <div className="flex flex-col items-center gap-5">
