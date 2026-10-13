@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PlatformProvider } from "@/components/platform/PlatformProvider";
+import { RecordEditor } from "@/components/platform/RecordEditor";
 import { AppShell } from "@/components/app/AppShell";
 
 export const Route = createFileRoute("/app")({
@@ -17,5 +19,5 @@ export const Route = createFileRoute("/app")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AppShell,
+  component: () => <PlatformProvider><AppShell /><RecordEditor /></PlatformProvider>,
 });

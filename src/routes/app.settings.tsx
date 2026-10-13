@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoon } from "@/components/app/ComingSoon";
+import { SettingsModule } from "@/components/platform/SettingsModule";
 
 export const Route = createFileRoute("/app/settings")({
   head: () => ({
@@ -13,5 +13,5 @@ export const Route = createFileRoute("/app/settings")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <ComingSoon title="Settings" icon="settings" blurb="Company profile, users, permissions and integrations." />,
+  component: SettingsModule,
 });
