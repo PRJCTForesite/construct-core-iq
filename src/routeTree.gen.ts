@@ -22,6 +22,7 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAdministrationRouteImport } from './routes/app.administration'
 import { Route as AppAiInsightsRouteImport } from './routes/app.ai-insights'
 import { Route as AppCalendarRouteImport } from './routes/app.calendar'
+import { Route as AppClientPortalRouteImport } from './routes/app.client-portal'
 import { Route as AppClientsRouteImport } from './routes/app.clients'
 import { Route as AppCommunicationsRouteImport } from './routes/app.communications'
 import { Route as AppDefectsRouteImport } from './routes/app.defects'
@@ -102,6 +103,11 @@ const AppAiInsightsRoute = AppAiInsightsRouteImport.update({
 const AppCalendarRoute = AppCalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppClientPortalRoute = AppClientPortalRouteImport.update({
+  id: '/client-portal',
+  path: '/client-portal',
   getParentRoute: () => AppRoute,
 } as any)
 const AppClientsRoute = AppClientsRouteImport.update({
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
+  '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/app/calendar': typeof AppCalendarRoute
+  '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
@@ -259,6 +267,7 @@ export interface FileRoutesById {
   '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
+  '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
   '/app/defects': typeof AppDefectsRoute
@@ -292,6 +301,7 @@ export interface FileRouteTypes {
     | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
+    | '/app/client-portal'
     | '/app/clients'
     | '/app/communications'
     | '/app/defects'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/app/calendar'
+    | '/app/client-portal'
     | '/app/clients'
     | '/app/communications'
     | '/app/defects'
@@ -351,6 +362,7 @@ export interface FileRouteTypes {
     | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
+    | '/app/client-portal'
     | '/app/clients'
     | '/app/communications'
     | '/app/defects'
@@ -473,6 +485,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/app/calendar'
       preLoaderRoute: typeof AppCalendarRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/client-portal': {
+      id: '/app/client-portal'
+      path: '/client-portal'
+      fullPath: '/app/client-portal'
+      preLoaderRoute: typeof AppClientPortalRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/clients': {
@@ -621,6 +640,7 @@ interface AppRouteChildren {
   AppAdministrationRoute: typeof AppAdministrationRouteWithChildren
   AppAiInsightsRoute: typeof AppAiInsightsRouteWithChildren
   AppCalendarRoute: typeof AppCalendarRoute
+  AppClientPortalRoute: typeof AppClientPortalRoute
   AppClientsRoute: typeof AppClientsRoute
   AppCommunicationsRoute: typeof AppCommunicationsRoute
   AppDefectsRoute: typeof AppDefectsRoute
@@ -640,6 +660,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdministrationRoute: AppAdministrationRouteWithChildren,
   AppAiInsightsRoute: AppAiInsightsRouteWithChildren,
   AppCalendarRoute: AppCalendarRoute,
+  AppClientPortalRoute: AppClientPortalRoute,
   AppClientsRoute: AppClientsRoute,
   AppCommunicationsRoute: AppCommunicationsRoute,
   AppDefectsRoute: AppDefectsRoute,
