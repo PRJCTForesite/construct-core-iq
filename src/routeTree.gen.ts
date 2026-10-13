@@ -34,6 +34,8 @@ import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
 import { Route as AppAdministrationIndexRouteImport } from './routes/app.administration.index'
 import { Route as AppAdministrationPermissionsRouteImport } from './routes/app.administration.permissions'
+import { Route as AppAiInsightsIndexRouteImport } from './routes/app.ai-insights.index'
+import { Route as AppAiInsightsProjectIdRouteImport } from './routes/app.ai-insights.$projectId'
 import { Route as AppProjectsIndexRouteImport } from './routes/app.projects.index'
 import { Route as AppProjectsProjectIdRouteImport } from './routes/app.projects.$projectId'
 
@@ -163,6 +165,16 @@ const AppAdministrationPermissionsRoute =
     path: '/permissions',
     getParentRoute: () => AppAdministrationRoute,
   } as any)
+const AppAiInsightsIndexRoute = AppAiInsightsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppAiInsightsRoute,
+} as any)
+const AppAiInsightsProjectIdRoute = AppAiInsightsProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => AppAiInsightsRoute,
+} as any)
 const AppProjectsIndexRoute = AppProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -185,7 +197,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
-  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
@@ -199,8 +211,10 @@ export interface FileRoutesByFullPath {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
+  '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration/': typeof AppAdministrationIndexRoute
+  '/app/ai-insights/': typeof AppAiInsightsIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -212,7 +226,6 @@ export interface FileRoutesByTo {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
-  '/app/ai-insights': typeof AppAiInsightsRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
@@ -226,8 +239,10 @@ export interface FileRoutesByTo {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app': typeof AppIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
+  '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration': typeof AppAdministrationIndexRoute
+  '/app/ai-insights': typeof AppAiInsightsIndexRoute
   '/app/projects': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesById {
@@ -242,7 +257,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
-  '/app/ai-insights': typeof AppAiInsightsRoute
+  '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
   '/app/clients': typeof AppClientsRoute
   '/app/communications': typeof AppCommunicationsRoute
@@ -256,8 +271,10 @@ export interface FileRoutesById {
   '/app/workspace': typeof AppWorkspaceRoute
   '/app/': typeof AppIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
+  '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
   '/app/administration/': typeof AppAdministrationIndexRoute
+  '/app/ai-insights/': typeof AppAiInsightsIndexRoute
   '/app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRouteTypes {
@@ -287,8 +304,10 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app/'
     | '/app/administration/permissions'
+    | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
     | '/app/administration/'
+    | '/app/ai-insights/'
     | '/app/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -300,7 +319,6 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
-    | '/app/ai-insights'
     | '/app/calendar'
     | '/app/clients'
     | '/app/communications'
@@ -314,8 +332,10 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app'
     | '/app/administration/permissions'
+    | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
     | '/app/administration'
+    | '/app/ai-insights'
     | '/app/projects'
   id:
     | '__root__'
@@ -343,8 +363,10 @@ export interface FileRouteTypes {
     | '/app/workspace'
     | '/app/'
     | '/app/administration/permissions'
+    | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
     | '/app/administration/'
+    | '/app/ai-insights/'
     | '/app/projects/'
   fileRoutesById: FileRoutesById
 }
@@ -537,6 +559,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdministrationPermissionsRouteImport
       parentRoute: typeof AppAdministrationRoute
     }
+    '/app/ai-insights/': {
+      id: '/app/ai-insights/'
+      path: '/'
+      fullPath: '/app/ai-insights/'
+      preLoaderRoute: typeof AppAiInsightsIndexRouteImport
+      parentRoute: typeof AppAiInsightsRoute
+    }
+    '/app/ai-insights/$projectId': {
+      id: '/app/ai-insights/$projectId'
+      path: '/$projectId'
+      fullPath: '/app/ai-insights/$projectId'
+      preLoaderRoute: typeof AppAiInsightsProjectIdRouteImport
+      parentRoute: typeof AppAiInsightsRoute
+    }
     '/app/projects/': {
       id: '/app/projects/'
       path: '/projects'
@@ -567,9 +603,23 @@ const AppAdministrationRouteChildren: AppAdministrationRouteChildren = {
 const AppAdministrationRouteWithChildren =
   AppAdministrationRoute._addFileChildren(AppAdministrationRouteChildren)
 
+interface AppAiInsightsRouteChildren {
+  AppAiInsightsProjectIdRoute: typeof AppAiInsightsProjectIdRoute
+  AppAiInsightsIndexRoute: typeof AppAiInsightsIndexRoute
+}
+
+const AppAiInsightsRouteChildren: AppAiInsightsRouteChildren = {
+  AppAiInsightsProjectIdRoute: AppAiInsightsProjectIdRoute,
+  AppAiInsightsIndexRoute: AppAiInsightsIndexRoute,
+}
+
+const AppAiInsightsRouteWithChildren = AppAiInsightsRoute._addFileChildren(
+  AppAiInsightsRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAdministrationRoute: typeof AppAdministrationRouteWithChildren
-  AppAiInsightsRoute: typeof AppAiInsightsRoute
+  AppAiInsightsRoute: typeof AppAiInsightsRouteWithChildren
   AppCalendarRoute: typeof AppCalendarRoute
   AppClientsRoute: typeof AppClientsRoute
   AppCommunicationsRoute: typeof AppCommunicationsRoute
@@ -588,7 +638,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAdministrationRoute: AppAdministrationRouteWithChildren,
-  AppAiInsightsRoute: AppAiInsightsRoute,
+  AppAiInsightsRoute: AppAiInsightsRouteWithChildren,
   AppCalendarRoute: AppCalendarRoute,
   AppClientsRoute: AppClientsRoute,
   AppCommunicationsRoute: AppCommunicationsRoute,

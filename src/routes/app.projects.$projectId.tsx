@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { ProjectTab } from "@/components/platform/ProjectExpansion";
+import { usePlatform } from "@/components/platform/PlatformProvider";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Camera, MapPin, Sparkles } from "lucide-react";
 
@@ -32,6 +35,9 @@ export const Route = createFileRoute("/app/projects/$projectId")({
 
 function ProjectDetailPage() {
   const { projectId } = Route.useParams();
+  const store = usePlatform();
+  const [tab,setTab] = useState("Overview");
+  const live = store.records.find(r=>r.kind==="Project" && r.id===projectId);
   const row = PROJECT_ROWS.find((item) => item.id === projectId);
   const project = { ...PROJECT_DETAIL, name: row?.name ?? PROJECT_DETAIL.name, status: row?.status ?? PROJECT_DETAIL.status };
 
@@ -68,12 +74,12 @@ function ProjectDetailPage() {
         <nav className="mt-5 -mb-1 flex gap-1 overflow-x-auto" aria-label="Project sections">
           {project.tabs.map((tab, index) => (
             <button
-              key={tab}
+              key={label}
               className={`shrink-0 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
                 index === 0 ? "bg-azure/10 text-azure" : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {tab}
+              {label}
             </button>
           ))}
         </nav>
@@ -213,6 +219,7 @@ function ProjectDetailPage() {
           </Panel>
         </div>
       </div>
+      </>}
     </div>
   );
 }
