@@ -2,7 +2,12 @@ import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-route
 import { Bell, ChevronsUpDown, Menu, Plus, Search, Sparkles, LogOut } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
-import { GlobalSearch, QuickAdd, Notifications, RolePreview } from "@/components/platform/GlobalControls";
+import {
+  GlobalSearch,
+  QuickAdd,
+  Notifications,
+  RolePreview,
+} from "@/components/platform/GlobalControls";
 import { usePlatform } from "@/components/platform/PlatformProvider";
 import mark from "@/assets/foresite-mark.png";
 import { AppIcon } from "./AppIcon";
@@ -25,29 +30,33 @@ function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { role } = usePlatform();
   return (
     <nav className="flex flex-col gap-0.5 px-2" aria-label="Application">
-      {APP_NAV.filter(item => role !== 'Client' || item.to === '/app/client-portal').map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          activeOptions={{ exact: item.to === "/app" }}
-          onClick={onNavigate}
-          className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
-          activeProps={{ className: "bg-sidebar-accent text-sidebar-foreground" }}
-        >
-          <AppIcon name={item.icon} className="h-[1.05rem] w-[1.05rem] shrink-0" />
-          <span className="truncate">{item.label}</span>
-          {item.badge && (
-            <span
-              className={cn(
-                "shrink-0 rounded-full px-1.5 py-0.5 text-[0.625rem] font-semibold",
-                item.label === "Defects" ? "bg-destructive/20 text-destructive" : "bg-azure/20 text-azure",
-              )}
-            >
-              {item.badge}
-            </span>
-          )}
-        </Link>
-      ))}
+      {APP_NAV.filter((item) => role !== "Client" || item.to === "/app/client-portal").map(
+        (item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            activeOptions={{ exact: item.to === "/app" }}
+            onClick={onNavigate}
+            className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
+            activeProps={{ className: "bg-sidebar-accent text-sidebar-foreground" }}
+          >
+            <AppIcon name={item.icon} className="h-[1.05rem] w-[1.05rem] shrink-0" />
+            <span className="truncate">{item.label}</span>
+            {item.badge && (
+              <span
+                className={cn(
+                  "shrink-0 rounded-full px-1.5 py-0.5 text-[0.625rem] font-semibold",
+                  item.label === "Defects"
+                    ? "bg-destructive/20 text-destructive"
+                    : "bg-azure/20 text-azure",
+                )}
+              >
+                {item.badge}
+              </span>
+            )}
+          </Link>
+        ),
+      )}
     </nav>
   );
 }
@@ -68,6 +77,16 @@ function SidebarBody({ onNavigate }: { onNavigate?: (() => void) | undefined }) 
 }
 
 function UserCard() {
+  const { role } = usePlatform();
+  const identity =
+    role === "Client"
+      ? {
+          name: "Sarah Mitchell",
+          initials: "SM",
+          company: "Smith Residence",
+          email: "sarah@example.com",
+        }
+      : DEMO_USER;
   const navigate = useNavigate();
 
   function signOut() {
@@ -79,15 +98,22 @@ function UserCard() {
     <div className="border-t border-sidebar-border p-3">
       <DropdownMenu>
         <DropdownMenuTrigger className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5 rounded-lg px-2 py-2 text-left transition-colors hover:bg-sidebar-accent">
-          <Avatar initials={DEMO_USER.initials} className="bg-sidebar-primary/25 text-sidebar-foreground" />
+          <Avatar
+            initials={identity.initials}
+            className="bg-sidebar-primary/25 text-sidebar-foreground"
+          />
           <span className="min-w-0">
-            <span className="block truncate text-sm font-medium">{DEMO_USER.name}</span>
-            <span className="block truncate text-xs text-sidebar-foreground/60">{DEMO_USER.company}</span>
+            <span className="block truncate text-sm font-medium">{identity.name}</span>
+            <span className="block truncate text-xs text-sidebar-foreground/60">
+              {identity.company}
+            </span>
           </span>
           <ChevronsUpDown className="h-4 w-4 shrink-0 text-sidebar-foreground/50" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-56">
-          <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">{DEMO_USER.email}</DropdownMenuLabel>
+          <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
+            {identity.email}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
             <Link to="/app/settings">Settings</Link>
@@ -101,11 +127,19 @@ function UserCard() {
   );
 }
 
-function TopBar({ crumb, searchPlaceholder, actions }: { crumb: ReactNode; searchPlaceholder: string; actions?: ReactNode }) {
+function TopBar({
+  crumb,
+  searchPlaceholder,
+  actions,
+}: {
+  crumb: ReactNode;
+  searchPlaceholder: string;
+  actions?: ReactNode;
+}) {
   const [open, setOpen] = useState(false);
-  const pathname = useRouterState({ select: s => s.location.pathname });
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { role } = usePlatform();
-  const clientSurface = pathname === '/app/client-portal' || role === 'Client';
+  const clientSurface = pathname === "/app/client-portal" || role === "Client";
 
   return (
     <header className="sticky top-0 z-40 grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border bg-background/90 px-4 backdrop-blur-md lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_auto] lg:px-6">
@@ -124,13 +158,24 @@ function TopBar({ crumb, searchPlaceholder, actions }: { crumb: ReactNode; searc
         <div className="min-w-0 truncate text-sm text-muted-foreground">{crumb}</div>
       </div>
 
-      <div className="hidden min-w-0 lg:block">
-        {!clientSurface && <GlobalSearch />}
-      </div>
+      <div className="hidden min-w-0 lg:block">{!clientSurface && <GlobalSearch />}</div>
 
       <div className="flex shrink-0 items-center gap-2">
-         {!clientSurface && <><div className="lg:hidden"><GlobalSearch /></div><Notifications />{actions ?? <QuickAdd />}<Button variant="outline" size="sm" asChild className="hidden sm:inline-flex"><Link to="/app/ai-insights"><Sparkles className="h-4 w-4 text-azure" /> AI</Link></Button></>}
-        <Avatar initials={DEMO_USER.initials} />
+        {!clientSurface && (
+          <>
+            <div className="lg:hidden">
+              <GlobalSearch />
+            </div>
+            <Notifications />
+            {actions ?? <QuickAdd />}
+            <Button variant="outline" size="sm" asChild className="hidden sm:inline-flex">
+              <Link to="/app/ai-insights">
+                <Sparkles className="h-4 w-4 text-azure" /> AI
+              </Link>
+            </Button>
+          </>
+        )}
+        <Avatar initials={role === "Client" ? "SM" : DEMO_USER.initials} />
       </div>
     </header>
   );
@@ -141,7 +186,10 @@ export function AppShell({ children }: { children?: ReactNode }) {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { role } = usePlatform();
-  useEffect(() => { if (role === 'Client' && pathname !== '/app/client-portal') void navigate({ to: '/app/client-portal' }); }, [role, pathname, navigate]);
+  useEffect(() => {
+    if (role === "Client" && pathname !== "/app/client-portal")
+      void navigate({ to: "/app/client-portal" });
+  }, [role, pathname, navigate]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -181,7 +229,9 @@ export function AppShell({ children }: { children?: ReactNode }) {
           searchPlaceholder={searchPlaceholder}
         />
         <RolePreview />
-         <main className="flex-1 px-4 py-6 lg:px-6 lg:py-8">{children ?? <Outlet />}</main>
+        <main className="flex-1 px-4 py-6 lg:px-6 lg:py-8">
+          {role === "Client" && pathname !== "/app/client-portal" ? null : (children ?? <Outlet />)}
+        </main>
       </div>
     </div>
   );
