@@ -10,3 +10,10 @@
 - [x] Upgrade login with informational Owner, Client and Trade access cards
 - [x] Add controlled registration and future workspace/role experience previews
 - [x] Verify shared sign-in, organisation code requirement and mobile layout
+
+# Client Portal V1 — Stage 2
+- [x] Client-safe records, template/widget framework and permission helpers
+- [x] Dashboard, approvals, updates, weighted progress and project health
+- [x] Photos, shared documents, financial summary, defects, contacts, messages and notifications
+- [x] Subscriber template/settings controls and existing access integration
+- [x] Verify client flows, subscriber settings, privacy rules and mobile layout

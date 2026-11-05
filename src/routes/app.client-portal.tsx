@@ -1,10 +1,23 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
-import { Tabs,TabsList,TabsTrigger,TabsContent } from '@/components/ui/tabs';
-import { Choice } from '@/components/app/PermissionControls';
-import { Meter } from '@/components/app/primitives';
-import { usePlatform } from '@/components/platform/PlatformProvider';
-import { RecordTable,status } from '@/components/platform/ModuleFrame';
-import { money } from '@/content/platform';
-export const Route=createFileRoute('/app/client-portal')({head:()=>({meta:[{title:'Client portal preview — Foresite'},{name:'description',content:'Client-visible progress, photos, invoices and project records.'},{property:'og:title',content:'Client portal preview — Foresite'},{property:'og:description',content:'Client-visible progress, photos, invoices and project records.'},{property:'og:type',content:'website'},{name:'twitter:card',content:'summary_large_image'}]}),component:ClientPortal});
-function ClientPortal(){const {records}=usePlatform();const [project,setProject]=useState('Smith Residence');const rows=records.filter(r=>r.project===project);return <div className="space-y-6"><header><h1 className="text-2xl font-semibold">Client portal preview</h1><p className="mt-1 text-sm text-muted-foreground">Client-visible project information · Sample records</p></header><div className="max-w-xs"><Choice label="Client project" value={project} options={records.filter(r=>r.kind==='Project').map(r=>r.title)} onChange={setProject}/></div><Tabs defaultValue="Progress"><TabsList className="flex h-auto flex-wrap justify-start">{['Progress','Photos','Defects','Invoices','Messages','Documents'].map(x=><TabsTrigger key={x} value={x}>{x}</TabsTrigger>)}</TabsList><TabsContent value="Progress" className="py-6"><h2 className="font-semibold">{project}</h2><p className="my-4 text-sm">{rows.find(r=>r.kind==='Project')?.progress??0}% complete</p><Meter value={rows.find(r=>r.kind==='Project')?.progress??0}/></TabsContent>{['Photos','Defects','Invoices','Messages','Documents'].map(tab=><TabsContent value={tab} key={tab} className="py-4"><RecordTable rows={rows.filter(r=>tab==='Photos'?r.kind==='Document'&&r.category==='Photos':tab==='Documents'?r.kind==='Document'&&!['Financial Files','Correspondence'].includes(r.category):tab==='Invoices'?r.kind==='Variation'&&r.category==='Invoice':tab==='Messages'?r.kind==='Communication'&&r.category!=='Internal':r.kind==='Defect')} onOpen={()=>{}} columns={[{title:'Record',value:r=>r.title},{title:'Status',value:r=>status(r.status)},{title:tab==='Invoices'?'Amount':'Date',value:r=>tab==='Invoices'?money(r.amount):r.date}]}/></TabsContent>)}</Tabs></div>}
+import { createFileRoute } from "@tanstack/react-router";
+import { ClientPortal } from "@/components/client-portal/ClientPortal";
+export const Route = createFileRoute("/app/client-portal")({
+  head: () => ({
+    meta: [
+      { title: "Client Portal — Foresite" },
+      {
+        name: "description",
+        content:
+          "Your project approvals, structured builder updates, progress, shared photos and documents in Foresite.",
+      },
+      { property: "og:title", content: "Client Portal — Foresite" },
+      {
+        property: "og:description",
+        content: "Client project transparency, approvals and configurable dashboards.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: ClientPortal,
+});

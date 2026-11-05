@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PlatformProvider } from "@/components/platform/PlatformProvider";
 import { RecordEditor } from "@/components/platform/RecordEditor";
+import { PortalProvider } from "@/components/client-portal/PortalProvider";
 import { AppShell } from "@/components/app/AppShell";
 
 export const Route = createFileRoute("/app")({
@@ -15,9 +16,19 @@ export const Route = createFileRoute("/app")({
           "The signed-in Foresite workspace: dashboard, projects, communications, financials and defects in one operating system.",
       },
       { property: "og:title", content: "Foresite OS workspace" },
-      { property: "og:description", content: "Dashboard, projects, communications, financials and defects." },
+      {
+        property: "og:description",
+        content: "Dashboard, projects, communications, financials and defects.",
+      },
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: () => <PlatformProvider><AppShell /><RecordEditor /></PlatformProvider>,
+  component: () => (
+    <PlatformProvider>
+      <PortalProvider>
+        <AppShell />
+        <RecordEditor />
+      </PortalProvider>
+    </PlatformProvider>
+  ),
 });

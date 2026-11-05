@@ -42,6 +42,7 @@ export const APP_NAV: NavItem[] = [
   { label: "Financials", to: "/app/financials", icon: "financials" },
   { label: "Defects", to: "/app/defects", icon: "defects", badge: "3" },
   { label: "Clients", to: "/app/clients", icon: "clients" },
+  { label: "Client Portal", to: "/app/client-portal", icon: "clients" },
   { label: "Trades", to: "/app/trades", icon: "trades" },
   { label: "Reports", to: "/app/reports", icon: "reports" },
   { label: "AI Insights", to: "/app/ai-insights", icon: "ai" },

@@ -203,3 +203,15 @@
 }
 .access-theme h1, .access-theme h2, .access-theme h3 { letter-spacing: 0; }
 
+
+/* Client Portal V1 shares access colours without recolouring other modules. */
+.client-portal-theme {
+  --primary: oklch(0.239 0.06 257);
+  --foreground: oklch(0.239 0.06 257);
+  --muted-foreground: oklch(0.554 0.046 257.4);
+  --azure: oklch(0.615 0.19 260);
+  --ring: var(--azure);
+  font-family: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+.client-portal-theme h1, .client-portal-theme h2, .client-portal-theme h3 { letter-spacing: 0; }
