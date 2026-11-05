@@ -15,3 +15,5 @@
 - Keep expansion sample records in the shared platform content module and session edits in PlatformProvider; this lets prototype modules share changes without implying durable storage or enforced access.
 - Use project-ID page URLs for assistant conversations and browser-only history isolated by that ID; this preserves project-specific history while keeping the prototype independent of a live AI service.
 - Keep unified access screens beneath the /login layout with scoped theme tokens; informational experience selections never mutate demo permissions and existing app URLs remain unchanged.
+
+- Keep Client Portal templates and project-specific session state in PortalProvider beneath the existing app layout; use dedicated client-safe projections and explicit document sharing so portal widgets never read internal financial or note fields.
