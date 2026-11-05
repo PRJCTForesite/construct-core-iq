@@ -33,6 +33,9 @@ import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
+import { Route as LoginIndexRouteImport } from './routes/login.index'
+import { Route as LoginRegisterRouteImport } from './routes/login.register'
+import { Route as LoginWorkspacesRouteImport } from './routes/login.workspaces'
 import { Route as AppAdministrationIndexRouteImport } from './routes/app.administration.index'
 import { Route as AppAdministrationPermissionsRouteImport } from './routes/app.administration.permissions'
 import { Route as AppAiInsightsIndexRouteImport } from './routes/app.ai-insights.index'
@@ -160,6 +163,21 @@ const AppWorkspaceRoute = AppWorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => AppRoute,
 } as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginRegisterRoute = LoginRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => LoginRoute,
+} as any)
+const LoginWorkspacesRoute = LoginWorkspacesRouteImport.update({
+  id: '/workspaces',
+  path: '/workspaces',
+  getParentRoute: () => LoginRoute,
+} as any)
 const AppAdministrationIndexRoute = AppAdministrationIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -200,7 +218,7 @@ export interface FileRoutesByFullPath {
   '/download': typeof DownloadRoute
   '/features': typeof FeaturesRoute
   '/industries': typeof IndustriesRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/pricing': typeof PricingRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
@@ -216,7 +234,10 @@ export interface FileRoutesByFullPath {
   '/app/tasks': typeof AppTasksRoute
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
+  '/login/register': typeof LoginRegisterRoute
+  '/login/workspaces': typeof LoginWorkspacesRoute
   '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
   '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
@@ -231,7 +252,6 @@ export interface FileRoutesByTo {
   '/download': typeof DownloadRoute
   '/features': typeof FeaturesRoute
   '/industries': typeof IndustriesRoute
-  '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/client-portal': typeof AppClientPortalRoute
@@ -245,7 +265,10 @@ export interface FileRoutesByTo {
   '/app/tasks': typeof AppTasksRoute
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
+  '/login/register': typeof LoginRegisterRoute
+  '/login/workspaces': typeof LoginWorkspacesRoute
   '/app': typeof AppIndexRoute
+  '/login': typeof LoginIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
   '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
@@ -262,7 +285,7 @@ export interface FileRoutesById {
   '/download': typeof DownloadRoute
   '/features': typeof FeaturesRoute
   '/industries': typeof IndustriesRoute
-  '/login': typeof LoginRoute
+  '/login': typeof LoginRouteWithChildren
   '/pricing': typeof PricingRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
@@ -278,7 +301,10 @@ export interface FileRoutesById {
   '/app/tasks': typeof AppTasksRoute
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
+  '/login/register': typeof LoginRegisterRoute
+  '/login/workspaces': typeof LoginWorkspacesRoute
   '/app/': typeof AppIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/app/administration/permissions': typeof AppAdministrationPermissionsRoute
   '/app/ai-insights/$projectId': typeof AppAiInsightsProjectIdRoute
   '/app/projects/$projectId': typeof AppProjectsProjectIdRoute
@@ -312,7 +338,10 @@ export interface FileRouteTypes {
     | '/app/tasks'
     | '/app/trades'
     | '/app/workspace'
+    | '/login/register'
+    | '/login/workspaces'
     | '/app/'
+    | '/login/'
     | '/app/administration/permissions'
     | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
@@ -327,7 +356,6 @@ export interface FileRouteTypes {
     | '/download'
     | '/features'
     | '/industries'
-    | '/login'
     | '/pricing'
     | '/app/calendar'
     | '/app/client-portal'
@@ -341,7 +369,10 @@ export interface FileRouteTypes {
     | '/app/tasks'
     | '/app/trades'
     | '/app/workspace'
+    | '/login/register'
+    | '/login/workspaces'
     | '/app'
+    | '/login'
     | '/app/administration/permissions'
     | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
@@ -373,7 +404,10 @@ export interface FileRouteTypes {
     | '/app/tasks'
     | '/app/trades'
     | '/app/workspace'
+    | '/login/register'
+    | '/login/workspaces'
     | '/app/'
+    | '/login/'
     | '/app/administration/permissions'
     | '/app/ai-insights/$projectId'
     | '/app/projects/$projectId'
@@ -390,7 +424,7 @@ export interface RootRouteChildren {
   DownloadRoute: typeof DownloadRoute
   FeaturesRoute: typeof FeaturesRoute
   IndustriesRoute: typeof IndustriesRoute
-  LoginRoute: typeof LoginRoute
+  LoginRoute: typeof LoginRouteWithChildren
   PricingRoute: typeof PricingRoute
 }
 
@@ -564,6 +598,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppWorkspaceRouteImport
       parentRoute: typeof AppRoute
     }
+    '/login/': {
+      id: '/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    '/login/register': {
+      id: '/login/register'
+      path: '/register'
+      fullPath: '/login/register'
+      preLoaderRoute: typeof LoginRegisterRouteImport
+      parentRoute: typeof LoginRoute
+    }
+    '/login/workspaces': {
+      id: '/login/workspaces'
+      path: '/workspaces'
+      fullPath: '/login/workspaces'
+      preLoaderRoute: typeof LoginWorkspacesRouteImport
+      parentRoute: typeof LoginRoute
+    }
     '/app/administration/': {
       id: '/app/administration/'
       path: '/'
@@ -678,6 +733,20 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface LoginRouteChildren {
+  LoginRegisterRoute: typeof LoginRegisterRoute
+  LoginWorkspacesRoute: typeof LoginWorkspacesRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+}
+
+const LoginRouteChildren: LoginRouteChildren = {
+  LoginRegisterRoute: LoginRegisterRoute,
+  LoginWorkspacesRoute: LoginWorkspacesRoute,
+  LoginIndexRoute: LoginIndexRoute,
+}
+
+const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -686,7 +755,7 @@ const rootRouteChildren: RootRouteChildren = {
   DownloadRoute: DownloadRoute,
   FeaturesRoute: FeaturesRoute,
   IndustriesRoute: IndustriesRoute,
-  LoginRoute: LoginRoute,
+  LoginRoute: LoginRouteWithChildren,
   PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
