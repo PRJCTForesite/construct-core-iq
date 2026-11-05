@@ -13,7 +13,6 @@ import {
   INDUSTRIES,
   MOBILE_HIGHLIGHTS,
   MOBILE_PANEL_ROWS,
-  PORTAL_URL,
   POSITIONING,
   STAKEHOLDERS,
   TAGLINE,
@@ -74,10 +73,10 @@ function HomePage() {
                 <Link to="/contact">Book a Demo</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href={`${PORTAL_URL}/register`}>Get Started</a>
+                <Link to="/login/register">Get Started</Link>
               </Button>
               <Button asChild size="lg" variant="ghost">
-                <a href={PORTAL_URL}>Login</a>
+                <Link to="/login">Login</Link>
               </Button>
             </div>
           </div>

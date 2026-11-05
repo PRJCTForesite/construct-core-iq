@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { APP_NAV, DEMO_USER } from "@/content/app";
-import { SESSION_KEY } from "@/lib/session";
+import { hasSession, endDemoSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 
 function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
@@ -69,7 +69,7 @@ function UserCard() {
   const navigate = useNavigate();
 
   function signOut() {
-    if (typeof window !== "undefined") window.localStorage.removeItem(SESSION_KEY);
+    if (typeof window !== "undefined") endDemoSession();
     navigate({ to: "/login", replace: true });
   }
 
@@ -141,7 +141,7 @@ export function AppShell({ children }: { children?: ReactNode }) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!window.localStorage.getItem(SESSION_KEY)) {
+    if (!hasSession()) {
       navigate({ to: "/login", replace: true });
     }
   }, [navigate, pathname]);
