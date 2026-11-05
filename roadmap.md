@@ -12,8 +12,8 @@
 - [x] Verify shared sign-in, organisation code requirement and mobile layout
 
 # Client Portal V1 — Stage 2
-- [ ] Client-safe records, template/widget framework and permission helpers
-- [ ] Dashboard, approvals, updates, weighted progress and project health
-- [ ] Photos, shared documents, financial summary, defects, contacts, messages and notifications
-- [ ] Subscriber template/settings controls and existing access integration
-- [ ] Verify client flows, subscriber settings, privacy rules and mobile layout
+- [x] Client-safe records, template/widget framework and permission helpers
+- [x] Dashboard, approvals, updates, weighted progress and project health
+- [x] Photos, shared documents, financial summary, defects, contacts, messages and notifications
+- [x] Subscriber template/settings controls and existing access integration
+- [x] Verify client flows, subscriber settings, privacy rules and mobile layout
