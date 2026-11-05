@@ -43,7 +43,7 @@ export type ClientFinancials = { contractValue: number; approvedVariations: numb
 export function clientFinancialSummary(source: ClientFinancials): ClientFinancials {
   return { contractValue: source.contractValue, approvedVariations: source.approvedVariations, pendingVariations: source.pendingVariations, amountPaid: source.amountPaid, amountOutstanding: source.amountOutstanding };
 }
-export type Approval = { id: string; title: string; category: string; detail: string; amount?: number; status: 'Requires Action' | 'Approved' | 'Rejected'; recordId?: string };
+export type Approval = { id: string; title: string; category: string; detail: string; amount?: number; status: 'Requires Action' | 'Approved' | 'Rejected' | 'Not Yet Available'; recordId?: string };
 export type BuilderUpdate = { id: string; date: string; author: string; completed: string; upcoming: string; risks: string; approvals: string; photos: string[] };
 export type Suggestion = { id: string; title: string; area: string; description: string; files: string[]; status: 'Suggested Defect' | 'Accepted' | 'Rejected'; recordId?: string | undefined; reason?: string | undefined };
 export function suggestionDecision(suggestion: Suggestion, decision: 'Accepted' | 'Rejected', recordId?: string, reason?: string): Suggestion {
@@ -71,5 +71,5 @@ export function defaultApprovals(): Approval[] { return [
   { id: 'colour', title: 'Internal paint colours', category: 'Colour Selections', detail: 'Walls: Natural White. Trim: Vivid White. Please confirm before painting starts.', status: 'Requires Action' },
   { id: 'drawing', title: 'Kitchen joinery shop drawings', category: 'Shop Drawings', detail: 'Revision C includes the approved island layout and appliance dimensions.', status: 'Approved' },
   { id: 'signoff', title: 'Bathroom sealant rectification', category: 'Defect Sign-Offs', detail: 'Review the completed sealant repair during your next site inspection.', status: 'Requires Action' },
-  { id: 'completion', title: 'Practical completion sign-off', category: 'Practical Completion Sign-Off', detail: 'Handover checklist will be issued when the practical completion inspection is complete.', status: 'Approved' },
+  { id: 'completion', title: 'Practical completion sign-off', category: 'Practical Completion Sign-Off', detail: 'Handover checklist will be issued when the practical completion inspection is complete.', status: 'Not Yet Available' },
 ]; }

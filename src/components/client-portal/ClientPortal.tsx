@@ -1,9 +1,10 @@
 import { useState, type ReactNode } from 'react';
-import { Check, ArrowRight, Bell, Camera, FileText, MessageSquare, Settings2, Plus, Paperclip, Send, ShieldCheck, X, CalendarDays, ChevronRight } from 'lucide-react';
+import { Check, ArrowRight, Bell, FileText, MessageSquare, Settings2, Plus, Paperclip, Send, ShieldCheck, X, CalendarDays, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Choice } from '@/components/app/PermissionControls';
@@ -68,7 +69,7 @@ export function ClientPortal() {
 
   function decide(status: 'Approved' | 'Rejected') {
     if (!approval || !allowed(status === 'Approved' ? 'Approve' : 'Reject')) return;
-    if (approval.recordId) { const r = platform.records.find(r => r.id === approval.recordId); if (r) platform.save({ ...r, status }); }
+    if (approval.recordId) { const r = platform.records.find(r => r.id === approval.recordId); if (r) platform.save({ ...r, status: r.kind === 'Defect' ? status === 'Approved' ? 'Closed' : 'In Progress' : status }); }
     else portal.updateProject(projectId, p => ({ ...p, approvals: p.approvals.map(a => a.id === approval.id ? { ...a, status } : a) }));
     if (decisionNote.trim()) portal.updateProject(projectId, p => ({ ...p, messages: [...p.messages, { id: crypto.randomUUID(), author: platform.role === 'Client' ? 'Sarah Mitchell' : 'Subscriber', text: `${approval.title} — ${status}: ${decisionNote}`, files: [], date: stamp() }] }));
     notify(`${approval.category === 'Outstanding Variations' ? 'Variation' : 'Approval'} ${status.toLowerCase()}: ${approval.title}`);
