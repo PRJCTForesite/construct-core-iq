@@ -3,6 +3,7 @@ import { Bell, ChevronsUpDown, Menu, Plus, Search, Sparkles, LogOut } from "luci
 import { useEffect, useState, type ReactNode } from "react";
 
 import { GlobalSearch, QuickAdd, Notifications, RolePreview } from "@/components/platform/GlobalControls";
+import { usePlatform } from "@/components/platform/PlatformProvider";
 import mark from "@/assets/foresite-mark.png";
 import { AppIcon } from "./AppIcon";
 import { Avatar } from "./primitives";
@@ -21,9 +22,10 @@ import { hasSession, endDemoSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 
 function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
+  const { role } = usePlatform();
   return (
     <nav className="flex flex-col gap-0.5 px-2" aria-label="Application">
-      {APP_NAV.map((item) => (
+      {APP_NAV.filter(item => role !== 'Client' || item.to === '/app/client-portal').map((item) => (
         <Link
           key={item.to}
           to={item.to}
@@ -101,6 +103,9 @@ function UserCard() {
 
 function TopBar({ crumb, searchPlaceholder, actions }: { crumb: ReactNode; searchPlaceholder: string; actions?: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: s => s.location.pathname });
+  const { role } = usePlatform();
+  const clientSurface = pathname === '/app/client-portal' || role === 'Client';
 
   return (
     <header className="sticky top-0 z-40 grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border bg-background/90 px-4 backdrop-blur-md lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_auto] lg:px-6">
@@ -120,14 +125,11 @@ function TopBar({ crumb, searchPlaceholder, actions }: { crumb: ReactNode; searc
       </div>
 
       <div className="hidden min-w-0 lg:block">
-        <GlobalSearch />
+        {!clientSurface && <GlobalSearch />}
       </div>
 
       <div className="flex shrink-0 items-center gap-2">
-        <div className="lg:hidden"><GlobalSearch /></div>
-        <Notifications />
-        {actions ?? <QuickAdd />}
-        <Button variant="outline" size="sm" asChild className="hidden sm:inline-flex"><Link to="/app/ai-insights"><Sparkles className="h-4 w-4 text-azure" /> AI</Link></Button>
+         {!clientSurface && <><div className="lg:hidden"><GlobalSearch /></div><Notifications />{actions ?? <QuickAdd />}<Button variant="outline" size="sm" asChild className="hidden sm:inline-flex"><Link to="/app/ai-insights"><Sparkles className="h-4 w-4 text-azure" /> AI</Link></Button></>}
         <Avatar initials={DEMO_USER.initials} />
       </div>
     </header>
@@ -138,6 +140,8 @@ function TopBar({ crumb, searchPlaceholder, actions }: { crumb: ReactNode; searc
 export function AppShell({ children }: { children?: ReactNode }) {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { role } = usePlatform();
+  useEffect(() => { if (role === 'Client' && pathname !== '/app/client-portal') void navigate({ to: '/app/client-portal' }); }, [role, pathname, navigate]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

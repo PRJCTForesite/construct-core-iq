@@ -1,6 +1,6 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PORTAL_TEMPLATES, DEFAULT_STAGES, weightedCompletion, sharedClientDocuments, clientFinancialSummary, portalCan, suggestionDecision, healthStatus } from './client-portal';
+import { PORTAL_TEMPLATES, DEFAULT_STAGES, weightedCompletion, sharedClientDocuments, clientFinancialSummary, portalCan, suggestionDecision, healthStatus, type Suggestion } from './client-portal';
 import { makeRecord } from './platform';
 
 describe('Client Portal V1 rules', () => {
@@ -19,7 +19,7 @@ describe('Client Portal V1 rules', () => {
   for (const action of ['Configure', 'Review suggestion', 'Edit project', 'Modify programme', 'Modify financials', 'Internal notes'] as const) test(`clients cannot ${action}`, () => assert.equal(portalCan('Client', action), false));
   test('only owners and administrators configure templates', () => { assert.equal(portalCan('Owner', 'Configure'), true); assert.equal(portalCan('Administrator', 'Configure'), true); assert.equal(portalCan('Project Manager', 'Configure'), false); });
   test('suggestions become official only after acceptance', () => {
-    const s = { id: 'suggestion', title: 'Sealant', area: 'Bathroom', description: 'Gap', files: [], status: 'Suggested Defect' as const };
+    const s: Suggestion = { id: 'suggestion', title: 'Sealant', area: 'Bathroom', description: 'Gap', files: [], status: 'Suggested Defect' };
     assert.equal(s.recordId, undefined); assert.equal(suggestionDecision(s, 'Rejected', 'should-not-attach').recordId, undefined); assert.equal(suggestionDecision(s, 'Accepted', 'official-1').recordId, 'official-1');
   });
   test('health displays healthy, attention required or critical', () => { assert.equal(healthStatus(90), 'Healthy'); assert.equal(healthStatus(70), 'Attention Required'); assert.equal(healthStatus(40), 'Critical'); });

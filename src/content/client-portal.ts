@@ -45,7 +45,7 @@ export function clientFinancialSummary(source: ClientFinancials): ClientFinancia
 }
 export type Approval = { id: string; title: string; category: string; detail: string; amount?: number; status: 'Requires Action' | 'Approved' | 'Rejected'; recordId?: string };
 export type BuilderUpdate = { id: string; date: string; author: string; completed: string; upcoming: string; risks: string; approvals: string; photos: string[] };
-export type Suggestion = { id: string; title: string; area: string; description: string; files: string[]; status: 'Suggested Defect' | 'Accepted' | 'Rejected'; recordId?: string; reason?: string };
+export type Suggestion = { id: string; title: string; area: string; description: string; files: string[]; status: 'Suggested Defect' | 'Accepted' | 'Rejected'; recordId?: string | undefined; reason?: string | undefined };
 export function suggestionDecision(suggestion: Suggestion, decision: 'Accepted' | 'Rejected', recordId?: string, reason?: string): Suggestion {
   return { ...suggestion, status: decision, recordId: decision === 'Accepted' ? recordId : undefined, reason };
 }
