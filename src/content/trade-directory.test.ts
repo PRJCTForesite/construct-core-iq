@@ -1,22 +1,23 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import assert from "node:assert/strict";
 import { DIRECTORY, availabilityFor, filterDirectory, recommendTrades } from "./trade-directory";
 
 const base = { query: "", trade: "All", location: "All", radiusKm: 100, compliance: [] as string[], availableOnly: false };
 
 describe("trade directory", () => {
   test("availability follows capacity thresholds", () => {
-    expect(availabilityFor(2, 8)).toBe("Available");
-    expect(availabilityFor(6, 8)).toBe("Busy");
-    expect(availabilityFor(8, 8)).toBe("Unavailable");
+    assert.equal(availabilityFor(2, 8), "Available");
+    assert.equal(availabilityFor(6, 8), "Busy");
+    assert.equal(availabilityFor(8, 8), "Unavailable");
   });
   test("manual override wins", () => {
-    expect(availabilityFor(1, 8, "Unavailable")).toBe("Unavailable");
+    assert.equal(availabilityFor(1, 8, "Unavailable"), "Unavailable");
   });
   test("electrician, Melbourne, 20km, heights, available", () => {
     const r = filterDirectory(DIRECTORY, { ...base, trade: "Electrician", location: "Melbourne", radiusKm: 20, compliance: ["Working At Heights"], availableOnly: true });
-    expect(r.map((t) => t.name)).toEqual(["ABC Electrical"]);
+    assert.deepEqual(r.map((t) => t.name), ["ABC Electrical"]);
   });
   test("recommendations exclude Trades- warnings", () => {
-    expect(recommendTrades(DIRECTORY, "Electrician").some((t) => t.preferred === "minus")).toBe(false);
+    assert.equal(recommendTrades(DIRECTORY, "Electrician").some((t) => t.preferred === "minus"), false);
   });
 });

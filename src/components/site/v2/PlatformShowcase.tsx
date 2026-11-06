@@ -42,9 +42,9 @@ const VIEWS: View[] = [
 const toneClass = { good: "bg-azure/10 text-azure", warn: "bg-construction/15 text-foreground", bad: "bg-destructive/10 text-destructive" };
 
 export function PlatformShowcase() {
-  const [active, setActive] = useState(VIEWS[0].id);
+  const [active, setActive] = useState("owner");
   const [tab, setTab] = useState(0);
-  const view = VIEWS.find((v) => v.id === active) ?? VIEWS[0];
+  const view = VIEWS.find((v) => v.id === active) ?? VIEWS[0]!;
   return (
     <div>
       <div role="tablist" aria-label="Stakeholder experience" className="mx-auto flex w-fit flex-wrap justify-center gap-1 rounded-full border border-border bg-card p-1">
