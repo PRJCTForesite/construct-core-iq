@@ -222,7 +222,7 @@ function WorkAssistant({ tasks, defects }: { tasks: TradeTask[]; defects: TradeD
   return (
     <Panel title="Work Assistant" subtitle="Only sees what your trade account can see" action={<Future label="Preview" />}>
       <div className="flex flex-wrap gap-1.5">
-        {Object.keys(prompts).map((p) => <Btn key={p} onClick={() => setAnswer(prompts[p]() || "Nothing found.")}>{p}</Btn>)}
+        {Object.keys(prompts).map((p) => <Btn key={p} onClick={() => setAnswer(prompts[p]?.() || "Nothing found.")}>{p}</Btn>)}
       </div>
       <p aria-live="polite" className="mt-3 rounded-lg bg-muted p-3 text-sm text-foreground">{answer}</p>
     </Panel>
@@ -267,7 +267,7 @@ function TasksBoard({ tasks, setTasks, compact }: { tasks: TradeTask[]; setTasks
                     <p className="font-medium text-foreground">{t.title}</p>
                     <p className="mt-1 text-muted-foreground">{t.project} · {t.employer}</p>
                     <div className="mt-2 flex items-center justify-between gap-1">
-                      <Pill tone={PRIORITY_TONE[t.priority]}>{t.priority}</Pill>
+                      <Pill tone={PRIORITY_TONE[t.priority] ?? "muted"}>{t.priority}</Pill>
                       <span className={cn("tabular-nums", t.due < TRADE_TODAY && t.status !== "Completed" ? "text-destructive" : "text-muted-foreground")}>{fmt(t.due)}</span>
                     </div>
                     <StatusSelect task={t} move={move} />
@@ -300,7 +300,7 @@ function TaskList({ tasks, move }: { tasks: TradeTask[]; move: (id: string, s: T
           {tasks.map((t) => (
             <tr key={t.id}>
               <td className="px-2 py-2">{t.project}</td><td className="px-2 py-2 text-muted-foreground">{t.employer}</td>
-              <td className="px-2 py-2 font-medium">{t.title}</td><td className="px-2 py-2"><Pill tone={PRIORITY_TONE[t.priority]}>{t.priority}</Pill></td>
+              <td className="px-2 py-2 font-medium">{t.title}</td><td className="px-2 py-2"><Pill tone={PRIORITY_TONE[t.priority] ?? "muted"}>{t.priority}</Pill></td>
               <td className="px-2 py-2 tabular-nums">{fmt(t.due)}</td><td className="w-44 px-2 py-1"><StatusSelect task={t} move={move} /></td>
               <td className="px-2 py-2"><div className="flex -space-x-1.5">{t.workers.map((w) => <Avatar key={w} initials={w} className="h-6 w-6 ring-2 ring-card" />)}</div></td>
             </tr>
@@ -323,7 +323,7 @@ function DefectsPanel({ defects, setDefects }: { defects: TradeDefect[]; setDefe
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {defects.map((d) => (
-          <Panel key={d.id} title={d.title} subtitle={`${d.project} · ${d.location}`} action={<StatusPill tone={DEFECT_TONE[d.status]}>{d.status}</StatusPill>}>
+          <Panel key={d.id} title={d.title} subtitle={`${d.project} · ${d.location}`} action={<StatusPill tone={DEFECT_TONE[d.status] ?? "muted"}>{d.status}</StatusPill>}>
             {d.rejected && <p className="mb-2 text-xs font-medium text-destructive">Rejected by builder — further rectification required.</p>}
             <p className="text-xs text-muted-foreground">Inspection on completion: <strong className="text-foreground">{d.requestInspectionOnCompletion ? "Yes" : "No"}</strong> · Photos: {d.photos}</p>
             {d.notes.length > 0 && <ul className="mt-2 list-disc pl-4 text-xs">{d.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>}
@@ -332,7 +332,7 @@ function DefectsPanel({ defects, setDefects }: { defects: TradeDefect[]; setDefe
             </label>
             <div className="mt-2 flex flex-wrap gap-2">
               <Btn onClick={() => { update(d.id, (x) => ({ ...x, photos: x.photos + 1 })); toast.success("Photo uploaded"); }}>Upload photo</Btn>
-              <Btn disabled={!notes[d.id]} onClick={() => { if (!notes[d.id]?.trim()) return; update(d.id, (x) => ({ ...x, notes: [...x.notes, notes[d.id]], status: x.status === "Open" ? "In Progress" : x.status })); setNotes({ ...notes, [d.id]: "" }); }}>Add note</Btn>
+              <Btn disabled={!notes[d.id]} onClick={() => { if (!notes[d.id]?.trim()) return; update(d.id, (x) => ({ ...x, notes: [...x.notes, notes[d.id] ?? ""], status: x.status === "Open" ? "In Progress" : x.status })); setNotes({ ...notes, [d.id]: "" }); }}>Add note</Btn>
               {d.requestInspectionOnCompletion && d.status !== "Awaiting Inspection" && d.status !== "Closed" && (
                 <Btn onClick={() => { update(d.id, (x) => ({ ...x, status: "Awaiting Inspection", rejected: false })); toast.success("Inspection requested"); }}>Request inspection</Btn>
               )}
@@ -424,7 +424,7 @@ function Profile() {
             <li key={i.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 py-2 text-sm">
               <span className="min-w-0"><span className="font-medium">{i.name}</span>{i.required && <span className="ml-1.5 text-[0.6875rem] text-construction">Required</span>}{i.expiry && <span className="block text-xs text-muted-foreground">Expires {fmt(i.expiry)}</span>}</span>
               <span className="flex items-center gap-2">
-                <StatusPill tone={COMPLIANCE_TONE[i.status]}>{i.status}</StatusPill>
+                <StatusPill tone={COMPLIANCE_TONE[i.status] ?? "muted"}>{i.status}</StatusPill>
                 {i.status !== "Verified" && <Btn onClick={() => { setItems(items.map((x) => (x.id === i.id ? { ...x, status: "Verified" } : x))); toast.success(`${i.name} uploaded`); }}>Upload</Btn>}
               </span>
             </li>

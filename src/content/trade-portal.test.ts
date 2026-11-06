@@ -9,10 +9,10 @@ describe("trade portal rules", () => {
     expect(TRADE_CAN_CLOSE_DEFECTS).toBe(false);
   });
   test("completing a defect with inspection enabled goes to Awaiting Inspection", () => {
-    expect(markDefectComplete(TRADE_DEFECTS[0]).status).toBe("Awaiting Inspection");
+    expect(markDefectComplete(TRADE_DEFECTS[0]!).status).toBe("Awaiting Inspection");
   });
   test("completing a defect without inspection goes to Awaiting Review", () => {
-    expect(markDefectComplete(TRADE_DEFECTS[2]).status).toBe("Awaiting Review");
+    expect(markDefectComplete(TRADE_DEFECTS[2]!).status).toBe("Awaiting Review");
   });
   test("only documents shared with the trade are visible", () => {
     const docs = visibleTradeDocs(TRADE_DOCS);
