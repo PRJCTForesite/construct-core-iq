@@ -17,3 +17,5 @@
 - [x] Photos, shared documents, financial summary, defects, contacts, messages and notifications
 - [x] Subscriber template/settings controls and existing access integration
 - [x] Verify client flows, subscriber settings, privacy rules and mobile layout
+
+- [x] Stage 3 Trade Portal V1 (prototype, session-only)
