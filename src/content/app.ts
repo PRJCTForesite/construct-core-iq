@@ -44,6 +44,7 @@ export const APP_NAV: NavItem[] = [
   { label: "Clients", to: "/app/clients", icon: "clients" },
   { label: "Client Portal", to: "/app/client-portal", icon: "clients" },
   { label: "Trades", to: "/app/trades", icon: "trades" },
+  { label: "Trade Portal", to: "/app/trade-portal", icon: "trades" },
   { label: "Reports", to: "/app/reports", icon: "reports" },
   { label: "AI Insights", to: "/app/ai-insights", icon: "ai" },
   { label: "Administration", to: "/app/administration", icon: "settings" },
