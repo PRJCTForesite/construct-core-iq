@@ -16,13 +16,14 @@ const PRIORITY_TONE: Record<string, Tone> = { High: "bad", Medium: "warn", Low: 
 const DEFECT_TONE: Record<string, Tone> = { Open: "bad", "In Progress": "warn", "Awaiting Inspection": "info", "Awaiting Review": "accent", Closed: "good" };
 const fmt = (d: string) => new Date(d).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
 
-function Btn({ children, onClick, variant = "outline", className }: { children: ReactNode; onClick?: () => void; variant?: "primary" | "outline" | "warn"; className?: string }) {
+function Btn({ children, onClick, variant = "outline", className, disabled }: { children: ReactNode; onClick?: () => void; variant?: "primary" | "outline" | "warn"; className?: string; disabled?: boolean }) {
   return (
     <button
       type="button"
+      disabled={disabled}
       onClick={onClick}
       className={cn(
-        "rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors",
+        "rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors disabled:opacity-50",
         variant === "primary" && "bg-azure text-primary-foreground hover:bg-azure/90",
         variant === "outline" && "border border-border bg-card text-foreground hover:bg-muted",
         variant === "warn" && "bg-construction text-primary-foreground hover:bg-construction/90",

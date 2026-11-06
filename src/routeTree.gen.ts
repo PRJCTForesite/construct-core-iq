@@ -31,6 +31,7 @@ import { Route as AppFinancialsRouteImport } from './routes/app.financials'
 import { Route as AppReportsRouteImport } from './routes/app.reports'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
+import { Route as AppTradePortalRouteImport } from './routes/app.trade-portal'
 import { Route as AppTradesRouteImport } from './routes/app.trades'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
 import { Route as LoginIndexRouteImport } from './routes/login.index'
@@ -153,6 +154,11 @@ const AppTasksRoute = AppTasksRouteImport.update({
   path: '/tasks',
   getParentRoute: () => AppRoute,
 } as any)
+const AppTradePortalRoute = AppTradePortalRouteImport.update({
+  id: '/trade-portal',
+  path: '/trade-portal',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppTradesRoute = AppTradesRouteImport.update({
   id: '/trades',
   path: '/trades',
@@ -232,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/app/reports': typeof AppReportsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
+  '/app/trade-portal': typeof AppTradePortalRoute
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/login/register': typeof LoginRegisterRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByTo {
   '/app/reports': typeof AppReportsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
+  '/app/trade-portal': typeof AppTradePortalRoute
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/login/register': typeof LoginRegisterRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   '/app/reports': typeof AppReportsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
+  '/app/trade-portal': typeof AppTradePortalRoute
   '/app/trades': typeof AppTradesRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/login/register': typeof LoginRegisterRoute
@@ -336,6 +345,7 @@ export interface FileRouteTypes {
     | '/app/reports'
     | '/app/settings'
     | '/app/tasks'
+    | '/app/trade-portal'
     | '/app/trades'
     | '/app/workspace'
     | '/login/register'
@@ -367,6 +377,7 @@ export interface FileRouteTypes {
     | '/app/reports'
     | '/app/settings'
     | '/app/tasks'
+    | '/app/trade-portal'
     | '/app/trades'
     | '/app/workspace'
     | '/login/register'
@@ -402,6 +413,7 @@ export interface FileRouteTypes {
     | '/app/reports'
     | '/app/settings'
     | '/app/tasks'
+    | '/app/trade-portal'
     | '/app/trades'
     | '/app/workspace'
     | '/login/register'
@@ -584,6 +596,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTasksRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/trade-portal': {
+      id: '/app/trade-portal'
+      path: '/trade-portal'
+      fullPath: '/app/trade-portal'
+      preLoaderRoute: typeof AppTradePortalRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/trades': {
       id: '/app/trades'
       path: '/trades'
@@ -704,6 +723,7 @@ interface AppRouteChildren {
   AppReportsRoute: typeof AppReportsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppTasksRoute: typeof AppTasksRoute
+  AppTradePortalRoute: typeof AppTradePortalRoute
   AppTradesRoute: typeof AppTradesRoute
   AppWorkspaceRoute: typeof AppWorkspaceRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -724,6 +744,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppReportsRoute: AppReportsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppTasksRoute: AppTasksRoute,
+  AppTradePortalRoute: AppTradePortalRoute,
   AppTradesRoute: AppTradesRoute,
   AppWorkspaceRoute: AppWorkspaceRoute,
   AppIndexRoute: AppIndexRoute,
