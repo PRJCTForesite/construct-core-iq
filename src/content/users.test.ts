@@ -9,11 +9,11 @@ test('Owner can manage organisation, users, billing and permissions', () => {
 test('Administrator manages projects, users, documents and defects but cannot manage billing', () => {
   const p = rolePermissions('Administrator');
   for (const m of ['Projects', 'Users', 'Documents', 'Defects']) assert.equal(p[m]?.includes('Edit'), true);
-  assert.deepEqual(p.Billing, []);
+  assert.deepEqual(p['Billing'], []);
 });
 test('Project Manager can manage projects, assign tasks and manage defects', () => {
   const p = rolePermissions('Project Manager');
-  assert.equal(p.Projects?.includes('Edit'), true); assert.equal(p.Tasks?.includes('Assign'), true); assert.equal(p.Defects?.includes('Edit'), true);
+  assert.equal(p['Projects']?.includes('Edit'), true); assert.equal(p['Tasks']?.includes('Assign'), true); assert.equal(p['Defects']?.includes('Edit'), true);
 });
 test('Supervisor can manage tasks, trades and defects', () => {
   const p = rolePermissions('Supervisor'); for (const m of ['Tasks', 'Trades', 'Defects']) assert.equal(p[m]?.includes('Edit'), true);
@@ -31,8 +31,8 @@ test('Users can be assigned one, multiple or all organisation projects', () => {
   const all = assignProjects(user, [], true); assert.deepEqual(all.assignments.map(a => a.project), PROJECTS); assert.equal(all.assignmentScope, 'Entire Organisation');
 });
 test('Custom permission toggles preserve view prerequisite and can be revoked', () => {
-  const p = togglePermission({}, 'Billing', 'Administer', true); assert.deepEqual(p.Billing, ['View', 'Administer']);
-  assert.equal(togglePermission(p, 'Billing', 'Administer', false).Billing?.includes('Administer'), false);
+  const p = togglePermission({}, 'Billing', 'Administer', true); assert.deepEqual(p['Billing'], ['View', 'Administer']);
+  assert.equal(togglePermission(p, 'Billing', 'Administer', false)['Billing']?.includes('Administer'), false);
 });
 test('Role, permission, assignment and removal changes produce audit records', () => {
   const user = INITIAL_USERS[0]; if (!user) throw new Error('Missing seed');
