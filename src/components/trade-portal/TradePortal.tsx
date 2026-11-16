@@ -314,7 +314,7 @@ function DefectsPanel({ defects, setDefects }: { defects: TradeDefect[]; setDefe
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {defects.map((d) => (
-          <Openable key={d.id} label={`Open ${d.title}`} onOpen={()=>setSelected(d.id)} className="rounded-lg border border-border"><Panel title={d.title} subtitle={`${d.project} · ${d.location}`} action={<StatusPill tone={DEFECT_TONE[d.status] ?? "muted"}>{d.status}</StatusPill>}>
+          <Openable key={d.id} label={`Open ${d.title}`} onOpen={()=>setSelected(d.id)} className=""><Panel title={d.title} subtitle={`${d.project} · ${d.location}`} action={<StatusPill tone={DEFECT_TONE[d.status] ?? "muted"}>{d.status}</StatusPill>}>
             <DefectPhoto title={d.title} className="mb-3 h-32 rounded"/><HealthBadge status={d.rejected?'Rejected':d.status}/>
             {d.rejected && <p className="mb-2 text-xs font-medium text-destructive">Rejected by builder — further rectification required.</p>}
             <p className="text-xs text-muted-foreground">Inspection on completion: <strong className="text-foreground">{d.requestInspectionOnCompletion ? "Yes" : "No"}</strong> · Photos: {d.photos}</p>

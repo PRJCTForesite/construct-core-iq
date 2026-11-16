@@ -1,4 +1,6 @@
-import { test, expect } from 'bun:test';
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+const expect = (actual: unknown) => ({ toBe: (expected: unknown) => assert.equal(actual, expected) });
 import { clampWeight, weightedProgress, taskMatches, canSignOff, workflowHealth } from './workflow';
 test('Open summary includes open and unstarted assigned tasks, not work in progress', () => { expect(taskMatches('Assigned','Open')).toBe(true); expect(taskMatches('In Progress','Open')).toBe(false); });
 test('Ready For Sign Off summary filters exactly', () => { expect(taskMatches('Ready For Sign Off','Ready For Sign Off')).toBe(true); expect(taskMatches('Completed By Trade','Ready For Sign Off')).toBe(false); });
