@@ -14,8 +14,12 @@ import {
   type PlatformRecord,
 } from "@/content/platform";
 import { usePlatform } from "./PlatformProvider";
+import { clampWeight, weightedProgress, canSignOff } from '@/content/workflow';
+import { HealthBadge } from '@/components/app/WorkflowControls';
+import { DefectPhoto } from '@/components/app/DefectPhoto';
+import { Minus, Plus } from 'lucide-react';
 export function RecordEditor() {
-  const { editing, edit, save, records, can } = usePlatform();
+  const { editing, edit, save, records, can, role } = usePlatform();
   const [draft, setDraft] = useState<PlatformRecord | null>(null);
   useEffect(() => setDraft(editing), [editing]);
   if (!draft) return null;
@@ -46,7 +50,7 @@ export function RecordEditor() {
     draft.kind === "Task"
       ? TASK_STATES
       : draft.kind === "Defect"
-        ? ["Reported", "Assigned", "In Progress", "Rectified", "Awaiting Approval"]
+        ? ["Reported", "Assigned", "In Progress", "Rectified", "Awaiting Approval", "Awaiting Inspection", "Awaiting Client Review", "Rejected", ...(canSignOff(role) ? ['Closed'] : [])]
         : draft.kind === "Variation"
           ? ["Draft", "Awaiting approval", "Approved", "Sent", "Overdue", "Paid"]
           : [
@@ -81,6 +85,7 @@ export function RecordEditor() {
           }}
         >
           {input("title", "Title / name")}
+          {draft.kind === 'Defect' && <><DefectPhoto title={draft.title} className="h-40 rounded-lg"/><HealthBadge status={draft.status} severity={draft.category}/></>}
           <div className="grid grid-cols-2 gap-3">
             <label className="grid gap-1.5 text-xs">
               Project
@@ -111,7 +116,7 @@ export function RecordEditor() {
           </div>
           {draft.kind === "Task" && (
             <div className="grid grid-cols-2 gap-3">
-              {input("weight", "Task weight", "number")}
+              <div className="col-span-2 space-y-2"><label className="grid gap-1.5 text-xs font-medium">Weight (%)<div className="flex gap-2"><Button type="button" variant="outline" size="icon" aria-label="Decrease weight" disabled={!can('Tasks','Edit')} onClick={()=>{const next={...draft,weight:clampWeight(draft.weight-1)};setDraft(next);if(records.some(r=>r.id===draft.id))save(next,true)}}><Minus/></Button><Input type="number" min={0} max={100} aria-label="Weight (%)" value={draft.weight} disabled={!can('Tasks','Edit')} onChange={e=>{const next={...draft,weight:clampWeight(Number(e.target.value))};setDraft(next);if(records.some(r=>r.id===draft.id))save(next,true)}}/><Button type="button" variant="outline" size="icon" aria-label="Increase weight" disabled={!can('Tasks','Edit')} onClick={()=>{const next={...draft,weight:clampWeight(draft.weight+1)};setDraft(next);if(records.some(r=>r.id===draft.id))save(next,true)}}><Plus/></Button></div></label><p className="text-xs text-muted-foreground">Project weighted progress: {weightedProgress([...records.filter(r=>r.kind==='Task'&&r.project===draft.project&&r.id!==draft.id),draft])}%</p></div>
               {input("progress", "Progress (%)", "number")}
               {input("dependencies", "Dependencies")}
               {input("responsible", "Responsible parties")}

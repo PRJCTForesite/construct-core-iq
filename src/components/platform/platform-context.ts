@@ -6,7 +6,7 @@ export type PlatformStore = {
   records: PlatformRecord[];
   role: Role;
   setRole: (role: Role) => void;
-  save: (record: PlatformRecord) => void;
+  save: (record: PlatformRecord, keepOpen?: boolean) => void;
   remove: (id: string) => void;
   create: (kind: RecordKind) => void;
   editing: PlatformRecord | null;

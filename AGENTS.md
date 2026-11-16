@@ -18,3 +18,5 @@
 - Keep unified access screens beneath the /login layout with scoped theme tokens; informational experience selections never mutate demo permissions and existing app URLs remain unchanged.
 
 - Keep Client Portal templates and project-specific session state in PortalProvider beneath the existing app layout; use dedicated client-safe projections and explicit document sharing so portal widgets never read internal financial or note fields.
+- Share document layout controls and health indicators across portals; keep client detail projections free of internal notes and trade defect actions limited to readiness or inspection.
+- Derive session project progress from task weights when tasks change; task weight edits update the shared state immediately while keeping details open.
