@@ -30,7 +30,7 @@ function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { role } = usePlatform();
   return (
     <nav className="flex flex-col gap-0.5 px-2" aria-label="Application">
-      {APP_NAV.filter((item) => role !== "Client" || item.to === "/app/client-portal").map(
+      {APP_NAV.filter((item) => role === "Client" ? item.to === "/app/client-portal" : role === "Trade" || role === "Trade Contractor" ? item.to === "/app/trade-portal" : true).map(
         (item) => (
           <Link
             key={item.to}
@@ -189,6 +189,8 @@ export function AppShell({ children }: { children?: ReactNode }) {
   useEffect(() => {
     if (role === "Client" && pathname !== "/app/client-portal")
       void navigate({ to: "/app/client-portal" });
+    if ((role === "Trade" || role === "Trade Contractor") && pathname !== "/app/trade-portal")
+      void navigate({ to: "/app/trade-portal" });
   }, [role, pathname, navigate]);
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useUsers } from "@/components/users/UsersProvider";
 import {
   ArrowDown,
   ArrowRight,
@@ -33,7 +34,6 @@ import {
 } from "@/components/ui/dialog";
 import {
   CONTRIBUTIONS,
-  INITIAL_AUDIT,
   INITIAL_USERS,
   METRIC_LABELS,
   MODULES,
@@ -69,8 +69,7 @@ export const Route = createFileRoute("/app/administration/permissions")({
 });
 
 function PermissionsPage() {
-  const [users, setUsers] = useState(INITIAL_USERS);
-  const [audit, setAudit] = useState(INITIAL_AUDIT);
+  const { users, setUsers, audit, setAudit } = useUsers();
   const [tab, setTab] = useState("directory");
   const [view, setView] = useState("list");
   const [search, setSearch] = useState("");
@@ -342,7 +341,7 @@ function PermissionsPage() {
             <Choice
               label="Filter by status"
               value={status}
-              options={["All statuses", "Online", "Active", "Inactive", "Invited"]}
+              options={["All statuses", "Online", "Active", "Inactive", "Invited", "Pending Invitation", "Suspended"]}
               onChange={setStatus}
             />
             <Choice
@@ -771,7 +770,7 @@ function PermissionsPage() {
                         <Choice
                           label="User status"
                           value={draft.status}
-                          options={["Online", "Active", "Inactive", "Invited"]}
+                          options={["Online", "Active", "Inactive", "Invited", "Pending Invitation", "Suspended"]}
                           onChange={(value) =>
                             setDraft({ ...draft, status: value as DirectoryUser["status"] })
                           }
@@ -1068,7 +1067,7 @@ function UserStatus({ user }: { user: DirectoryUser }) {
   return (
     <StatusPill
       tone={
-        user.status === "Online"
+        user.status === "Suspended" ? "bad" : user.status === "Pending Invitation" ? "warn" : user.status === "Online"
           ? "good"
           : user.status === "Inactive"
             ? "warn"
