@@ -566,7 +566,7 @@ export function ClientPortal() {
             )}
           </span>
           <span className="flex-1 text-sm font-medium">{name}</span>
-          <span className="text-xs text-muted-foreground">{state}</span><HealthBadge status={state}/>
+          <span className="text-xs text-muted-foreground">{state}</span><HealthBadge status={state ?? 'Current'}/>
         </li>
       ))}
     </ol>
