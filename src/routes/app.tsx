@@ -3,6 +3,7 @@ import { PlatformProvider } from "@/components/platform/PlatformProvider";
 import { RecordEditor } from "@/components/platform/RecordEditor";
 import { PortalProvider } from "@/components/client-portal/PortalProvider";
 import { AppShell } from "@/components/app/AppShell";
+import { UsersProvider } from "@/components/users/UsersProvider";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
@@ -25,10 +26,12 @@ export const Route = createFileRoute("/app")({
   }),
   component: () => (
     <PlatformProvider>
+      <UsersProvider>
       <PortalProvider>
         <AppShell />
         <RecordEditor />
       </PortalProvider>
+      </UsersProvider>
     </PlatformProvider>
   ),
 });

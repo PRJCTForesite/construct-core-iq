@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useUsers } from "@/components/users/UsersProvider";
 import {
   ArrowDown,
   ArrowRight,
@@ -69,8 +70,7 @@ export const Route = createFileRoute("/app/administration/permissions")({
 });
 
 function PermissionsPage() {
-  const [users, setUsers] = useState(INITIAL_USERS);
-  const [audit, setAudit] = useState(INITIAL_AUDIT);
+  const { users, setUsers, audit, setAudit } = useUsers();
   const [tab, setTab] = useState("directory");
   const [view, setView] = useState("list");
   const [search, setSearch] = useState("");
