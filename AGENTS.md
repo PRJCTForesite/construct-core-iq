@@ -10,7 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
-- Keep Permissions Centre demo data and permission helpers in a dedicated content module, with state owned by its page; this isolates demonstration changes from real access enforcement.
+- Keep Users and Permissions Centre demo records and audit state in a shared app-level UsersProvider with stable context identity in a non-component module; both screens must read back the same session edits without implying real access enforcement.
 - Place Administration and Permissions Centre at named child routes of the existing app layout; this preserves all existing public and app URLs.
 - Keep expansion sample records in the shared platform content module and session edits in PlatformProvider; this lets prototype modules share changes without implying durable storage or enforced access.
 - Keep the platform context identity in a non-component module; hot updates must not disconnect mounted providers from shared controls.

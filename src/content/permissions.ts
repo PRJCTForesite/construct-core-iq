@@ -8,6 +8,8 @@ export const ROLES = [
   "Consultant",
   "Trade Contractor",
   "Guest",
+  "Supervisor",
+  "Trade",
 ] as const;
 export type Role = (typeof ROLES)[number];
 export const MODULES = [
@@ -20,6 +22,14 @@ export const MODULES = [
   "Reports",
   "AI",
   "Administration",
+  "Users",
+  "Billing",
+  "Trades",
+  "Clients",
+  "Variations",
+  "Organisation",
+  "Client Portal",
+  "Trade Portal",
 ] as const;
 export const ACTIONS = [
   "View",
@@ -52,7 +62,10 @@ export type DirectoryUser = {
   organisation: string;
   email: string;
   mobile: string;
-  status: "Online" | "Active" | "Inactive" | "Invited";
+  status: "Online" | "Active" | "Inactive" | "Invited" | "Pending Invitation" | "Suspended";
+  position?: string;
+  permissionTemplate?: Role;
+  assignmentScope?: "Selected Projects" | "Entire Organisation";
   added: string;
   lastActive: string;
   permissions: PermissionMap;
@@ -72,17 +85,23 @@ export type AuditEntry = {
 export function rolePermissions(role: Role): PermissionMap {
   return Object.fromEntries(
     MODULES.map((module) => {
-      if (role === "Owner" || role === "Administrator") return [module, [...ACTIONS]];
+      if (role === "Owner") return [module, [...ACTIONS]];
+      if (role === "Client" || role === "Trade" || role === "Trade Contractor")
+        return [module, module === (role === "Client" ? "Client Portal" : "Trade Portal") ? ["View"] : []];
+      if (module === "Billing" || module === "Organisation") return [module, []];
+      if (role === "Administrator") return [module, [...ACTIONS]];
+      if (["Users", "Client Portal", "Trade Portal", "Clients"].includes(module)) return [module, []];
       if (module === "Administration" || (module === "Financials" && role !== "Project Manager"))
         return [module, []];
-      if (role === "Guest" || role === "Client")
+      if (role === "Guest")
         return [
           module,
           ["Projects", "Documents", "Communications"].includes(module) ? ["View"] : [],
         ];
       if (role === "Project Manager")
         return [module, ["View", "Create", "Edit", "Assign", "Approve"]];
-      if (role === "Foreman") return [module, ["View", "Create", "Edit", "Assign"]];
+      if (role === "Foreman" || role === "Supervisor")
+        return [module, ["Tasks", "Trades", "Defects", "Documents", "Communications"].includes(module) ? ["View", "Create", "Edit", "Assign"] : module === "Projects" ? ["View"] : []];
       return [module, ["Reports"].includes(module) ? [] : ["View", "Create"]];
     }),
   );
@@ -93,14 +112,16 @@ const PEOPLE: [string, Role, string, DirectoryUser["status"], number][] = [
   ["Emma Wilson", "Administrator", "Foresite Development", "Online", 4],
   ["James Hartley", "Project Manager", "Hartley Construction", "Online", 3],
   ["Sarah Chen", "Project Manager", "Hartley Construction", "Active", 2],
-  ["John Smith", "Foreman", "Hartley Construction", "Online", 2],
+  ["John Smith", "Supervisor", "Hartley Construction", "Online", 2],
   ["Michael Brown", "Worker", "Hartley Construction", "Active", 1],
   ["Oliver Taylor", "Worker", "Hartley Construction", "Inactive", 1],
   ["Sophie Smith", "Client", "Smith Family", "Active", 1],
   ["Alex Morgan", "Consultant", "Studio North", "Active", 2],
-  ["Daniel Lee", "Trade Contractor", "Precision Electrical", "Inactive", 2],
+  ["Daniel Lee", "Trade", "Precision Electrical", "Inactive", 2],
   ["Grace Miller", "Guest", "Studio North", "Active", 0],
   ["Ben Carter", "Guest", "Independent", "Inactive", 0],
+  ["Mia Roberts", "Client", "Roberts Family", "Pending Invitation", 1],
+  ["Noah Williams", "Trade", "ABC Electrical", "Suspended", 1],
 ];
 
 export const INITIAL_USERS: DirectoryUser[] = PEOPLE.map(

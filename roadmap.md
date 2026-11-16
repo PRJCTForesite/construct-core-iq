@@ -19,3 +19,9 @@
 - [x] Verify client flows, subscriber settings, privacy rules and mobile layout
 
 - [x] Stage 3 Trade Portal V1 (prototype, session-only)
+
+# Users Management Centre V1
+- [ ] Shared user register, role templates and audit state with Permissions Centre
+- [ ] Users dashboard, filters, profile drawer, permissions and project assignment
+- [ ] Organisation structure, activity, workspace and invitation previews
+- [ ] Verify shared edits, role rules and desktop/mobile workflows
