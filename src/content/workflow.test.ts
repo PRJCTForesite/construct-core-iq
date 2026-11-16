@@ -1,0 +1,8 @@
+import { test, expect } from 'bun:test';
+import { clampWeight, weightedProgress, taskMatches, canSignOff, workflowHealth } from './workflow';
+test('Open summary includes open and unstarted assigned tasks, not work in progress', () => { expect(taskMatches('Assigned','Open')).toBe(true); expect(taskMatches('In Progress','Open')).toBe(false); });
+test('Ready For Sign Off summary filters exactly', () => { expect(taskMatches('Ready For Sign Off','Ready For Sign Off')).toBe(true); expect(taskMatches('Completed By Trade','Ready For Sign Off')).toBe(false); });
+test('Changing weights updates weighted progress immediately', () => { expect(weightedProgress([{progress:100,weight:50},{progress:0,weight:50}])).toBe(50); expect(weightedProgress([{progress:100,weight:75},{progress:0,weight:25}])).toBe(75); });
+test('Manual task weight stays within percentage range', () => { expect(clampWeight(120)).toBe(100); expect(clampWeight(-1)).toBe(0); });
+test('Supervisor and project manager may sign off, trades and clients may not', () => { expect(canSignOff('Supervisor')).toBe(true); expect(canSignOff('Project Manager')).toBe(true); expect(canSignOff('Trade')).toBe(false); expect(canSignOff('Client')).toBe(false); });
+test('Status indicators distinguish all four health levels', () => { expect(workflowHealth('In Progress')).toBe('On Track'); expect(workflowHealth('Awaiting Approval')).toBe('Attention Required'); expect(workflowHealth('Delayed By Others')).toBe('Delayed'); expect(workflowHealth('Reported','Critical')).toBe('Critically Delayed'); });

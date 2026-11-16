@@ -28,6 +28,10 @@
   --radius-4xl: calc(var(--radius) + 16px);
   --font-sans: "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
+  --color-health-good: var(--health-good);
+  --color-health-attention: var(--health-attention);
+  --color-health-delayed: var(--health-delayed);
+  --color-health-critical: var(--health-critical);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-card: var(--card);
@@ -70,6 +74,10 @@
 }
 
 :root {
+  --health-good: oklch(0.48 0.14 150);
+  --health-attention: oklch(0.53 0.13 78);
+  --health-delayed: oklch(0.57 0.17 45);
+  --health-critical: oklch(0.55 0.22 27);
   --radius: 0.5rem;
   /* #FFFFFF */
   --background: oklch(1 0 0);
@@ -118,6 +126,10 @@
 
 
 .dark {
+  --health-good: oklch(0.76 0.16 150);
+  --health-attention: oklch(0.8 0.15 78);
+  --health-delayed: oklch(0.78 0.16 45);
+  --health-critical: oklch(0.76 0.18 27);
   --background: oklch(0.16 0.035 265.8);
   --foreground: oklch(0.984 0.003 247.858);
   --surface: oklch(0.239 0.06 257);
