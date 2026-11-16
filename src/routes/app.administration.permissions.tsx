@@ -34,7 +34,6 @@ import {
 } from "@/components/ui/dialog";
 import {
   CONTRIBUTIONS,
-  INITIAL_AUDIT,
   INITIAL_USERS,
   METRIC_LABELS,
   MODULES,
@@ -342,7 +341,7 @@ function PermissionsPage() {
             <Choice
               label="Filter by status"
               value={status}
-              options={["All statuses", "Online", "Active", "Inactive", "Invited"]}
+              options={["All statuses", "Online", "Active", "Inactive", "Invited", "Pending Invitation", "Suspended"]}
               onChange={setStatus}
             />
             <Choice
@@ -771,7 +770,7 @@ function PermissionsPage() {
                         <Choice
                           label="User status"
                           value={draft.status}
-                          options={["Online", "Active", "Inactive", "Invited"]}
+                          options={["Online", "Active", "Inactive", "Invited", "Pending Invitation", "Suspended"]}
                           onChange={(value) =>
                             setDraft({ ...draft, status: value as DirectoryUser["status"] })
                           }
@@ -1068,7 +1067,7 @@ function UserStatus({ user }: { user: DirectoryUser }) {
   return (
     <StatusPill
       tone={
-        user.status === "Online"
+        user.status === "Suspended" ? "bad" : user.status === "Pending Invitation" ? "warn" : user.status === "Online"
           ? "good"
           : user.status === "Inactive"
             ? "warn"
