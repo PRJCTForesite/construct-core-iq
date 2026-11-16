@@ -1,0 +1,3 @@
+import electrical from '@/assets/defect-electrical.jpg';
+import plaster from '@/assets/defect-plaster.jpg';
+export function DefectPhoto({ title, className='' }: { title:string; className?:string }) { return <div className={`relative overflow-hidden ${className}`}><img src={/GPO|circuit|cable|light|electrical/i.test(title)?electrical:plaster} alt={`Sample defect photo: ${title}`} loading="lazy" width={992} height={672} className="aspect-[3/2] h-full w-full object-cover"/><span className="absolute bottom-1 left-1 rounded bg-card/90 px-1.5 py-0.5 text-[0.625rem] text-muted-foreground">Sample photo</span></div>; }
