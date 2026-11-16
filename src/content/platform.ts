@@ -54,6 +54,7 @@ export type PlatformRecord = {
   licence: string;
   induction: string;
   health: number;
+  fileSize?: string;
   shareWithClient?: boolean;
   portalCategory?: string;
 };

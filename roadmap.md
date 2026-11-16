@@ -25,3 +25,10 @@
 - [x] Users dashboard, filters, profile drawer, permissions and project assignment
 - [x] Organisation structure, activity, workspace and invitation previews
 - [x] Verify shared edits, role rules and desktop/mobile workflows
+
+# Frontend usability and workflow rollup
+- [x] Task status filters, full-card details, quick actions and live weighted progress
+- [x] Shared document preview/list views and prominent health indicators
+- [x] Defect details, photo thumbnails and permission-aware quick actions
+- [x] Client and Trade portal card, document and mobile alignment
+- [x] Verify session workflows and regression rules across all portals

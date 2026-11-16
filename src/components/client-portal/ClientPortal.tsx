@@ -1,3 +1,5 @@
+import { DocumentBrowser, Openable, HealthBadge, ReadDetail } from '@/components/app/WorkflowControls';
+import { DefectPhoto } from '@/components/app/DefectPhoto';
 import { useState, type ReactNode } from "react";
 import {
   Check,
@@ -109,6 +111,7 @@ export function ClientPortal() {
   const portal = usePortal();
   const projects = platform.records.filter((r) => r.kind === "Project");
   const [projectId, setProjectId] = useState(projects[0]?.id ?? "");
+  const [readDetail, setReadDetail] = useState<{title:string; body:ReactNode}|null>(null);
   const [view, setView] = useState<View>("Dashboard");
   const [approval, setApproval] = useState<Approval | null>(null);
   const [decisionNote, setDecisionNote] = useState("");
@@ -283,7 +286,7 @@ export function ClientPortal() {
   const approvalList = (all = false) => (
     <div className="divide-y divide-border">
       {(all ? approvals : pending).map((a) => (
-        <div
+        <Openable label={`Review ${a.title}`} onOpen={()=>{setApproval(a);setDecisionNote('')}}
           className="flex flex-wrap items-center justify-between gap-3 py-4 first:pt-0 last:pb-0"
           key={a.id}
         >
@@ -292,7 +295,7 @@ export function ClientPortal() {
             <h3 className="mt-1 text-sm font-semibold">{a.title}</h3>
             {a.amount !== undefined && <p className="mt-1 text-sm">{money(a.amount)}</p>}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2"><HealthBadge status={a.status==='Requires Action'?'Awaiting Approval':a.status}/>
             <Pill
               tone={
                 a.status === "Requires Action"
@@ -317,7 +320,7 @@ export function ClientPortal() {
               Review
             </Button>
           </div>
-        </div>
+        </Openable>
       ))}
       {!pending.length && !all && (
         <p className="text-sm text-muted-foreground">All caught up. No decisions required.</p>
@@ -408,38 +411,7 @@ export function ClientPortal() {
       ))}
     </div>
   );
-  const documentsContent = () => (
-    <div className="divide-y divide-border">
-      {documents
-        .filter(
-          (d) =>
-            documentCategory === "All categories" ||
-            (d.portalCategory ?? d.category) === documentCategory,
-        )
-        .map((d) => (
-          <Button
-            key={d.id}
-            variant="ghost"
-            className="flex h-auto w-full justify-start gap-3 whitespace-normal rounded-none py-4 text-left"
-            onClick={() => setDocumentId(d.id)}
-          >
-            <FileText className="h-5 w-5 shrink-0 text-azure" />
-            <span className="min-w-0 flex-1">
-              <span className="block text-sm font-medium">{d.title}</span>
-              <span className="mt-1 block text-xs text-muted-foreground">
-                {d.portalCategory ?? d.category} · Revision {d.revision} · {d.date}
-              </span>
-            </span>
-            <ChevronRight className="h-4 w-4 shrink-0" />
-          </Button>
-        ))}
-      {!documents.length && (
-        <p className="py-4 text-sm text-muted-foreground">
-          Your builder has not shared documents for this project yet.
-        </p>
-      )}
-    </div>
-  );
+  const documentsContent = () => <DocumentBrowser items={documents.filter(d=>documentCategory==='All categories'||(d.portalCategory??d.category)===documentCategory).map(d=>({id:d.id,title:d.title,category:d.portalCategory??d.category,date:d.date,owner:d.person,size:d.fileSize}))} onOpen={setDocumentId}/>;
   const officialDefects = platform.records.filter(
     (r) => r.kind === "Defect" && r.project === project.title,
   );
@@ -454,19 +426,17 @@ export function ClientPortal() {
   const defectContent = () => (
     <div className="space-y-4">
       {officialDefects.map((d) => (
-        <div
+        <Openable label={`Open ${d.title}`} onOpen={()=>setReadDetail({title:d.title,body:<><DefectPhoto title={d.title} className="h-48 rounded-lg"/><HealthBadge status={d.status}/><p className="text-sm">{d.project} · {d.person} · {d.date}</p><p className="text-sm">{defectStatus(d.status)}</p></>})}
           className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4"
           key={d.id}
-        >
+        ><DefectPhoto title={d.title} className="h-20 w-28 shrink-0 rounded"/>
           <div>
             <p className="text-sm font-medium">{d.title}</p>
             <p className="mt-1 text-xs text-muted-foreground">
               {d.id} · {d.date}
             </p>
           </div>
-          <Pill tone={defectStatus(d.status) === "Closed" ? "good" : "warn"}>
-            {defectStatus(d.status)}
-          </Pill>
+          <HealthBadge status={d.status}/><Pill>{defectStatus(d.status)}</Pill>
           {defectStatus(d.status) === "Awaiting Review" && (
             <Button
               size="sm"
@@ -485,7 +455,7 @@ export function ClientPortal() {
               Review repair
             </Button>
           )}
-        </div>
+        </Openable>
       ))}
       {!officialDefects.length && (
         <p className="text-sm text-muted-foreground">No official defects recorded.</p>
@@ -596,7 +566,7 @@ export function ClientPortal() {
             )}
           </span>
           <span className="flex-1 text-sm font-medium">{name}</span>
-          <span className="text-xs text-muted-foreground">{state}</span>
+          <span className="text-xs text-muted-foreground">{state}</span><HealthBadge status={state ?? 'Current'}/>
         </li>
       ))}
     </ol>
@@ -607,10 +577,10 @@ export function ClientPortal() {
       case "approvals":
         return approvalList();
       case "updates":
-        return config.updates[0] ? updateContent(config.updates[0]) : <p>No updates yet.</p>;
+        return config.updates[0] ? <Openable label="Open latest builder update" onOpen={()=>{const latest=config.updates[0];if(latest)setReadDetail({title:'Builder update',body:updateContent(latest)})}}>{updateContent(config.updates[0])}</Openable> : <p>No updates yet.</p>;
       case "progress":
         return (
-          <>
+          <Openable label="Open project progress" onOpen={()=>setReadDetail({title:'Project progress',body:<div className="space-y-4">{config.stages.map(s=><div key={s.name}><p className="text-sm">{s.name} · {s.completion}% complete · {s.weight}% weight</p><Meter value={s.completion}/></div>)}</div>})}>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-xs text-muted-foreground">Current stage</p>
@@ -632,7 +602,7 @@ export function ClientPortal() {
                 </div>
               ))}
             </div>
-          </>
+          </Openable>
         );
       case "health":
         return (
@@ -657,7 +627,7 @@ export function ClientPortal() {
               {HEALTH.map((h) => (
                 <div key={h.name} className="flex justify-between text-xs">
                   <span>{h.name}</span>
-                  <Pill tone={h.score >= 80 ? "good" : "warn"}>{healthStatus(h.score)}</Pill>
+                  <HealthBadge health={h.score>=80?'On Track':h.score>=60?'Attention Required':'Critically Delayed'}/>
                 </div>
               ))}
             </div>
@@ -718,7 +688,7 @@ export function ClientPortal() {
     messages: "Messages",
   };
   return (
-    <div className="client-portal-theme space-y-6">
+    <div className="client-portal-theme space-y-6"><ReadDetail title={readDetail?.title??null} onClose={()=>setReadDetail(null)}>{readDetail?.body}</ReadDetail>
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase text-azure">Foresite · Client Portal</p>
@@ -882,9 +852,9 @@ export function ClientPortal() {
           </div>
           <div className="space-y-8">
             {config.updates.map((u) => (
-              <div key={u.id} className="border-b border-border pb-8">
+              <Openable key={u.id} label={`Open update ${u.date}`} onOpen={()=>setReadDetail({title:`Builder update · ${u.date}`,body:updateContent(u)})} className="border-b border-border pb-8">
                 {updateContent(u)}
-              </div>
+              </Openable>
             ))}
           </div>
         </section>
