@@ -1,3 +1,6 @@
+import { Button } from '@/components/ui/button';
+import { Openable, HealthBadge, DocumentBrowser, ReadDetail } from '@/components/app/WorkflowControls';
+import { DefectPhoto } from '@/components/app/DefectPhoto';
 import { useMemo, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -18,7 +21,7 @@ const fmt = (d: string) => new Date(d).toLocaleDateString("en-AU", { day: "numer
 
 function Btn({ children, onClick, variant = "outline", className, disabled }: { children: ReactNode; onClick?: () => void; variant?: "primary" | "outline" | "warn"; className?: string; disabled?: boolean }) {
   return (
-    <button
+    <Button
       type="button"
       disabled={disabled}
       onClick={onClick}
@@ -31,7 +34,7 @@ function Btn({ children, onClick, variant = "outline", className, disabled }: { 
       )}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
@@ -94,6 +97,7 @@ function Dashboard({ urgent, tasks, setTasks, defects, setDefects, go }: {
   urgent: ReturnType<typeof urgentActions>; tasks: TradeTask[]; setTasks: (t: TradeTask[]) => void;
   defects: TradeDefect[]; setDefects: (d: TradeDefect[]) => void; go: (t: Tab) => void;
 }) {
+  const [feed, setFeed] = useState<(typeof PROJECT_FEED)[number]|null>(null);
   const [window, setWindow] = useState<7 | 14 | 30>(14);
   const [photos, setPhotos] = useState([
     { kind: "Progress", project: "Smith Residence", when: "Today" },
@@ -102,7 +106,7 @@ function Dashboard({ urgent, tasks, setTasks, defects, setDefects, go }: {
   ]);
   const reviewDocs = 2;
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-5"><ReadDetail title={feed?.type??null} onClose={()=>setFeed(null)}><p className="text-sm">{feed?.project} · {feed?.who}</p><p>{feed?.text}</p></ReadDetail>
       <section aria-label="Urgent actions" className="rounded-xl border border-construction/40 bg-construction/5 p-4 sm:p-5">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 className="text-[0.9375rem] font-semibold text-foreground">Urgent Actions</h2>
@@ -172,13 +176,13 @@ function Dashboard({ urgent, tasks, setTasks, defects, setDefects, go }: {
         <Panel title="Project Feed" subtitle="Updates, mentions, site requests and documents">
           <ul className="space-y-3">
             {PROJECT_FEED.map((f) => (
-              <li key={f.text} className="flex gap-3 text-sm">
+              <li key={f.text}><Openable label={`Open ${f.type}: ${f.text}`} onOpen={()=>setFeed(f)} className="flex gap-3 text-sm">
                 <Avatar initials={f.who.split(" ").map((p) => p[0]).join("").slice(0, 2)} />
                 <div className="min-w-0">
                   <p className="text-xs text-muted-foreground"><Pill tone={f.type === "Mention" ? "warn" : f.type === "Site Request" ? "bad" : "info"}>{f.type}</Pill> {f.project} · {f.when}</p>
                   <p className="mt-1 text-foreground">{f.text}</p>
                 </div>
-              </li>
+              </Openable></li>
             ))}
           </ul>
         </Panel>
@@ -232,6 +236,8 @@ function WorkAssistant({ tasks, defects }: { tasks: TradeTask[]; defects: TradeD
 /* ---------------------------------- Tasks ---------------------------------- */
 
 function TasksBoard({ tasks, setTasks, compact }: { tasks: TradeTask[]; setTasks: (t: TradeTask[]) => void; compact?: boolean }) {
+  const [selected, setSelected] = useState<string|null>(null);
+  const task = tasks.find(t=>t.id===selected);
   const [view, setView] = useState<"Kanban" | "List">("Kanban");
   const [f, setF] = useState({ employer: "All", project: "All", priority: "All", due: "All" });
   const uniq = (k: keyof TradeTask) => [...new Set(TRADE_TASKS.map((t) => String(t[k])))];
@@ -242,7 +248,7 @@ function TasksBoard({ tasks, setTasks, compact }: { tasks: TradeTask[]; setTasks
     (f.due === "All" || (f.due === "Overdue" ? t.due < TRADE_TODAY && t.status !== "Completed" : f.due === "Today" ? t.due === TRADE_TODAY : t.due <= "2025-06-23"))), [tasks, f]);
   const move = (id: string, status: TaskStatus) => setTasks(tasks.map((t) => (t.id === id ? { ...t, status } : t)));
   const body = (
-    <div className="grid gap-4">
+    <div className="grid gap-4"><ReadDetail title={task?.title??null} onClose={()=>setSelected(null)}>{task&&<><p className="text-sm">{task.project} · {task.employer} · Due {fmt(task.due)}</p><HealthBadge status={task.due<TRADE_TODAY&&task.status!=='Completed'?'Delayed':task.status}/><p className="text-sm">Workers: {task.workers.join(', ')}</p><StatusSelect task={task} move={move}/></>}</ReadDetail>
       <div className="flex flex-wrap items-end gap-3">
         <Select label="Employer" value={f.employer} onChange={(v) => setF({ ...f, employer: v })} options={uniq("employer")} />
         <Select label="Project" value={f.project} onChange={(v) => setF({ ...f, project: v })} options={uniq("project")} />
@@ -255,7 +261,7 @@ function TasksBoard({ tasks, setTasks, compact }: { tasks: TradeTask[]; setTasks
         </div>
       </div>
       {/* Mobile always list; desktop follows toggle (default Kanban) */}
-      <div className={cn(view === "Kanban" ? "md:hidden" : "")}><TaskList tasks={filtered} move={move} /></div>
+      <div className={cn(view === "Kanban" ? "md:hidden" : "")}><TaskList tasks={filtered} move={move} open={setSelected} /></div>
       {view === "Kanban" && (
         <div className="hidden gap-3 overflow-x-auto md:grid md:grid-cols-5">
           {TASK_COLUMNS.map((col) => (
@@ -263,15 +269,15 @@ function TasksBoard({ tasks, setTasks, compact }: { tasks: TradeTask[]; setTasks
               <p className="mb-2 px-1 text-xs font-semibold text-muted-foreground">{col} · {filtered.filter((t) => t.status === col).length}</p>
               <div className="space-y-2">
                 {filtered.filter((t) => t.status === col).map((t) => (
-                  <article key={t.id} className="rounded-md border border-border bg-card p-2.5 text-xs shadow-panel">
+                  <Openable key={t.id} label={`Open ${t.title}`} onOpen={()=>setSelected(t.id)} className="rounded-md border border-border bg-card p-2.5 text-xs shadow-panel">
                     <p className="font-medium text-foreground">{t.title}</p>
                     <p className="mt-1 text-muted-foreground">{t.project} · {t.employer}</p>
                     <div className="mt-2 flex items-center justify-between gap-1">
                       <Pill tone={PRIORITY_TONE[t.priority] ?? "muted"}>{t.priority}</Pill>
                       <span className={cn("tabular-nums", t.due < TRADE_TODAY && t.status !== "Completed" ? "text-destructive" : "text-muted-foreground")}>{fmt(t.due)}</span>
                     </div>
-                    <StatusSelect task={t} move={move} />
-                  </article>
+                    <HealthBadge status={t.due<TRADE_TODAY&&t.status!=='Completed'?'Delayed':t.status}/><StatusSelect task={t} move={move}/><TaskActions task={t} move={move} open={()=>setSelected(t.id)}/>
+                  </Openable>
                 ))}
               </div>
             </div>
@@ -291,39 +297,25 @@ function StatusSelect({ task, move }: { task: TradeTask; move: (id: string, s: T
   );
 }
 
-function TaskList({ tasks, move }: { tasks: TradeTask[]; move: (id: string, s: TaskStatus) => void }) {
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[640px] text-left text-sm">
-        <thead className="text-xs text-muted-foreground"><tr>{["Project", "Employer", "Task", "Priority", "Due", "Status", "Workers"].map((h) => <th key={h} className="px-2 py-2 font-medium">{h}</th>)}</tr></thead>
-        <tbody className="divide-y divide-border">
-          {tasks.map((t) => (
-            <tr key={t.id}>
-              <td className="px-2 py-2">{t.project}</td><td className="px-2 py-2 text-muted-foreground">{t.employer}</td>
-              <td className="px-2 py-2 font-medium">{t.title}</td><td className="px-2 py-2"><Pill tone={PRIORITY_TONE[t.priority] ?? "muted"}>{t.priority}</Pill></td>
-              <td className="px-2 py-2 tabular-nums">{fmt(t.due)}</td><td className="w-44 px-2 py-1"><StatusSelect task={t} move={move} /></td>
-              <td className="px-2 py-2"><div className="flex -space-x-1.5">{t.workers.map((w) => <Avatar key={w} initials={w} className="h-6 w-6 ring-2 ring-card" />)}</div></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+function TaskActions({task,move,open}:{task:TradeTask;move:(id:string,s:TaskStatus)=>void;open:()=>void}) {return <div className="mt-2 flex flex-wrap gap-1.5"><Btn onClick={open}>View details</Btn>{task.status!=='Completed'&&<><Btn onClick={()=>move(task.id,'In Progress')}>Start work</Btn><Btn onClick={()=>move(task.id,'Awaiting Sign Off')}>Ready for review</Btn><Btn onClick={()=>move(task.id,'Awaiting Inspection')}>Request inspection</Btn></>}</div>}
+function TaskList({tasks,move,open}:{tasks:TradeTask[];move:(id:string,s:TaskStatus)=>void;open:(id:string)=>void}) {return <div className="grid gap-3">{tasks.map(t=><Openable key={t.id} label={`Open ${t.title}`} onOpen={()=>open(t.id)} className="rounded-lg border border-border bg-card p-3"><h3 className="text-sm font-semibold">{t.title}</h3><p className="mt-1 text-xs text-muted-foreground">{t.project} · {t.employer} · Due {fmt(t.due)}</p><div className="mt-2"><HealthBadge status={t.due<TRADE_TODAY&&t.status!=='Completed'?'Delayed':t.status}/></div><StatusSelect task={t} move={move}/><TaskActions task={t} move={move} open={()=>open(t.id)}/></Openable>)}</div>}
 
 /* --------------------------------- Defects --------------------------------- */
 
 function DefectsPanel({ defects, setDefects }: { defects: TradeDefect[]; setDefects: (d: TradeDefect[]) => void }) {
+  const [selected,setSelected] = useState<string|null>(null);
+  const defect=defects.find(d=>d.id===selected);
   const [notes, setNotes] = useState<Record<string, string>>({});
   const update = (id: string, fn: (d: TradeDefect) => TradeDefect) => setDefects(defects.map((d) => (d.id === id ? fn(d) : d)));
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4"><ReadDetail title={defect?.title??null} onClose={()=>setSelected(null)}>{defect&&<><DefectPhoto title={defect.title} className="h-48 rounded-lg"/><HealthBadge status={defect.rejected?'Rejected':defect.status}/><p>{defect.project} · {defect.location}</p><p className="text-sm">{defect.notes.join(' · ')||'No rectification notes yet.'}</p><Btn onClick={()=>update(defect.id,markDefectComplete)}>Mark ready for review</Btn></>}</ReadDetail>
       <p className="rounded-lg border border-border bg-muted/50 p-3 text-xs text-muted-foreground">
         Trades can upload photos and rectification notes, request inspection and mark defects ready for review. Only project-authorised users can close defects. The builder's “Request Inspection On Completion” setting is followed automatically.
       </p>
       <div className="grid gap-4 md:grid-cols-2">
         {defects.map((d) => (
-          <Panel key={d.id} title={d.title} subtitle={`${d.project} · ${d.location}`} action={<StatusPill tone={DEFECT_TONE[d.status] ?? "muted"}>{d.status}</StatusPill>}>
+          <Openable key={d.id} label={`Open ${d.title}`} onOpen={()=>setSelected(d.id)} className="rounded-lg border border-border"><Panel title={d.title} subtitle={`${d.project} · ${d.location}`} action={<StatusPill tone={DEFECT_TONE[d.status] ?? "muted"}>{d.status}</StatusPill>}>
+            <DefectPhoto title={d.title} className="mb-3 h-32 rounded"/><HealthBadge status={d.rejected?'Rejected':d.status}/>
             {d.rejected && <p className="mb-2 text-xs font-medium text-destructive">Rejected by builder — further rectification required.</p>}
             <p className="text-xs text-muted-foreground">Inspection on completion: <strong className="text-foreground">{d.requestInspectionOnCompletion ? "Yes" : "No"}</strong> · Photos: {d.photos}</p>
             {d.notes.length > 0 && <ul className="mt-2 list-disc pl-4 text-xs">{d.notes.map((n, i) => <li key={i}>{n}</li>)}</ul>}
@@ -341,7 +333,7 @@ function DefectsPanel({ defects, setDefects }: { defects: TradeDefect[]; setDefe
               )}
               <button type="button" disabled title="Only project-authorised users can close defects" className="cursor-not-allowed rounded-md border border-dashed border-border px-2.5 py-1.5 text-xs text-muted-foreground">Close defect (builder only)</button>
             </div>
-          </Panel>
+          </Panel></Openable>
         ))}
       </div>
     </div>
@@ -351,6 +343,7 @@ function DefectsPanel({ defects, setDefects }: { defects: TradeDefect[]; setDefe
 /* -------------------------------- Documents -------------------------------- */
 
 function Documents() {
+  const [selected,setSelected] = useState<string|null>(null);
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("All");
   const docs = visibleTradeDocs(TRADE_DOCS, q).filter((d) => cat === "All" || d.category === cat);
@@ -362,15 +355,7 @@ function Documents() {
           <button key={c} type="button" onClick={() => setCat(c)} className={cn("rounded-full px-3 py-1 text-xs", cat === c ? "bg-azure text-primary-foreground" : "bg-muted text-muted-foreground")}>{c}</button>
         ))}
       </div>
-      <ul className="divide-y divide-border">
-        {docs.map((d) => (
-          <li key={d.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 py-2.5 text-sm">
-            <span className="min-w-0"><span className="block truncate font-medium">{d.name} <span className="text-xs text-muted-foreground">{d.revision}</span></span><span className="text-xs text-muted-foreground">{d.category} · {d.project} · updated {fmt(d.updated)}</span></span>
-            <Btn onClick={() => toast(`Opening ${d.name} (demo)`)}>Open</Btn>
-          </li>
-        ))}
-        {docs.length === 0 && <li className="py-3 text-sm text-muted-foreground">No shared documents match.</li>}
-      </ul>
+      <DocumentBrowser items={docs.map(d=>({id:d.id,title:d.name,category:d.category,date:d.updated,owner:'Builder'}))} onOpen={setSelected}/><ReadDetail title={docs.find(d=>d.id===selected)?.name??null} onClose={()=>setSelected(null)}><p className="text-sm">{docs.find(d=>d.id===selected)?.project} · {docs.find(d=>d.id===selected)?.revision}</p><p className="text-xs text-muted-foreground">Shared document record · file viewing is not connected.</p></ReadDetail>
     </Panel>
   );
 }
