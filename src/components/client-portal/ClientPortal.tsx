@@ -295,7 +295,7 @@ export function ClientPortal() {
             <h3 className="mt-1 text-sm font-semibold">{a.title}</h3>
             {a.amount !== undefined && <p className="mt-1 text-sm">{money(a.amount)}</p>}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2"><HealthBadge status={a.status==='Requires Action'?'Awaiting Approval':a.status}/>
             <Pill
               tone={
                 a.status === "Requires Action"
