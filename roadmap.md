@@ -21,7 +21,7 @@
 - [x] Stage 3 Trade Portal V1 (prototype, session-only)
 
 # Users Management Centre V1
-- [ ] Shared user register, role templates and audit state with Permissions Centre
-- [ ] Users dashboard, filters, profile drawer, permissions and project assignment
-- [ ] Organisation structure, activity, workspace and invitation previews
-- [ ] Verify shared edits, role rules and desktop/mobile workflows
+- [x] Shared user register, role templates and audit state with Permissions Centre
+- [x] Users dashboard, filters, profile drawer, permissions and project assignment
+- [x] Organisation structure, activity, workspace and invitation previews
+- [x] Verify shared edits, role rules and desktop/mobile workflows
