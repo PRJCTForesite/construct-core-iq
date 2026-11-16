@@ -577,7 +577,7 @@ export function ClientPortal() {
       case "approvals":
         return approvalList();
       case "updates":
-        return config.updates[0] ? <Openable label="Open latest builder update" onOpen={()=>setReadDetail({title:'Builder update',body:updateContent(config.updates[0])})}>{updateContent(config.updates[0])}</Openable> : <p>No updates yet.</p>;
+        return config.updates[0] ? <Openable label="Open latest builder update" onOpen={()=>{const latest=config.updates[0];if(latest)setReadDetail({title:'Builder update',body:updateContent(latest)})}>{updateContent(config.updates[0])}</Openable> : <p>No updates yet.</p>;
       case "progress":
         return (
           <Openable label="Open project progress" onOpen={()=>setReadDetail({title:'Project progress',body:<div className="space-y-4">{config.stages.map(s=><div key={s.name}><p className="text-sm">{s.name} · {s.completion}% complete · {s.weight}% weight</p><Meter value={s.completion}/></div>)}</div>})}>
