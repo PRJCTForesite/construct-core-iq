@@ -566,7 +566,7 @@ export function ClientPortal() {
             )}
           </span>
           <span className="flex-1 text-sm font-medium">{name}</span>
-          <span className="text-xs text-muted-foreground">{state}</span>
+          <span className="text-xs text-muted-foreground">{state}</span><HealthBadge status={state}/>
         </li>
       ))}
     </ol>
@@ -627,7 +627,7 @@ export function ClientPortal() {
               {HEALTH.map((h) => (
                 <div key={h.name} className="flex justify-between text-xs">
                   <span>{h.name}</span>
-                  <Pill tone={h.score >= 80 ? "good" : "warn"}>{healthStatus(h.score)}</Pill>
+                  <HealthBadge health={h.score>=80?'On Track':h.score>=60?'Attention Required':'Critically Delayed'}/>
                 </div>
               ))}
             </div>

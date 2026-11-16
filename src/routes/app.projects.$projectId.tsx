@@ -39,7 +39,7 @@ function ProjectDetailPage() {
   const [tab,setTab] = useState("Overview");
   const live = store.records.find(r=>r.kind==="Project" && r.id===projectId);
   const row = PROJECT_ROWS.find((item) => item.id === projectId);
-  const project = { ...PROJECT_DETAIL, name: live?.title ?? row?.name ?? PROJECT_DETAIL.name, status: live?.status ?? row?.status ?? PROJECT_DETAIL.status };
+  const project = { ...PROJECT_DETAIL, completion: live?.progress ?? row?.progress ?? PROJECT_DETAIL.completion, name: live?.title ?? row?.name ?? PROJECT_DETAIL.name, status: live?.status ?? row?.status ?? PROJECT_DETAIL.status };
 
   return (
     <div className="space-y-6">

@@ -18,8 +18,10 @@ import { clampWeight, weightedProgress, canSignOff } from '@/content/workflow';
 import { HealthBadge } from '@/components/app/WorkflowControls';
 import { DefectPhoto } from '@/components/app/DefectPhoto';
 import { Minus, Plus } from 'lucide-react';
+import { useUsers } from '@/components/users/UsersProvider';
 export function RecordEditor() {
   const { editing, edit, save, records, can, role } = usePlatform();
+  const { users } = useUsers();
   const [draft, setDraft] = useState<PlatformRecord | null>(null);
   useEffect(() => setDraft(editing), [editing]);
   if (!draft) return null;
@@ -111,7 +113,7 @@ export function RecordEditor() {
                 onChange={(v) => update("status", v)}
               />
             </label>
-            {input("person", "Assigned party")}
+            {['Task','Defect'].includes(draft.kind) ? <label className="grid gap-1.5 text-xs">Assign user, trade or supervisor<Choice label="Assign user, trade or supervisor" value={draft.person} options={[...new Set([draft.person,'Unassigned',...users.filter(u=>!['Client','Guest'].includes(u.role)).map(u=>u.name),...records.filter(r=>r.kind==='Trade').map(r=>r.title)])]} onChange={v=>update('person',v)}/></label> : input("person", "Assigned party")}
             {input("date", "Date", "date")}
           </div>
           {draft.kind === "Task" && (
