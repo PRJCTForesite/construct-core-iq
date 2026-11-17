@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
+- Keep permission constants and types in a dependency-free module consumed by demo permission services and record seeds; this prevents SSR import cycles without changing permission rules.
 - Keep onboarding validation and sample fixtures browser-safe and separate from views; store no passwords or payment credentials, and keep beta bypass and invitations explicitly mock-only until verified backend contracts exist.
 - Load optional onboarding samples through a guarded provider action before any real record exists; initialise a fresh per-app mock store with sample IDs so real exports and module-by-module sample replacement remain correct.
 - Keep software plans and optional service prices in one public pricing module shared by marketing and subscription previews; previews must never activate billing or change permissions.

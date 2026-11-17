@@ -19,6 +19,8 @@ import { HealthBadge } from '@/components/app/WorkflowControls';
 import { DefectPhoto } from '@/components/app/DefectPhoto';
 import { Minus, Plus } from 'lucide-react';
 import { useUsers } from '@/components/users/UsersProvider';
+import { AssignedPartyPicker } from './AssignedPartyPicker';
+import { prepareRecordForSave } from '@/content/record-editing';
 export function RecordEditor() {
   const { editing, edit, save, records, can, role } = usePlatform();
   const { users } = useUsers();
@@ -82,14 +84,14 @@ export function RecordEditor() {
               toast.error("Access restricted in this role preview");
               return;
             }
-            save(draft);
+            save(prepareRecordForSave(draft));
             toast.success(`${draft.kind} saved in demonstration`);
           }}
         >
           {input("title", "Title / name")}
           {draft.kind === 'Defect' && <><DefectPhoto title={draft.title} className="h-40 rounded-lg"/><HealthBadge status={draft.status} severity={draft.category}/></>}
           <div className="grid grid-cols-2 gap-3">
-            <label className="grid gap-1.5 text-xs">
+            {draft.kind !== 'Project' && <label className="grid gap-1.5 text-xs">
               Project
               <Choice
                 label="Project"
@@ -103,7 +105,7 @@ export function RecordEditor() {
                 ]}
                 onChange={(v) => update("project", v)}
               />
-            </label>
+            </label>}
             <label className="grid gap-1.5 text-xs">
               Status
               <Choice
@@ -113,7 +115,7 @@ export function RecordEditor() {
                 onChange={(v) => update("status", v)}
               />
             </label>
-            {['Task','Defect'].includes(draft.kind) ? <label className="grid gap-1.5 text-xs">Assign user, trade or supervisor<Choice label="Assign user, trade or supervisor" value={draft.person} options={[...new Set([draft.person,'Unassigned',...users.filter(u=>!['Client','Guest'].includes(u.role)).map(u=>u.name),...records.filter(r=>r.kind==='Trade').map(r=>r.title)])]} onChange={v=>update('person',v)}/></label> : input("person", "Assigned party")}
+            {['Task','Defect'].includes(draft.kind) ? <label className="grid gap-1.5 text-xs">Assign user, trade or supervisor<Choice label="Assign user, trade or supervisor" value={draft.person} options={[...new Set([draft.person,'Unassigned',...users.filter(u=>!['Client','Guest'].includes(u.role)).map(u=>u.name),...records.filter(r=>r.kind==='Trade').map(r=>r.title)])]} onChange={v=>update('person',v)}/></label> : <AssignedPartyPicker value={draft.person} onChange={v=>update('person',v)} />}
             {input("date", "Date", "date")}
           </div>
           {draft.kind === "Task" && (
