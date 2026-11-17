@@ -50,6 +50,6 @@
 - [x] Supporting Construction Intelligence positioning; verify homepage and CTA destinations on desktop/mobile
 
 # Pricing and professional services
-- [ ] Update shared plans, homepage summary and subscription tab
-- [ ] Build pricing comparison, onboarding and optional advisory services with consultation links
-- [ ] Verify all prices and desktop/mobile navigation
+- [x] Update shared plans, homepage summary and subscription tab
+- [x] Build pricing comparison, onboarding and optional advisory services with consultation links
+- [x] Verify all prices and desktop/mobile navigation
