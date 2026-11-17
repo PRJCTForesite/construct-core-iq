@@ -63,3 +63,7 @@
 - [ ] Bring role templates, security reviews and permission history into Users
 - [ ] Remove Permissions navigation and redirect existing links to Users
 - [ ] Verify combined session edits, history and desktop/mobile views
+
+# Add Communication rework
+- [ ] Clarify whose messaging and email accounts should be linked
+- [ ] Rework communication entry and connect the agreed services
