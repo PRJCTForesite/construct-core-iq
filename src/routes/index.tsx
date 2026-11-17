@@ -1,16 +1,17 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowDown, ArrowRight, Bell, Building2, Check, CreditCard, HardHat, Mail, MessageSquare, Sparkles, ThumbsDown, ThumbsUp, Users,
+  Activity, ArrowDown, ArrowRight, Bell, Building2, Check, ClipboardCheck, CreditCard, HardHat, Mail, MessageSquare, ShieldCheck, Sparkles, ThumbsDown, ThumbsUp, Users, Wallet,
 } from "lucide-react";
 
 import { Section, SectionHeading } from "@/components/site/Section";
 import { PlatformShowcase } from "@/components/site/v2/PlatformShowcase";
+import { OperationalWorkspace } from "@/components/site/v2/OperationalWorkspace";
 import { TradeDirectoryDemo } from "@/components/site/v2/TradeDirectoryDemo";
 import { Button } from "@/components/ui/button";
 import { DIRECTORY, recommendTrades } from "@/content/trade-directory";
 
-const TITLE = "Foresite — The Construction Operating System";
-const DESC = "Complete visibility, greater control and operational intelligence. Foresite connects builders, trades and clients on one platform.";
+const TITLE = "Foresite — Reduce Delays. Protect Profit. Keep Projects Moving.";
+const DESC = "Manage trades, variations, client approvals and defects with Foresite. Built for construction businesses that need project visibility, accountability and control.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,6 +42,21 @@ function CTAButtons({ light }: { light?: boolean }) {
 }
 
 const BENEFITS = ["Reduced Administrative Work", "Improved Communication", "Greater Transparency", "Complete Traceability", "Faster Decisions", "Higher Client Confidence"];
+
+const VALUE_CARDS = [
+  { title: "Trade Control", icon: HardHat, tone: "bg-azure/10 text-azure", description: "Assign work. Track completion. Monitor compliance. Reduce subcontractor delays." },
+  { title: "Financial Visibility", icon: Wallet, tone: "bg-health-good/10 text-health-good", description: "Manage variations, costs and project performance with confidence." },
+  { title: "Defects & Evidence", icon: ShieldCheck, tone: "bg-construction/15 text-construction", description: "Capture photos, defects, approvals and project records from one place." },
+  { title: "Client Decisions", icon: ClipboardCheck, tone: "bg-azure/10 text-azure", description: "Reduce selection delays and approval bottlenecks with a dedicated client experience." },
+  { title: "Project Health", icon: Activity, tone: "bg-health-good/10 text-health-good", description: "Identify risks early and keep projects moving." },
+];
+
+const BUILDER_PROBLEMS = [
+  { title: "Subcontractor Delays", icon: HardHat, outcome: "Keep trades accountable and work coordinated.", solutions: ["Trade Portal", "Task Management", "Trade Directory", "Upcoming Works"] },
+  { title: "Cashflow Pressure", icon: Wallet, outcome: "See variations, costs and project performance together.", solutions: ["Project Visibility", "Variations", "Financial Tracking", "Project Health"] },
+  { title: "Client Approval Delays", icon: ClipboardCheck, outcome: "Keep selections and decisions moving, without chasing emails.", solutions: ["Client Portal", "Selections", "Approvals", "Updates"] },
+  { title: "Defects and Warranty Exposure", icon: ShieldCheck, outcome: "Keep evidence and rectification history connected to the job.", solutions: ["Defect Management", "Photo Evidence", "Audit History", "Rectification Tracking"] },
+];
 
 const MODULE_GROUPS = [
   { title: "Project Delivery", items: ["Projects", "Tasks", "Programme Tracking", "Project Health"] },
@@ -74,21 +90,56 @@ function Chips({ items }: { items: string[] }) {
 function HomePage() {
   const recs = recommendTrades(DIRECTORY, "Roofer");
   return (
-    <>
+    <div className="homepage-outcomes">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-surface">
-        <div className="pointer-events-none absolute inset-0 grid-blueprint opacity-40" aria-hidden="true" />
-        <div className="container-page relative py-20 text-center md:py-28">
-          <p className="mx-auto inline-flex rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-azure">Builders · Trades · Clients · One platform</p>
-          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-semibold leading-[1.05] text-foreground sm:text-6xl">The Construction Operating System</h1>
-          <p className="mx-auto mt-6 text-xl font-medium text-secondary-foreground sm:text-2xl">Complete Visibility. Greater Control. Operational Intelligence.</p>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Foresite centralises projects, defects, documents, financials, communications, trades and clients into one connected platform designed for modern construction businesses.
+        <div className="container-page relative pb-5 pt-6 text-center sm:pb-8 sm:pt-10 md:pt-12">
+          <p className="text-sm font-semibold text-azure">Foresite <span className="mx-2 text-border">/</span><span className="font-medium text-muted-foreground">The Construction Operating System</span></p>
+          <h1 className="mx-auto mt-4 max-w-5xl text-3xl font-bold leading-[1.12] text-foreground sm:mt-5 sm:text-5xl lg:text-6xl">Reduce Delays. <span className="text-azure">Protect Profit.</span><br className="hidden sm:block" /> Keep Projects Moving.</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-secondary-foreground sm:mt-5 sm:text-lg">
+            Foresite connects projects, trades, clients, defects, documents and project intelligence into a single platform built for modern construction businesses.
           </p>
-          <div className="mt-9 flex justify-center"><CTAButtons /></div>
-          <p className="mt-6 text-sm text-muted-foreground">This application works for you, not the other way around.</p>
+          <div className="mt-5 flex justify-center sm:mt-6"><CTAButtons /></div>
+          <p className="mx-auto mt-3 max-w-xl text-[11px] leading-relaxed text-muted-foreground sm:mt-4 sm:text-sm">Built for builders who need visibility, accountability and control without the complexity of traditional enterprise software.</p>
+          <div className="mx-auto mt-5 max-w-5xl sm:mt-8"><OperationalWorkspace /></div>
         </div>
       </section>
+
+      <section className="border-b border-border bg-background py-8" aria-label="Construction business outcomes">
+        <div className="container-page grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {VALUE_CARDS.map(({ title, icon: Icon, tone, description }) => (
+            <article key={title} className="rounded-lg border border-border bg-card p-5">
+              <div className={`mb-4 grid size-10 place-items-center rounded-md ${tone}`}><Icon className="size-5" /></div>
+              <h2 className="text-base font-semibold text-foreground">{title}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-surface py-10" aria-label="Platform scale placeholders">
+        <div className="container-page text-center">
+          <h2 className="text-xl font-semibold text-foreground sm:text-2xl">Built For Builders, Trades and Clients.</h2>
+          <p className="mt-2 text-xs text-muted-foreground">Illustrative sample figures · not live customer statistics</p>
+          <dl className="mt-7 grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {[{ label: "Projects Managed", value: "120" }, { label: "Defects Tracked", value: "1,850" }, { label: "Trades Connected", value: "340" }, { label: "Documents Managed", value: "6,200" }].map(({ label, value }) => (
+              <div key={label}><dd className="text-3xl font-semibold text-foreground">{value}</dd><dt className="mt-1 text-sm text-muted-foreground">{label}</dt></div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <Section>
+        <SectionHeading eyebrow="Less chasing. More control." title="Built Around The Problems Builders Actually Face." />
+        <div className="mt-9 divide-y divide-border border-y border-border">
+          {BUILDER_PROBLEMS.map(({ title, icon: Icon, outcome, solutions }) => (
+            <div key={title} className="grid gap-5 py-7 md:grid-cols-[1fr_1.4fr] md:gap-10">
+              <div className="flex items-start gap-3"><Icon className="mt-1 size-5 shrink-0 text-construction" /><div><h3 className="text-lg font-semibold text-foreground">{title}</h3><p className="mt-2 text-sm text-muted-foreground">{outcome}</p></div></div>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-3 self-center">{solutions.map((solution) => <li key={solution} className="flex items-center gap-2 text-sm font-medium text-secondary-foreground"><Check className="size-4 shrink-0 text-azure" />{solution}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </Section>
 
       {/* Showcase */}
       <Section>
@@ -210,7 +261,7 @@ function HomePage() {
         </div>
 
         <div className="mt-6 rounded-xl border border-border bg-surface p-6 md:p-8">
-          <h3 className="text-xl font-semibold text-foreground">AI Powered Trade Recommendations</h3>
+          <h3 className="text-xl font-semibold text-foreground">Construction Intelligence · Trade Recommendations</h3>
           <div className="mt-6 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr_auto_1.4fr]">
             <div className="rounded-lg border border-border bg-card p-4"><p className="text-xs text-muted-foreground">New Defect</p><p className="font-semibold text-foreground">Roof Leak</p></div>
             <ArrowRight className="mx-auto hidden text-azure md:block" /><ArrowDown className="mx-auto text-azure md:hidden" />
@@ -227,7 +278,7 @@ function HomePage() {
 
       {/* AI */}
       <Section tone="navy">
-        <SectionHeading tone="light" eyebrow="Platform intelligence" title="AI works alongside your team." description="AI works alongside your team to reduce administration, surface risks and improve decisions." />
+        <SectionHeading tone="light" eyebrow="Supporting your decisions" title="Construction Intelligence" description="AI works alongside your team to reduce administration, surface risks and improve decisions — supporting the people who keep projects moving." />
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {AI_EXAMPLES.map((a) => <div key={a} className="flex items-center gap-2 rounded-lg border border-primary-foreground/15 bg-primary-foreground/5 px-4 py-3 text-sm"><Sparkles className="size-4 text-azure" />{a}</div>)}
         </div>
@@ -280,11 +331,11 @@ function HomePage() {
       {/* Final CTA */}
       <section className="bg-primary text-primary-foreground">
         <div className="container-page py-20 text-center">
-          <h2 className="mx-auto max-w-3xl text-3xl font-semibold md:text-4xl">Stop Managing Construction Across Multiple Systems.</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/75">Bring projects, clients, trades, communications and project intelligence together in one connected platform.</p>
+          <h2 className="mx-auto max-w-3xl text-3xl font-semibold md:text-4xl">Less Chasing. Fewer Delays. More Control.</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/75">Keep trades accountable, decisions moving and project risks visible with Foresite.</p>
           <div className="mt-8 flex justify-center"><CTAButtons light /></div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

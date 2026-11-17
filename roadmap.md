@@ -43,3 +43,8 @@
 - [x] Remove assumed endpoints and introduce replaceable record and module service interfaces
 - [x] Add mock authentication and multi-organisation memberships; centralise demo permission checks
 - [x] Preserve existing session workflows and sample removal; verify services and browser flows (59 tests; sign-in, defect save/read-back, portal previews, sign-out)
+
+# Homepage market alignment
+- [x] Outcome-led hero and operational workspace preview
+- [x] Five value cards, clearly labelled sample figures and builder problem-to-solution section
+- [x] Supporting Construction Intelligence positioning; verify homepage and CTA destinations on desktop/mobile
