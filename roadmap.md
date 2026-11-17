@@ -45,6 +45,6 @@
 - [x] Preserve existing session workflows and sample removal; verify services and browser flows (59 tests; sign-in, defect save/read-back, portal previews, sign-out)
 
 # Homepage market alignment
-- [ ] Outcome-led hero and operational workspace preview
-- [ ] Five value cards, clearly labelled sample figures and builder problem-to-solution section
-- [ ] Supporting Construction Intelligence positioning; verify homepage and CTA destinations on desktop/mobile
+- [x] Outcome-led hero and operational workspace preview
+- [x] Five value cards, clearly labelled sample figures and builder problem-to-solution section
+- [x] Supporting Construction Intelligence positioning; verify homepage and CTA destinations on desktop/mobile

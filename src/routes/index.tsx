@@ -93,15 +93,15 @@ function HomePage() {
     <div className="homepage-outcomes">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-surface">
-        <div className="container-page relative pb-8 pt-10 text-center md:pt-12">
+        <div className="container-page relative pb-5 pt-6 text-center sm:pb-8 sm:pt-10 md:pt-12">
           <p className="text-sm font-semibold text-azure">Foresite <span className="mx-2 text-border">/</span><span className="font-medium text-muted-foreground">The Construction Operating System</span></p>
-          <h1 className="mx-auto mt-5 max-w-5xl text-4xl font-bold leading-[1.12] text-foreground sm:text-5xl lg:text-6xl">Reduce Delays. <span className="text-azure">Protect Profit.</span><br className="hidden sm:block" /> Keep Projects Moving.</h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-secondary-foreground sm:text-lg">
+          <h1 className="mx-auto mt-4 max-w-5xl text-3xl font-bold leading-[1.12] text-foreground sm:mt-5 sm:text-5xl lg:text-6xl">Reduce Delays. <span className="text-azure">Protect Profit.</span><br className="hidden sm:block" /> Keep Projects Moving.</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-secondary-foreground sm:mt-5 sm:text-lg">
             Foresite connects projects, trades, clients, defects, documents and project intelligence into a single platform built for modern construction businesses.
           </p>
-          <div className="mt-6 flex justify-center"><CTAButtons /></div>
-          <p className="mx-auto mt-4 max-w-xl text-xs leading-relaxed text-muted-foreground sm:text-sm">Built for builders who need visibility, accountability and control without the complexity of traditional enterprise software.</p>
-          <div className="mx-auto mt-8 max-w-5xl"><OperationalWorkspace /></div>
+          <div className="mt-5 flex justify-center sm:mt-6"><CTAButtons /></div>
+          <p className="mx-auto mt-3 max-w-xl text-[11px] leading-relaxed text-muted-foreground sm:mt-4 sm:text-sm">Built for builders who need visibility, accountability and control without the complexity of traditional enterprise software.</p>
+          <div className="mx-auto mt-5 max-w-5xl sm:mt-8"><OperationalWorkspace /></div>
         </div>
       </section>
 
