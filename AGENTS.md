@@ -28,3 +28,4 @@
 - Keep role-based simulation in permissionsService and account memberships as organisation-scoped role arrays — allows future multi-workspace integration without implying enforced security.
 - Keep homepage operational previews in isolated presentational components with explicitly labelled illustrative records; marketing changes must not mutate application state or imply live customer usage.
 - Keep stakeholder showcase content keyed by view and section in a public-only content module, with one atomic selection state; tab changes must immediately select distinct content without touching private app records.
+- Keep communication app choices and safe draft links in a browser-safe catalogue; personal inbox integration stays setup-needed until verified auth and server-side per-user credential storage exist, preventing shared-account exposure.
