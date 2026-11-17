@@ -68,4 +68,4 @@
 - [x] Clarify whose messaging and email accounts should be linked
 - [x] Rework communication entry with common apps and searchable See More
 - [ ] Connect personal Gmail, Outlook, Teams and Slack accounts — blocked by verified authentication and secure per-user storage pending the user's backend contracts
-- [ ] Verify communication record save/readback and app draft links
+- [x] Verify communication record save/readback and app draft links
