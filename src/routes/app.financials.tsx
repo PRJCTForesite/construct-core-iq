@@ -1,3 +1,5 @@
+import { usePlatform } from "@/components/platform/PlatformProvider";
+import { LiveRegister } from "@/components/platform/ModuleFrame";
 import { createFileRoute } from "@tanstack/react-router";
 import { Download, Plus } from "lucide-react";
 
@@ -56,6 +58,7 @@ function CashflowBars() {
 }
 
 function FinancialsPage() {
+  const store = usePlatform();
   return (
     <div className="space-y-6">
       <PageHeading
@@ -66,12 +69,13 @@ function FinancialsPage() {
             <Button variant="outline" size="sm">
               <Download className="h-4 w-4" /> <span className="hidden sm:inline">Export</span>
             </Button>
-            <Button size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+            <Button onClick={()=>store.create("Variation")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
               <Plus className="h-4 w-4" /> New Invoice
             </Button>
           </>
         }
       />
+      <LiveRegister kind="Variation" title="Variations & claims" module="Financials" detail={r=>`${r.person} · $${r.amount.toLocaleString()}`} />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {FINANCIAL_KPIS.map((kpi) => (

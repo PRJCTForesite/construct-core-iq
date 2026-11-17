@@ -32,3 +32,10 @@
 - [x] Defect details, photo thumbnails and permission-aware quick actions
 - [x] Client and Trade portal card, document and mobile alignment
 - [x] Verify session workflows and regression rules across all portals
+
+# Functional frontend pass
+- [x] Module-by-module sample removal on first real record, with sample notices
+- [x] Connection point for own FastAPI/PostgreSQL service (real records only)
+- [x] Live Variations/claims and RFI/site instruction registers; New Invoice and Compose open forms
+- [ ] Connect FastAPI service — needs the service address (VITE_FORESITE_API_URL) and matching /records endpoints
+- [ ] Load records from the service on sign-in and real authentication — needs the service's login/list endpoints

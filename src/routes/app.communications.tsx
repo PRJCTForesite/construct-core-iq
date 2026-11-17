@@ -1,3 +1,5 @@
+import { usePlatform } from "@/components/platform/PlatformProvider";
+import { LiveRegister } from "@/components/platform/ModuleFrame";
 import { createFileRoute } from "@tanstack/react-router";
 import { Paperclip, Phone, Reply, Sparkles } from "lucide-react";
 
@@ -23,17 +25,19 @@ export const Route = createFileRoute("/app/communications")({
 const GROUPS = ["Today", "Yesterday"];
 
 function CommunicationsPage() {
+  const store = usePlatform();
   return (
     <div className="space-y-6">
       <PageHeading
         title="Communications"
         meta="Email · SMS · Calls · Internal — 7 unread"
         actions={
-          <Button size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+          <Button onClick={()=>store.create("Communication")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             <Reply className="h-4 w-4" /> Compose
           </Button>
         }
       />
+      <LiveRegister kind="Communication" title="RFIs, site instructions & messages" module="Communications" detail={r=>`${r.category} · ${r.person}`} />
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)_minmax(0,0.8fr)]">
         <Panel title="Inbox" bodyClassName="p-0 sm:p-0" className="max-h-[42rem] overflow-y-auto">

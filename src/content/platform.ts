@@ -69,7 +69,7 @@ export function makeRecord(
     kind,
     title,
     project: PROJECT_NAMES[0] ?? "Smith Residence",
-    status: "Active",
+    status: kind === "Defect" ? "Reported" : kind === "Task" ? "Pending" : kind === "Variation" ? "Draft" : "Active",
     person: "James Hartley",
     date: "2026-10-14",
     category: kind,
