@@ -37,7 +37,6 @@ export const APP_NAV: NavItem[] = [
   { label: "Projects", to: "/app/projects", icon: "projects" },
   { label: "Tasks", to: "/app/tasks", icon: "tasks" },
   { label: "Users", to: "/app/users", icon: "clients" },
-  { label: "Permissions", to: "/app/administration/permissions", icon: "settings" },
   { label: "Documents", to: "/app/documents", icon: "documents" },
   { label: "Communications", to: "/app/communications", icon: "communications", badge: "7" },
   { label: "Financials", to: "/app/financials", icon: "financials" },

@@ -14,8 +14,8 @@
 - Keep onboarding validation and sample fixtures browser-safe and separate from views; store no passwords or payment credentials, and keep beta bypass and invitations explicitly mock-only until verified backend contracts exist.
 - Load optional onboarding samples through a guarded provider action before any real record exists; initialise a fresh per-app mock store with sample IDs so real exports and module-by-module sample replacement remain correct.
 - Keep software plans and optional service prices in one public pricing module shared by marketing and subscription previews; previews must never activate billing or change permissions.
-- Keep Users and Permissions Centre demo records and audit state in a shared app-level UsersProvider with stable context identity in a non-component module; both screens must read back the same session edits without implying real access enforcement.
-- Place Administration and Permissions Centre at named child routes of the existing app layout; this preserves all existing public and app URLs.
+- Keep the combined Users centre backed by the shared app-level UsersProvider with stable context identity; profiles, access panels and audit history must read the same session edits without implying real enforcement.
+- Keep Administration under the existing app layout and redirect the legacy permissions URL to Users; this preserves bookmarks without duplicating people management.
 - Keep expansion sample records in the shared platform content module and session edits in PlatformProvider; this lets prototype modules share changes without implying durable storage or enforced access.
 - Keep the platform context identity in a non-component module; hot updates must not disconnect mounted providers from shared controls.
 - Use project-ID page URLs for assistant conversations and browser-only history isolated by that ID; this preserves project-specific history while keeping the prototype independent of a live AI service.

@@ -64,7 +64,7 @@ const MODULE_GROUPS = [
   { title: "Quality Management", items: ["Defects", "Approvals", "Client Sign-Off", "Rectification Tracking"] },
   { title: "Knowledge & Information", items: ["Documents", "Communications", "Photos", "Search"] },
   { title: "Commercial Management", items: ["Financials", "Variations", "Budgets", "Reporting"] },
-  { title: "People & Permissions", items: ["Owner Workspace", "Client Portal", "Trade Portal", "Permissions Centre"] },
+  { title: "People & Permissions", items: ["Owner Workspace", "Client Portal", "Trade Portal", "Users & Permissions"] },
 ];
 
 const HEALTH = [
