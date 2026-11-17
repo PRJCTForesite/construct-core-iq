@@ -227,3 +227,11 @@
   letter-spacing: 0;
 }
 .client-portal-theme h1, .client-portal-theme h2, .client-portal-theme h3 { letter-spacing: 0; }
+
+/* Outcome-led homepage changes do not alter the existing application. */
+.homepage-outcomes,
+.homepage-outcomes h1,
+.homepage-outcomes h2,
+.homepage-outcomes h3 {
+  letter-spacing: 0;
+}
