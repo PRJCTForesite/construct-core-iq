@@ -17,6 +17,7 @@ export type PlatformStore = {
   notifications: string[];
   notify: (notification: string) => void;
   dismissNotifications: () => void;
+  isSample: (id: string) => boolean;
 };
 
 // Keep context identity outside the hot-reloaded provider/component module.
