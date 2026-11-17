@@ -55,6 +55,6 @@
 - [x] Verify all prices and desktop/mobile navigation
 
 # Subscriber onboarding
-- [ ] Account, verification previews, plans, payment preview and organisation setup
-- [ ] Invited client/trade journeys, independent trade fields and beta shortcut
-- [ ] Welcome actions, optional sample generator and regression/browser checks
+- [x] Account, verification previews, plans, payment preview and organisation setup
+- [x] Invited client/trade journeys, independent trade fields and beta shortcut
+- [x] Welcome actions, optional sample generator and regression/browser checks
