@@ -11,16 +11,20 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Route = createFileRoute("/contact")({
+  validateSearch: (search: Record<string, unknown>): { enquiry?: "sales" | "demo" | "advisory" | undefined; service?: string | undefined } => ({
+    enquiry: search['enquiry'] === "advisory" || search['enquiry'] === "demo" || search['enquiry'] === "sales" ? search['enquiry'] : undefined,
+    service: typeof search['service'] === "string" ? search['service'].slice(0, 120) : undefined,
+  }),
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Contact Foresite — Talk to Sales or Book a Demo" },
+      { title: "Contact Foresite — Software, Demos & Advisory" },
       {
         name: "description",
         content:
-          "Contact the Foresite team to discuss your projects, request pricing or book a demo of the construction operating system.",
+          "Contact the Foresite team to discuss your projects, request software pricing, book a demo or discuss optional construction advisory services.",
       },
-      { property: "og:title", content: "Contact Foresite — Talk to Sales or Book a Demo" },
+      { property: "og:title", content: "Contact Foresite — Software, Demos & Advisory" },
       {
         property: "og:description",
         content: "Send us your details and we will arrange a walkthrough of Foresite for your delivery team.",
@@ -51,8 +55,9 @@ const FIELDS = [
 ] as const;
 
 function ContactPage() {
+  const search = Route.useSearch();
   const [errors, setErrors] = useState<Errors>({});
-  const [intent, setIntent] = useState<"sales" | "demo">("sales");
+  const [intent, setIntent] = useState<"sales" | "demo" | "advisory">(search.enquiry ?? "sales");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -79,7 +84,7 @@ function ContactPage() {
     setErrors({});
     event.currentTarget.reset();
     toast.success(
-      intent === "demo" ? "Demo request received. We will be in touch shortly." : "Thanks — our sales team will reply soon.",
+      "Preview only — your request has not been sent. Enquiry delivery is not connected.",
     );
   }
 
@@ -100,6 +105,11 @@ function ContactPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
           <form onSubmit={handleSubmit} noValidate className="rounded-xl border border-border bg-card p-7 shadow-panel">
+            <div className="mb-6">
+              <Label htmlFor="enquiry">Enquiry type</Label>
+              <select id="enquiry" className="mt-2 w-full rounded-md border border-input bg-background p-2 text-sm" value={intent} onChange={e => setIntent(e.target.value as "sales" | "demo" | "advisory")}><option value="sales">Software pricing</option><option value="demo">Book Demo</option><option value="advisory">Advisory Consultation</option></select>
+              {search.service && <p className="mt-2 text-sm text-azure">{search.service}</p>}
+            </div>
             <div className="grid gap-5 sm:grid-cols-2">
               {FIELDS.map((field) => (
                 <div key={field.id} className={field.id === "email" || field.id === "phone" ? "" : "sm:col-span-1"}>
@@ -127,25 +137,13 @@ function ContactPage() {
               <Label htmlFor="message">
                 Message<span className="text-destructive"> *</span>
               </Label>
-              <Textarea id="message" name="message" rows={6} maxLength={1000} className="mt-1.5" />
+              <Textarea key={search.service ?? search.enquiry} defaultValue={search.service ? `I would like to discuss ${search.service}.` : search.enquiry === "advisory" ? "I would like an advisory consultation." : ""} id="message" name="message" rows={6} maxLength={1000} className="mt-1.5" />
               {errors.message ? <p className="mt-1.5 text-xs text-destructive">{errors.message}</p> : null}
             </div>
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <Button
-                type="submit"
-                onClick={() => setIntent("sales")}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                Contact Sales
-              </Button>
-              <Button
-                type="submit"
-                onClick={() => setIntent("demo")}
-                className="bg-azure text-azure-foreground hover:bg-azure/90"
-              >
-                Book Demo
-              </Button>
+              <Button type="submit" className="bg-azure text-azure-foreground hover:bg-azure/90">{intent === 'advisory' ? 'Request Advisory Consultation' : intent === 'demo' ? 'Book Demo' : 'Contact Sales'}</Button>
+              <p className="w-full text-xs text-muted-foreground">Preview only · requests are not sent.</p>
             </div>
           </form>
 

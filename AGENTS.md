@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Application architecture
+- Keep software plans and optional service prices in one public pricing module shared by marketing and subscription previews; previews must never activate billing or change permissions.
 - Keep Users and Permissions Centre demo records and audit state in a shared app-level UsersProvider with stable context identity in a non-component module; both screens must read back the same session edits without implying real access enforcement.
 - Place Administration and Permissions Centre at named child routes of the existing app layout; this preserves all existing public and app URLs.
 - Keep expansion sample records in the shared platform content module and session edits in PlatformProvider; this lets prototype modules share changes without implying durable storage or enforced access.

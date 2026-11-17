@@ -6,6 +6,7 @@ import {
 import { Section, SectionHeading } from "@/components/site/Section";
 import { PlatformShowcase } from "@/components/site/v2/PlatformShowcase";
 import { OperationalWorkspace } from "@/components/site/v2/OperationalWorkspace";
+import { PlanCards } from "@/components/site/PlanCards";
 import { TradeDirectoryDemo } from "@/components/site/v2/TradeDirectoryDemo";
 import { Button } from "@/components/ui/button";
 import { DIRECTORY, recommendTrades } from "@/content/trade-directory";
@@ -73,13 +74,6 @@ const HEALTH = [
 
 const AI_EXAMPLES = ["Project Risks", "Forecasting", "Document Summaries", "Communication Summaries", "Recommended Actions", "Trade Recommendations"];
 const INDUSTRIES = ["Residential Builders", "Commercial Builders", "Civil Contractors", "Subcontractors", "Project Management Firms"];
-
-const PLANS = [
-  { name: "Starter", blurb: "For small builders getting organised.", directory: ["Basic Directory Access"] },
-  { name: "Professional", blurb: "For growing teams running multiple projects.", directory: ["Directory Access", "Preferred Trades"], featured: true },
-  { name: "Enterprise", blurb: "For multi-team and multi-region businesses.", directory: ["Directory", "Preferred Trades", "AI Trade Discovery", "Capacity Analytics"] },
-];
-const PLAN_INCLUDES = ["User-Based Pricing", "Implementation Services", "Founder Advisory", "Construction Intelligence Services"];
 
 const TRIAL_STEPS = ["Create Account", "Add Organisation Details", "Provide Billing Information", "Access Full Functionality", "30 Day Trial", "Automatic Plan Assignment Based On Usage"];
 
@@ -294,19 +288,10 @@ function HomePage() {
 
       {/* Pricing */}
       <Section tone="surface">
-        <SectionHeading eyebrow="Pricing" title="Plans that grow with your business." description={`Every plan includes ${PLAN_INCLUDES.join(", ").toLowerCase()} options.`} />
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {PLANS.map((p) => (
-            <div key={p.name} className={`rounded-xl border bg-card p-6 ${p.featured ? "border-azure shadow-[var(--shadow-raised)]" : "border-border"}`}>
-              <h3 className="text-xl font-semibold text-foreground">{p.name}</h3>
-              <p className="mt-1 text-sm text-secondary-foreground">{p.blurb}</p>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Trade Directory</p>
-              <ul className="mt-2 space-y-1.5 text-sm text-foreground">{p.directory.map((d) => <li key={d} className="flex items-center gap-2"><Check className="size-4 text-azure" />{d}</li>)}</ul>
-            </div>
-          ))}
-        </div>
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-secondary-foreground">{PLAN_INCLUDES.map((i) => <li key={i} className="flex items-center gap-2"><Check className="size-4 text-azure" />{i}</li>)}</ul>
-        <div className="mt-6"><Link to="/pricing" className="inline-flex items-center gap-1 text-sm font-semibold text-azure">Compare plans <ArrowRight className="size-4" /></Link></div>
+        <SectionHeading eyebrow="Software subscriptions" title="Simple Pricing For Growing Construction Businesses." description="Only pay for internal users. Unlimited clients, trades and external users are included in every plan." />
+        <div className="mt-10"><PlanCards compact /></div>
+        <p className="mt-6 text-sm text-secondary-foreground">Implementation and construction advisory services are optional and priced separately from software.</p>
+        <div className="mt-6"><Button asChild variant="outline"><Link to="/pricing">Explore Pricing &amp; Advisory Services <ArrowRight className="size-4" /></Link></Button></div>
       </Section>
 
       {/* Trial */}
