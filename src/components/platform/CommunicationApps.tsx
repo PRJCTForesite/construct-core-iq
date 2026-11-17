@@ -1,0 +1,16 @@
+import { useState } from 'react';
+import { ExternalLink, Mail, MessageSquare, MoreHorizontal, Phone, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { COMMUNICATION_APPS, type CommunicationApp } from '@/content/communication-apps';
+
+export function CommunicationApps({ value, onSelect }: { value: string; onSelect: (app: CommunicationApp) => void }) {
+  const [more, setMore] = useState(false);
+  const [query, setQuery] = useState('');
+  function appButton(app: CommunicationApp) {
+    const Icon = app.type === 'Email' ? Mail : app.type === 'Call' ? Phone : MessageSquare;
+    return <Button key={app.id} type="button" variant={value === app.name ? 'secondary' : 'outline'} aria-pressed={value === app.name} className="h-auto min-h-16 flex-col items-start gap-2 whitespace-normal p-3 text-left" onClick={() => { onSelect(app); setMore(false); }}><span className="flex items-center gap-2"><Icon className="h-4 w-4 shrink-0 text-azure" />{app.name}</span><span className="text-[11px] font-normal text-muted-foreground">{app.mode === 'record' ? 'Session record' : app.mode === 'setup' ? 'Account setup needed' : 'Open your app'}</span></Button>;
+  }
+  return <div className="space-y-3"><div className="flex items-center justify-between gap-3"><h3 className="text-sm font-semibold">Communication App</h3><Button type="button" variant="ghost" size="sm" onClick={() => { setQuery(''); setMore(true); }}><MoreHorizontal className="h-4 w-4" />See More</Button></div><div className="grid grid-cols-2 gap-2 sm:grid-cols-3">{COMMUNICATION_APPS.filter(app => app.common).map(appButton)}</div>{!COMMUNICATION_APPS.some(app => app.common && app.name === value) && <p className="text-xs text-muted-foreground">Selected: {value}</p>}<Dialog open={more} onOpenChange={setMore}><DialogContent className="max-h-[85dvh] overflow-y-auto"><DialogHeader><DialogTitle>Communication Apps</DialogTitle><DialogDescription>Personal app links and supported account integrations. Inbox syncing is not connected.</DialogDescription></DialogHeader><div className="relative"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><Input aria-label="Search communication apps" className="pl-9" placeholder="Search apps" value={query} onChange={event => setQuery(event.target.value)} /></div><div className="grid grid-cols-2 gap-2">{COMMUNICATION_APPS.filter(app => app.name.toLowerCase().includes(query.toLowerCase())).map(appButton)}</div>{!COMMUNICATION_APPS.some(app => app.name.toLowerCase().includes(query.toLowerCase())) && <p className="py-4 text-sm text-muted-foreground">No matching apps.</p>}<p className="flex gap-2 text-xs text-muted-foreground"><ExternalLink className="h-4 w-4 shrink-0" />Gmail, Outlook, Teams and Slack account syncing requires verified Foresite sign-in and secure personal account storage.</p></DialogContent></Dialog></div>;
+}
