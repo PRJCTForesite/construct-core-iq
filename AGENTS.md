@@ -23,3 +23,4 @@
 - Keep records behind per-app mock service instances and sign-in behind authService; module adapters share the record store and export real records separately — preserves session workflows without guessed transport contracts or sample submission.
 - Keep role-based simulation in permissionsService and account memberships as organisation-scoped role arrays — allows future multi-workspace integration without implying enforced security.
 - Keep homepage operational previews in isolated presentational components with explicitly labelled illustrative records; marketing changes must not mutate application state or imply live customer usage.
+- Keep stakeholder showcase content keyed by view and section in a public-only content module, with one atomic selection state; tab changes must immediately select distinct content without touching private app records.
