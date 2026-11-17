@@ -48,3 +48,8 @@
 - [x] Outcome-led hero and operational workspace preview
 - [x] Five value cards, clearly labelled sample figures and builder problem-to-solution section
 - [x] Supporting Construction Intelligence positioning; verify homepage and CTA destinations on desktop/mobile
+
+# Pricing and professional services
+- [ ] Update shared plans, homepage summary and subscription tab
+- [ ] Build pricing comparison, onboarding and optional advisory services with consultation links
+- [ ] Verify all prices and desktop/mobile navigation
