@@ -1,4 +1,6 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import assert from "node:assert/strict";
+const expect = (a: unknown) => ({ toBe: (e: unknown) => assert.equal(a, e), toEqual: (e: unknown) => assert.deepEqual(a, e) });
 import { INITIAL_RECORDS, makeRecord } from "@/content/platform";
 import { commitRecord, realRecords } from "@/content/sample-data";
 

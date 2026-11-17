@@ -6,7 +6,7 @@ import type { PlatformRecord } from "@/content/platform";
  * Expected endpoints: PUT /records/{id} (upsert JSON record), DELETE /records/{id}.
  * Only real user records are sent; sample records never leave the browser.
  */
-const base = () => (import.meta.env.VITE_FORESITE_API_URL as string | undefined)?.replace(/\/$/, "");
+const base = () => (import.meta.env['VITE_FORESITE_API_URL'] as string | undefined)?.replace(/\/$/, "");
 
 export const apiConfigured = () => Boolean(base());
 
