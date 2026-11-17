@@ -58,3 +58,8 @@
 - [x] Account, verification previews, plans, payment preview and organisation setup
 - [x] Invited client/trade journeys, independent trade fields and beta shortcut
 - [x] Welcome actions, optional sample generator and regression/browser checks
+
+# Combined Users centre
+- [ ] Bring role templates, security reviews and permission history into Users
+- [ ] Remove Permissions navigation and redirect existing links to Users
+- [ ] Verify combined session edits, history and desktop/mobile views
