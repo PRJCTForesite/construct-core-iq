@@ -25,12 +25,13 @@ import {
 import { APP_NAV, DEMO_USER } from "@/content/app";
 import { hasSession, endDemoSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
+import { previewPortal } from '@/lib/services/permissionsService';
 
 function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { role } = usePlatform();
   return (
     <nav className="flex flex-col gap-0.5 px-2" aria-label="Application">
-      {APP_NAV.filter((item) => role === "Client" ? item.to === "/app/client-portal" : role === "Trade" || role === "Trade Contractor" ? item.to === "/app/trade-portal" : true).map(
+      {APP_NAV.filter((item) => !previewPortal(role) || item.to === previewPortal(role)).map(
         (item) => (
           <Link
             key={item.to}
@@ -187,10 +188,8 @@ export function AppShell({ children }: { children?: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { role } = usePlatform();
   useEffect(() => {
-    if (role === "Client" && pathname !== "/app/client-portal")
-      void navigate({ to: "/app/client-portal" });
-    if ((role === "Trade" || role === "Trade Contractor") && pathname !== "/app/trade-portal")
-      void navigate({ to: "/app/trade-portal" });
+    const portal = previewPortal(role);
+    if (portal && pathname !== portal) void navigate({ to: portal });
   }, [role, pathname, navigate]);
 
   useEffect(() => {

@@ -26,3 +26,6 @@ export function canUseClientPortal(role: Role, action: string) {
   return role === 'Client' && ['View', 'Comment', 'Approve', 'Reject', 'Submit defect'].includes(action);
 }
 export function assignmentRights(role: Role) { return ['Client', 'Trade'].includes(role) ? ['View'] : ['View', 'Edit']; }
+export function previewPortal(role: Role): '/app/client-portal' | '/app/trade-portal' | null {
+  return role === 'Client' ? '/app/client-portal' : ['Trade', 'Trade Contractor'].includes(role) ? '/app/trade-portal' : null;
+}
