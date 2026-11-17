@@ -10,7 +10,11 @@ function account(email: string): Account { return { id: `demo-account:${email.to
 export const authService: AuthService = {
   login(email, remember) {
     if (typeof window === 'undefined') throw new Error('Mock sign-in requires a browser');
+    const previewRole=window.sessionStorage.getItem('foresite.beta-preview');
+    const onboarding=window.sessionStorage.getItem('foresite.onboarding-preview');
     this.logout();
+    if(previewRole)window.sessionStorage.setItem('foresite.beta-preview',previewRole);
+    if(onboarding)window.sessionStorage.setItem('foresite.onboarding-preview',onboarding);
     const user = account(email.trim());
     const storage = remember ? window.localStorage : window.sessionStorage;
     storage.setItem(SESSION_KEY, JSON.stringify({ email: user.email, at: Date.now(), demo: true }));
@@ -18,6 +22,8 @@ export const authService: AuthService = {
   },
   logout() {
     if (typeof window === 'undefined') return;
+    window.sessionStorage.removeItem('foresite.beta-preview');
+    window.sessionStorage.removeItem('foresite.onboarding-preview');
     window.localStorage.removeItem(SESSION_KEY);
     window.sessionStorage.removeItem(SESSION_KEY);
   },

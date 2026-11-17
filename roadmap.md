@@ -53,3 +53,8 @@
 - [x] Update shared plans, homepage summary and subscription tab
 - [x] Build pricing comparison, onboarding and optional advisory services with consultation links
 - [x] Verify all prices and desktop/mobile navigation
+
+# Subscriber onboarding
+- [x] Account, verification previews, plans, payment preview and organisation setup
+- [x] Invited client/trade journeys, independent trade fields and beta shortcut
+- [x] Welcome actions, optional sample generator and regression/browser checks

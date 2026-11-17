@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { UsersCentre } from '@/components/users/UsersCentre';
 export const Route = createFileRoute('/app/users')({
+  validateSearch: (search: Record<string, unknown>): { invite?: 'Client' | 'Trade' | undefined } => ({ invite: search['invite'] === 'Client' || search['invite'] === 'Trade' ? search['invite'] : undefined }),
   head: () => ({ meta: [
     { title: 'Users Management Centre — Foresite' },
     { name: 'description', content: 'Manage Foresite user profiles, organisation roles, project assignments and shared permission templates.' },
