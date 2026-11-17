@@ -1,5 +1,5 @@
 export const ACCESS_VIEWS = [
-  { id: "owner", title: "Owner View", description: "Manage projects, teams, financials, communications and operations across your organisation.", features: ["Projects", "Financials", "Documents", "Communications", "Defects", "Reports", "AI Insights", "Permissions Centre"] },
+  { id: "owner", title: "Owner View", description: "Manage projects, teams, financials, communications and operations across your organisation.", features: ["Projects", "Financials", "Documents", "Communications", "Defects", "Reports", "AI Insights", "Users & Permissions"] },
   { id: "client", title: "Client View", description: "Track project progress, approvals, photos, defects and updates in real time.", features: ["Progress", "Photos", "Approvals", "Documents", "Defects", "Updates", "Messaging"] },
   { id: "trade", title: "Trade View", description: "Manage assigned works, defects, site communications and project deliverables.", features: ["Tasks", "Defects", "Communications", "Drawings", "Documents", "Upcoming Works"] },
 ] as const;

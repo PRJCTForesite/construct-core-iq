@@ -14,7 +14,7 @@ export const Route = createFileRoute("/app/administration/")({
       { property: "og:title", content: "Administration — Foresite" },
       {
         property: "og:description",
-        content: "Manage your organisation and open the Foresite Permissions Centre.",
+        content: "Manage your organisation and open the Foresite Users centre.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -34,7 +34,7 @@ function AdministrationPage() {
             <ShieldCheck className="h-6 w-6" />
           </span>
           <div className="min-w-0 flex-1">
-            <h2 className="text-lg font-semibold">Permissions Centre</h2>
+            <h2 className="text-lg font-semibold">Users &amp; Permissions</h2>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground">
               Manage users, permissions and organisational access across the Foresite platform.
             </p>
@@ -44,8 +44,8 @@ function AdministrationPage() {
             </p>
           </div>
           <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Link to="/app/administration/permissions">
-              Open Permissions Centre <ArrowRight className="h-4 w-4" />
+            <Link to="/app/users">
+              Open Users &amp; Permissions <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </div>
