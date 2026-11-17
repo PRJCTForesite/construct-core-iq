@@ -1,4 +1,4 @@
-import { ACTIONS, MODULES, type PermissionMap, type Role } from '@/content/permissions';
+import { ACTIONS, MODULES, type PermissionMap, type Role } from '@/content/permission-types';
 
 /** UI simulation only. A future backend must independently enforce access. */
 export function rolePermissions(role: Role): PermissionMap {
