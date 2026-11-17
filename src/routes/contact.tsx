@@ -11,9 +11,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 export const Route = createFileRoute("/contact")({
-  validateSearch: (search: Record<string, unknown>): { enquiry?: "sales" | "demo" | "advisory"; service?: string } => ({
-    enquiry: search.enquiry === "advisory" || search.enquiry === "demo" || search.enquiry === "sales" ? search.enquiry : undefined,
-    service: typeof search.service === "string" ? search.service.slice(0, 120) : undefined,
+  validateSearch: (search: Record<string, unknown>): { enquiry?: "sales" | "demo" | "advisory" | undefined; service?: string | undefined } => ({
+    enquiry: search['enquiry'] === "advisory" || search['enquiry'] === "demo" || search['enquiry'] === "sales" ? search['enquiry'] : undefined,
+    service: typeof search['service'] === "string" ? search['service'].slice(0, 120) : undefined,
   }),
   head: () => ({
     meta: [
