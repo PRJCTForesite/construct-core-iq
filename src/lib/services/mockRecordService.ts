@@ -1,6 +1,7 @@
 import { INITIAL_RECORDS, type PlatformRecord } from '@/content/platform';
 import { commitRecord, realRecords } from '@/content/sample-data';
 import { weightedProgress } from '@/content/workflow';
+import { prepareRecordForSave } from '@/content/record-editing';
 import type { RecordService } from './contracts';
 
 /** One instance per mounted app: no global mutable record store or network calls. */
@@ -12,6 +13,9 @@ export function createMockRecordService(seed = INITIAL_RECORDS): RecordService {
     getRealRecords: () => structuredClone(realRecords(records, samples)),
     isSample: id => samples.has(id),
     saveRecord(record: PlatformRecord) {
+      // New projects stand alone even when created through a module adapter.
+      // Existing records are not rewritten as a side effect of this rule.
+      if (record.kind === 'Project' && !records.some(row => row.id === record.id)) record = prepareRecordForSave(record);
       const previousProject = records.find(row => row.id === record.id)?.project;
       const result = commitRecord(records, structuredClone(record), samples);
       records = record.kind === 'Task' ? result.records.map(project => project.kind === 'Project' && [record.project, previousProject].includes(project.title)
