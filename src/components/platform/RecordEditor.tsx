@@ -21,6 +21,8 @@ import { Minus, Plus } from 'lucide-react';
 import { useUsers } from '@/components/users/UsersProvider';
 import { AssignedPartyPicker } from './AssignedPartyPicker';
 import { prepareRecordForSave } from '@/content/record-editing';
+import { CommunicationApps } from './CommunicationApps';
+import { COMMUNICATION_APPS, communicationDraftLink } from '@/content/communication-apps';
 export function RecordEditor() {
   const { editing, edit, save, records, can, role } = usePlatform();
   const { users } = useUsers();
@@ -40,6 +42,8 @@ export function RecordEditor() {
   }[draft.kind];
   const update = (key: keyof PlatformRecord, value: string | number | boolean) =>
     setDraft((d) => (d ? { ...d, [key]: value } : d));
+  const communicationApp = COMMUNICATION_APPS.find(app => app.name === draft.category);
+  const draftLink = communicationApp ? communicationDraftLink(communicationApp.id, communicationApp.type === 'Email' ? draft.email : draft.phone, draft.title, draft.notes) : null;
   const input = (key: keyof PlatformRecord, label: string, type = "text") => (
     <label className="grid gap-1.5 text-xs font-medium" key={key}>
       {label}
@@ -69,14 +73,14 @@ export function RecordEditor() {
             ];
   return (
     <Dialog open={Boolean(editing)} onOpenChange={(v) => !v && edit(null)}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-xl">
+      <DialogContent className="max-h-[85vh] max-w-[calc(100vw-1rem)] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>
-            {records.some((r) => r.id === draft.id) ? "Edit" : "New"} {draft.kind.toLowerCase()}
+            {draft.kind === 'Communication' ? records.some(r => r.id === draft.id) ? 'Edit Communication' : 'Add Communication' : `${records.some(r => r.id === draft.id) ? 'Edit' : 'New'} ${draft.kind.toLowerCase()}`}
           </DialogTitle>
         </DialogHeader>
         <form
-          className="space-y-4"
+          className="min-w-0 space-y-4 [&_label]:min-w-0"
           onSubmit={(e) => {
             e.preventDefault();
             if (!draft.title.trim()) return;
@@ -88,7 +92,13 @@ export function RecordEditor() {
             toast.success(`${draft.kind} saved in demonstration`);
           }}
         >
-          {input("title", "Title / name")}
+          {draft.kind === 'Communication' && <CommunicationApps value={draft.category} onSelect={app => update('category', app.name)} />}
+          {input("title", draft.kind === 'Communication' ? 'Subject / title' : 'Title / name')}
+          {draft.kind === 'Communication' && <div className="space-y-4">
+            {communicationApp?.type === 'Email' ? input('email', 'Recipient email', 'email') : communicationApp && ['sms', 'whatsapp', 'call'].includes(communicationApp.id) ? input('phone', 'Recipient phone (international format)', 'tel') : input('responsible', 'Recipient / participants')}
+            <p className="text-xs text-muted-foreground">Personal account syncing is not connected. Saving logs this communication for the session; it does not send a message.</p>
+            {communicationApp?.mode === 'setup' && <p className="border-l-2 border-construction pl-3 text-xs text-muted-foreground">{communicationApp.name} requires verified Foresite sign-in and secure personal account storage before it can be linked.</p>}
+          </div>}
           {draft.kind === 'Defect' && <><DefectPhoto title={draft.title} className="h-40 rounded-lg"/><HealthBadge status={draft.status} severity={draft.category}/></>}
           <div className="grid grid-cols-2 gap-3">
             {draft.kind !== 'Project' && <label className="grid gap-1.5 text-xs">
@@ -187,10 +197,11 @@ export function RecordEditor() {
             />
           )}
           <label className="grid gap-1.5 text-xs">
-            Notes
+            {draft.kind === 'Communication' ? 'Message / communication details' : 'Notes'}
             <Textarea value={draft.notes} onChange={(e) => update("notes", e.target.value)} />
           </label>
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-wrap justify-end gap-2">
+            {draft.kind === 'Communication' && communicationApp && !['record', 'setup'].includes(communicationApp.mode) && <Button type="button" variant="outline" disabled={!draftLink} onClick={() => { if (!draftLink) return; window.open(draftLink, '_blank', 'noopener,noreferrer'); }}>Open {communicationApp.name}</Button>}
             <Button type="button" variant="outline" onClick={() => edit(null)}>
               Cancel
             </Button>
@@ -198,7 +209,7 @@ export function RecordEditor() {
               disabled={!can(module, records.some((r) => r.id === draft.id) ? "Edit" : "Create")}
               type="submit"
             >
-              Save
+              {draft.kind === 'Communication' ? 'Save Communication' : 'Save'}
             </Button>
           </div>
         </form>

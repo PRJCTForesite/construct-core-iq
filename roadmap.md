@@ -60,10 +60,12 @@
 - [x] Welcome actions, optional sample generator and regression/browser checks
 
 # Combined Users centre
-- [ ] Bring role templates, security reviews and permission history into Users
-- [ ] Remove Permissions navigation and redirect existing links to Users
-- [ ] Verify combined session edits, history and desktop/mobile views
+- [x] Bring role templates, security reviews and permission history into Users
+- [x] Remove Permissions navigation and redirect existing links to Users
+- [x] Verify combined session edits, history and desktop/mobile views
 
 # Add Communication rework
-- [ ] Clarify whose messaging and email accounts should be linked
-- [ ] Rework communication entry and connect the agreed services
+- [x] Clarify whose messaging and email accounts should be linked
+- [x] Rework communication entry with common apps and searchable See More
+- [ ] Connect personal Gmail, Outlook, Teams and Slack accounts — blocked by verified authentication and secure per-user storage pending the user's backend contracts
+- [x] Verify communication record save/readback and app draft links

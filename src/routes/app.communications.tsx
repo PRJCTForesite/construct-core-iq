@@ -33,7 +33,7 @@ function CommunicationsPage() {
         meta="Email · SMS · Calls · Internal — 7 unread"
         actions={
           <Button onClick={()=>store.create("Communication")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Reply className="h-4 w-4" /> Compose
+            <Reply className="h-4 w-4" /> Add Communication
           </Button>
         }
       />
