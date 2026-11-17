@@ -1,3 +1,4 @@
+import { LiveRegister } from "@/components/platform/ModuleFrame";
 import { createFileRoute } from "@tanstack/react-router";
 import { Paperclip, Phone, Reply, Sparkles } from "lucide-react";
 
@@ -34,6 +35,7 @@ function CommunicationsPage() {
           </Button>
         }
       />
+      <LiveRegister kind="Communication" title="RFIs, site instructions & messages" module="Communications" detail={r=>`${r.category} · ${r.person}`} />
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)_minmax(0,0.8fr)]">
         <Panel title="Inbox" bodyClassName="p-0 sm:p-0" className="max-h-[42rem] overflow-y-auto">

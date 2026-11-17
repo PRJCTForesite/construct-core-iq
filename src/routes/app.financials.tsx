@@ -1,3 +1,4 @@
+import { LiveRegister } from "@/components/platform/ModuleFrame";
 import { createFileRoute } from "@tanstack/react-router";
 import { Download, Plus } from "lucide-react";
 
@@ -72,6 +73,7 @@ function FinancialsPage() {
           </>
         }
       />
+      <LiveRegister kind="Variation" title="Variations & claims" module="Financials" detail={r=>`${r.person} · $${r.amount.toLocaleString()}`} />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {FINANCIAL_KPIS.map((kpi) => (
