@@ -73,14 +73,14 @@ export function RecordEditor() {
             ];
   return (
     <Dialog open={Boolean(editing)} onOpenChange={(v) => !v && edit(null)}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-xl">
+      <DialogContent className="max-h-[85vh] max-w-[calc(100vw-1rem)] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>
             {draft.kind === 'Communication' ? records.some(r => r.id === draft.id) ? 'Edit Communication' : 'Add Communication' : `${records.some(r => r.id === draft.id) ? 'Edit' : 'New'} ${draft.kind.toLowerCase()}`}
           </DialogTitle>
         </DialogHeader>
         <form
-          className="space-y-4"
+          className="min-w-0 space-y-4 [&_label]:min-w-0"
           onSubmit={(e) => {
             e.preventDefault();
             if (!draft.title.trim()) return;
@@ -200,7 +200,7 @@ export function RecordEditor() {
             {draft.kind === 'Communication' ? 'Message / communication details' : 'Notes'}
             <Textarea value={draft.notes} onChange={(e) => update("notes", e.target.value)} />
           </label>
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-wrap justify-end gap-2">
             {draft.kind === 'Communication' && communicationApp && !['record', 'setup'].includes(communicationApp.mode) && <Button type="button" variant="outline" disabled={!draftLink} onClick={() => { if (!draftLink) return; window.open(draftLink, '_blank', 'noopener,noreferrer'); }}>Open {communicationApp.name}</Button>}
             <Button type="button" variant="outline" onClick={() => edit(null)}>
               Cancel
