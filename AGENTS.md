@@ -20,4 +20,5 @@
 - Keep Client Portal templates and project-specific session state in PortalProvider beneath the existing app layout; use dedicated client-safe projections and explicit document sharing so portal widgets never read internal financial or note fields.
 - Share document layout controls and health indicators across portals; keep client detail projections free of internal notes and trade defect actions limited to readiness or inspection.
 - Derive session project progress from task weights when tasks change; task weight edits update the shared state immediately while keeping details open.
-- Sample records are identified by their seed IDs; a user's first new record of a kind removes that kind's samples (commitRecord), and only non-sample records sync through src/lib/foresite-api.ts to the external FastAPI service when VITE_FORESITE_API_URL is set — keeps demo data out of real storage.
+- Keep records behind per-app mock service instances and sign-in behind authService; module adapters share the record store and export real records separately — preserves session workflows without guessed transport contracts or sample submission.
+- Keep role-based simulation in permissionsService and account memberships as organisation-scoped role arrays — allows future multi-workspace integration without implying enforced security.

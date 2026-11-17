@@ -1,12 +1,19 @@
 import { useContext, useState, type ReactNode } from 'react';
-import { INITIAL_USERS, INITIAL_AUDIT, type DirectoryUser } from '@/content/permissions';
+import { INITIAL_AUDIT, type DirectoryUser } from '@/content/permissions';
+import { createMockUserService } from '@/lib/services/userService';
 import { userChanges } from '@/content/users';
 import { UsersContext } from './users-context';
 
 // Future authenticated membership service replaces this session-only state.
 // Organisation invitations, password resets and billing checks require server validation.
 export function UsersProvider({ children }: { children: ReactNode }) {
-  const [users, setUsers] = useState(INITIAL_USERS);
+  const [service] = useState(createMockUserService);
+  const [users, setUsersState] = useState(()=>service.getUsers());
+  const setUsers: React.Dispatch<React.SetStateAction<DirectoryUser[]>> = next => setUsersState(current => {
+    const updated = typeof next === 'function' ? next(current) : next;
+    service.replaceUsers(updated);
+    return updated;
+  });
   const [audit, setAudit] = useState(INITIAL_AUDIT);
   function saveUser(user: DirectoryUser) {
     const before = users.find(u => u.id === user.id);
