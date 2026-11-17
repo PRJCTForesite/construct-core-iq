@@ -4,6 +4,7 @@ import type { PermissionMap, Role } from '@/content/permissions';
 
 export type PlatformStore = {
   records: PlatformRecord[];
+  loadSamples: (records: PlatformRecord[]) => void;
   role: Role;
   setRole: (role: Role) => void;
   save: (record: PlatformRecord, keepOpen?: boolean) => void;
