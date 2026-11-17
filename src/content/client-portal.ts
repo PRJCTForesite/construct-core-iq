@@ -1,5 +1,6 @@
 import type { PlatformRecord } from "./platform";
 import type { Role } from "./permissions";
+import { canUseClientPortal } from '@/lib/services/permissionsService';
 
 export const WIDGETS = [
   { id: "approvals", name: "Pending Approvals" },
@@ -69,11 +70,7 @@ export type PortalAction =
   | "Modify financials"
   | "Internal notes";
 export function portalCan(role: Role, action: PortalAction) {
-  if (["Owner", "Administrator"].includes(role)) return true;
-  if (role === "Project Manager") return action !== "Configure";
-  return (
-    role === "Client" && ["View", "Comment", "Approve", "Reject", "Submit defect"].includes(action)
-  );
+  return canUseClientPortal(role, action);
 }
 export const DOCUMENT_PORTAL_CATEGORIES = [
   "Contracts",

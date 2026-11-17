@@ -19,7 +19,7 @@ export function weightedProgress(tasks: Pick<PlatformRecord, 'progress' | 'weigh
   return weight ? Math.round(tasks.reduce((sum, task) => sum + Math.min(100, Math.max(0, task.progress)) * Math.max(0, task.weight), 0) / weight) : 0;
 }
 export function clampWeight(value: number) { return Math.min(100, Math.max(0, Number.isFinite(value) ? value : 0)); }
-export function canSignOff(role: string) { return ['Owner', 'Administrator', 'Project Manager', 'Supervisor', 'Foreman'].includes(role); }
+export { canSignOff } from '@/lib/services/permissionsService';
 export function documentType(name: string, category = '') {
   const extension = name.match(/\.(pdf|docx?|xlsx?|jpe?g|png|dwg)$/i)?.[1];
   return extension?.toUpperCase() ?? (/Photos/i.test(category) ? 'JPG' : /Programs|Financial/i.test(category) ? 'XLSX' : 'PDF');

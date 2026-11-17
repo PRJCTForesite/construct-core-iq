@@ -1,0 +1,23 @@
+import { INITIAL_RECORDS, type PlatformRecord } from '@/content/platform';
+import { commitRecord, realRecords } from '@/content/sample-data';
+import { weightedProgress } from '@/content/workflow';
+import type { RecordService } from './contracts';
+
+/** One instance per mounted app: no global mutable record store or network calls. */
+export function createMockRecordService(seed = INITIAL_RECORDS): RecordService {
+  let records = structuredClone(seed);
+  const samples = new Set(seed.map(record => record.id));
+  return {
+    getRecords: () => structuredClone(records),
+    getRealRecords: () => structuredClone(realRecords(records, samples)),
+    isSample: id => samples.has(id),
+    saveRecord(record: PlatformRecord) {
+      const previousProject = records.find(row => row.id === record.id)?.project;
+      const result = commitRecord(records, structuredClone(record), samples);
+      records = record.kind === 'Task' ? result.records.map(project => project.kind === 'Project' && [record.project, previousProject].includes(project.title)
+        ? { ...project, progress: weightedProgress(result.records.filter(task => task.kind === 'Task' && task.project === project.title)) } : project) : result.records;
+      return { records: structuredClone(records), clearedSamples: result.clearedSamples };
+    },
+    deleteRecord(id) { records = records.filter(record => record.id !== id); return structuredClone(records); },
+  };
+}

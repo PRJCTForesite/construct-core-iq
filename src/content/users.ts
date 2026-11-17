@@ -1,4 +1,5 @@
 import { PROJECTS, type DirectoryUser, type Role, type PermissionMap, type AuditEntry } from './permissions';
+import { assignmentRights } from '@/lib/services/permissionsService';
 
 export const STANDARD_ROLES: Role[] = ['Owner', 'Administrator', 'Project Manager', 'Supervisor', 'Trade', 'Client'];
 export const USER_PERMISSIONS = [
@@ -25,7 +26,7 @@ export function togglePermission(permissions: PermissionMap, module: string, act
 export function assignProjects(user: DirectoryUser, projects: string[], entireOrganisation = false): DirectoryUser {
   const selected = entireOrganisation ? PROJECTS : projects;
   return { ...user, assignmentScope: entireOrganisation ? 'Entire Organisation' : 'Selected Projects', assignments: selected.map(project => user.assignments.find(a => a.project === project) ?? {
-    project, role: user.role, status: 'Active', date: new Date().toLocaleDateString('en-AU'), rights: user.role === 'Client' || user.role === 'Trade' ? ['View'] : ['View', 'Edit'],
+    project, role: user.role, status: 'Active', date: new Date().toLocaleDateString('en-AU'), rights: assignmentRights(user.role),
   }) };
 }
 export function userChanges(before: DirectoryUser, after: DirectoryUser): AuditEntry[] {

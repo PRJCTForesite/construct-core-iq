@@ -82,30 +82,8 @@ export type AuditEntry = {
   date: string;
 };
 
-export function rolePermissions(role: Role): PermissionMap {
-  return Object.fromEntries(
-    MODULES.map((module) => {
-      if (role === "Owner") return [module, [...ACTIONS]];
-      if (role === "Client" || role === "Trade" || role === "Trade Contractor")
-        return [module, module === (role === "Client" ? "Client Portal" : "Trade Portal") ? ["View"] : []];
-      if (module === "Billing" || module === "Organisation") return [module, []];
-      if (role === "Administrator") return [module, [...ACTIONS]];
-      if (["Users", "Client Portal", "Trade Portal", "Clients"].includes(module)) return [module, []];
-      if (module === "Administration" || (module === "Financials" && role !== "Project Manager"))
-        return [module, []];
-      if (role === "Guest")
-        return [
-          module,
-          ["Projects", "Documents", "Communications"].includes(module) ? ["View"] : [],
-        ];
-      if (role === "Project Manager")
-        return [module, ["View", "Create", "Edit", "Assign", "Approve"]];
-      if (role === "Foreman" || role === "Supervisor")
-        return [module, ["Tasks", "Trades", "Defects", "Documents", "Communications"].includes(module) ? ["View", "Create", "Edit", "Assign"] : module === "Projects" ? ["View"] : []];
-      return [module, ["Reports"].includes(module) ? [] : ["View", "Create"]];
-    }),
-  );
-}
+import { rolePermissions } from '@/lib/services/permissionsService';
+export { rolePermissions };
 
 const PEOPLE: [string, Role, string, DirectoryUser["status"], number][] = [
   ["Lachlan Davies", "Owner", "Foresite Development", "Online", 4],

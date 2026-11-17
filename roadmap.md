@@ -35,7 +35,11 @@
 
 # Functional frontend pass
 - [x] Module-by-module sample removal on first real record, with sample notices
-- [x] Connection point for own FastAPI/PostgreSQL service (real records only)
+- [x] Mock-only connection boundary for future FastAPI/PostgreSQL service (real records only)
 - [x] Live Variations/claims and RFI/site instruction registers; New Invoice and Compose open forms
-- [ ] Connect FastAPI service — needs the service address (VITE_FORESITE_API_URL) and matching /records endpoints
-- [ ] Load records from the service on sign-in and real authentication — needs the service's login/list endpoints
+- [ ] Connect FastAPI service and real authentication — deferred until confirmed backend contracts are supplied
+
+# Mock service integration preparation
+- [x] Remove assumed endpoints and introduce replaceable record and module service interfaces
+- [x] Add mock authentication and multi-organisation memberships; centralise demo permission checks
+- [x] Preserve existing session workflows and sample removal; verify services and browser flows (59 tests; sign-in, defect save/read-back, portal previews, sign-out)
