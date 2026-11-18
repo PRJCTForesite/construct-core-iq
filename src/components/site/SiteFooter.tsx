@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import mark from "@/assets/foresite-mark.png";
+import markAsset from "@/assets/foresite-mark-v2.png.asset.json";
+const mark = markAsset.url;
 import { BRAND, POSITIONING, PORTAL_URL } from "@/content/site";
 
 const COLUMNS = [

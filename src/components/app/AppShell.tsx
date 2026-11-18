@@ -9,7 +9,8 @@ import {
   RolePreview,
 } from "@/components/platform/GlobalControls";
 import { usePlatform } from "@/components/platform/PlatformProvider";
-import mark from "@/assets/foresite-mark.png";
+import markAsset from "@/assets/foresite-mark-v2.png.asset.json";
+const mark = markAsset.url;
 import { AppIcon } from "./AppIcon";
 import { Avatar } from "./primitives";
 import { Button } from "@/components/ui/button";

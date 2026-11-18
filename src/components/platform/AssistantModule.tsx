@@ -1,7 +1,8 @@
 import { useEffect,useRef,useState } from 'react';
 import { Link,useNavigate } from '@tanstack/react-router';
 import type { UIMessage } from 'ai';
-import mark from '@/assets/foresite-mark.png';
+import markAsset from '@/assets/foresite-mark-v2.png.asset.json';
+const mark = markAsset.url;
 import { Conversation,ConversationContent,ConversationScrollButton } from '@/components/ai-elements/conversation';
 import { Message,MessageContent,MessageResponse } from '@/components/ai-elements/message';
 import { PromptInput,PromptInputTextarea,PromptInputFooter,PromptInputSubmit } from '@/components/ai-elements/prompt-input';
