@@ -76,5 +76,5 @@
 - [x] Remove exterior logo backgrounds and verify across website and app
 
 # Google Search Console setup
-- [ ] Check Google connection and verified property access
-- [ ] Complete site verification and submit the published sitemap, with approval before any required publish
+- [x] Check Google connection and verified property access
+- [x] Complete site verification and submit the published sitemap, with approval before any required publish
