@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TradePortal } from "@/components/trade-portal/TradePortal";
 export const Route = createFileRoute("/app/trade-portal")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Trade Portal — Foresite" },

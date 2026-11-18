@@ -6,6 +6,7 @@ import { RoleExperienceFlow } from "@/components/access/AccessFlow";
 import { ACCESS_WORKSPACES } from "@/content/access";
 import { hasSession, endDemoSession } from "@/lib/session";
 export const Route = createFileRoute("/login/workspaces")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "My Workspaces — Foresite Account Preview" },

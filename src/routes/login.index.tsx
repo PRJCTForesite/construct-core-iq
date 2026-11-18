@@ -10,6 +10,7 @@ import { ACCESS_VIEWS, validateDemoLogin } from "@/content/access";
 import { startDemoSession } from "@/lib/session";
 
 export const Route = createFileRoute("/login/")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: "One account, every experience — Foresite Sign In" }, { name: "description", content: "Unified Foresite account access for owners, clients and trades. One platform, one login and permission-based experiences." }, { property: "og:title", content: "Foresite — Unified Account Access" }, { property: "og:description", content: "Sign in to one Foresite account for Owner, Client and Trade experiences." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { name: "robots", content: "noindex" }] }),
   component: LoginPage,
 });

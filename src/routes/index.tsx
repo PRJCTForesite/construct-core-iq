@@ -15,6 +15,7 @@ const TITLE = "Foresite — Reduce Delays. Protect Profit. Keep Projects Moving.
 const DESC = "Manage trades, variations, client approvals and defects with Foresite. Built for construction businesses that need project visibility, accountability and control.";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: TITLE },

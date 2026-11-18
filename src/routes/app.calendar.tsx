@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CalendarModule } from "@/components/platform/CalendarModule";
 
 export const Route = createFileRoute("/app/calendar")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Calendar \u2014 Foresite OS" },

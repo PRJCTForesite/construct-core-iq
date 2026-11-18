@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ClientPortal } from "@/components/client-portal/ClientPortal";
 export const Route = createFileRoute("/app/client-portal")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Client Portal — Foresite" },

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { APP_URL } from "@/content/site";
 
 export const Route = createFileRoute("/download")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },

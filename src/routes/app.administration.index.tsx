@@ -4,6 +4,7 @@ import { PageHeading } from "@/components/app/primitives";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/app/administration/")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Administration — Foresite" },

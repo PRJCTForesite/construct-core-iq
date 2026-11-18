@@ -18,6 +18,7 @@ import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAdministrationRouteImport } from './routes/app.administration'
 import { Route as AppAiInsightsRouteImport } from './routes/app.ai-insights'
@@ -89,6 +90,11 @@ const LoginRoute = LoginRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -238,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRouteWithChildren
   '/pricing': typeof PricingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByTo {
   '/features': typeof FeaturesRoute
   '/industries': typeof IndustriesRoute
   '/pricing': typeof PricingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/client-portal': typeof AppClientPortalRoute
   '/app/clients': typeof AppClientsRoute
@@ -311,6 +319,7 @@ export interface FileRoutesById {
   '/industries': typeof IndustriesRoute
   '/login': typeof LoginRouteWithChildren
   '/pricing': typeof PricingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app/administration': typeof AppAdministrationRouteWithChildren
   '/app/ai-insights': typeof AppAiInsightsRouteWithChildren
   '/app/calendar': typeof AppCalendarRoute
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/sitemap.xml'
     | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
@@ -387,6 +397,7 @@ export interface FileRouteTypes {
     | '/features'
     | '/industries'
     | '/pricing'
+    | '/sitemap.xml'
     | '/app/calendar'
     | '/app/client-portal'
     | '/app/clients'
@@ -423,6 +434,7 @@ export interface FileRouteTypes {
     | '/industries'
     | '/login'
     | '/pricing'
+    | '/sitemap.xml'
     | '/app/administration'
     | '/app/ai-insights'
     | '/app/calendar'
@@ -462,6 +474,7 @@ export interface RootRouteChildren {
   IndustriesRoute: typeof IndustriesRoute
   LoginRoute: typeof LoginRouteWithChildren
   PricingRoute: typeof PricingRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -527,6 +540,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -820,6 +840,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndustriesRoute: IndustriesRoute,
   LoginRoute: LoginRouteWithChildren,
   PricingRoute: PricingRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

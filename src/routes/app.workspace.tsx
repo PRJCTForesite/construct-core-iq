@@ -21,6 +21,7 @@ import {
 } from "@/content/app";
 
 export const Route = createFileRoute("/app/workspace")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "My Workspace \u2014 Foresite OS" },

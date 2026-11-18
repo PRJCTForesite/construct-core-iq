@@ -12,6 +12,7 @@ import { PRICING_COMPARISON, PRICING_FAQ, PRICING_TIERS, ASSURANCE_SERVICES, DEL
 const title = 'Foresite Pricing — Software Plans & Optional Advisory Services';
 const description = 'Starter $50/user/month, Professional $100/user/month and Enterprise $10,000/year. Clients and trades included. Explore optional implementation and construction advisory services.';
 export const Route = createFileRoute('/pricing')({
+  staticData: { sitemap: true },
   head: () => ({ meta: [{ title }, { name: 'description', content: description }, { property: 'og:title', content: title }, { property: 'og:description', content: description }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }),
   component: PricingPage,
 });

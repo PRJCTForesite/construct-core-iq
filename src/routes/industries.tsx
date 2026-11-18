@@ -6,6 +6,7 @@ import { Section, SectionHeading } from "@/components/site/Section";
 import { INDUSTRIES } from "@/content/site";
 
 export const Route = createFileRoute("/industries")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },

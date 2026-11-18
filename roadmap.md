@@ -71,6 +71,10 @@
 - [x] Verify communication record save/readback and app draft links
 
 # Launch video and brand cleanup
-- [ ] Create a short branded motion-graphics launch video (X reference unavailable)
+- [x] Create a 20-second branded motion-graphics launch video with music (X reference unavailable; frame-based review)
 - [x] Rename Book Demo buttons to Book
 - [x] Remove exterior logo backgrounds and verify across website and app
+
+# Google Search Console setup
+- [ ] Check Google connection and verified property access
+- [ ] Complete site verification and submit the published sitemap, with approval before any required publish

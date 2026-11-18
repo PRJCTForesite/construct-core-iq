@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ACTIVE_THREAD, INBOX_THREADS } from "@/content/app";
 
 export const Route = createFileRoute("/app/communications")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Communications \u2014 Foresite OS" },

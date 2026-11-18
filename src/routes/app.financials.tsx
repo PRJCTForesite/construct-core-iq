@@ -23,6 +23,7 @@ import {
 } from "@/content/app";
 
 export const Route = createFileRoute("/app/financials")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Financials \u2014 Foresite OS" },

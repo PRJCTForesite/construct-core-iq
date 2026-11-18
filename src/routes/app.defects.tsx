@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DEFECT_COLUMNS } from "@/content/app";
 
 export const Route = createFileRoute("/app/defects")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Defects \u2014 Foresite OS" },

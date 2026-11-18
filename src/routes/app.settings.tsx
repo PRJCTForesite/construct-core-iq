@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SettingsModule } from "@/components/platform/SettingsModule";
 
 export const Route = createFileRoute("/app/settings")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Settings \u2014 Foresite OS" },

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PROJECT_ROWS } from "@/content/app";
 
 export const Route = createFileRoute("/app/projects/")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Projects \u2014 Foresite OS" },

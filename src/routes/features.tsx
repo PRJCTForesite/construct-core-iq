@@ -9,6 +9,7 @@ import { FEATURE_DETAILS } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/features")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },

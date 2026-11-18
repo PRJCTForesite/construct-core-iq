@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DirectoryModule } from "@/components/platform/RegisterModules";
 
 export const Route = createFileRoute("/app/clients")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Clients \u2014 Foresite OS" },

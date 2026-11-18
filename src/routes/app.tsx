@@ -6,6 +6,7 @@ import { AppShell } from "@/components/app/AppShell";
 import { UsersProvider } from "@/components/users/UsersProvider";
 
 export const Route = createFileRoute("/app")({
+  staticData: { sitemap: "exclude-subtree" },
   head: () => ({
     meta: [
       { property: "og:type", content: "website" },

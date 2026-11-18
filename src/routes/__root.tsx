@@ -78,9 +78,11 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
+      { name: "google-site-verification", content: "0hWMnwkQVw5WKcOXkn4JApg3_cOZaFUpXmpK_59ebmY" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Foresite — The Construction Operating System" },
       {

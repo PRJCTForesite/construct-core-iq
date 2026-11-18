@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { TasksModule } from "@/components/platform/RegisterModules";
 
 export const Route = createFileRoute("/app/tasks")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Tasks \u2014 Foresite OS" },

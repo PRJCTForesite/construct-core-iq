@@ -2,6 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 
 // Preserve existing bookmarks while keeping a single people-and-access centre.
 export const Route = createFileRoute('/app/administration/permissions')({
+  staticData: { sitemap: false },
   beforeLoad: () => { throw redirect({ to: '/app/users', replace: true }); },
   head: () => ({ meta: [
     { title: 'User Access Redirect — Foresite' },

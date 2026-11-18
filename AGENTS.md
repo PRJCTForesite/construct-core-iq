@@ -30,3 +30,4 @@
 - Keep stakeholder showcase content keyed by view and section in a public-only content module, with one atomic selection state; tab changes must immediately select distinct content without touching private app records.
 - Keep communication app choices and safe draft links in a browser-safe catalogue; personal inbox integration stays setup-needed until verified auth and server-side per-user credential storage exist, preventing shared-account exposure.
 - Use the shared transparent logo assets across public and application surfaces and derive the favicon from the same mark; this keeps exterior backgrounds consistent without CSS masking.
+- Maintain the router-derived sitemap through required staticData.sitemap decisions, excluding private subtrees and omitting unauthoritative lastmod dates; this keeps public discovery aligned with routes.

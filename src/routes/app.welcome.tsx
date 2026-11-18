@@ -8,6 +8,7 @@ import { readOnboardingPreview } from '@/content/onboarding';
 import { onboardingDemoRecords, onboardingDemoUsers } from '@/content/onboarding-demo';
 import { toast } from 'sonner';
 export const Route = createFileRoute('/app/welcome')({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: 'Welcome & Workspace Setup — Foresite' }, { name: 'description', content: 'Start your first Foresite project, invite clients and trades or generate optional sample workspace records.' }, { property: 'og:title', content: 'Welcome to your Foresite Workspace' }, { property: 'og:description', content: 'Your first project, client and trade invitations and optional sample workspace setup.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }, { name: 'robots', content: 'noindex' }] }),
   component: WelcomePage,
 });

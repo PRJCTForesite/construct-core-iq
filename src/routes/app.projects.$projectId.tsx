@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { PROJECT_DETAIL, PROJECT_ROWS } from "@/content/app";
 
 export const Route = createFileRoute("/app/projects/$projectId")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "Project overview \u2014 Foresite OS" },

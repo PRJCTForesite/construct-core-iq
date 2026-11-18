@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/app/ai-insights")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { property: "og:title", content: "AI Insights \u2014 Foresite OS" },

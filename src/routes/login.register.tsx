@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Onboarding } from '@/components/access/Onboarding';
 import type { OnboardingKind } from '@/content/onboarding';
 export const Route = createFileRoute('/login/register')({
+  staticData: { sitemap: false },
   validateSearch: (search: Record<string, unknown>): { kind?: OnboardingKind | undefined; code?: string | undefined; organisation?: string | undefined; email?: string | undefined } => ({
     kind: ['subscriber', 'independent-trade', 'client-invite', 'trade-invite'].includes(String(search['kind'])) ? search['kind'] as OnboardingKind : undefined,
     code: typeof search['code'] === 'string' ? search['code'].slice(0, 100) : undefined,

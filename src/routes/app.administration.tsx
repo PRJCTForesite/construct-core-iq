@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/app/administration")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Administration — Foresite OS" },
     { name: "description", content: "Foresite organisation administration and permission management." },

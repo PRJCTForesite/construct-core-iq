@@ -5,6 +5,7 @@ import { Section, SectionHeading } from "@/components/site/Section";
 import { POSITIONING, ROADMAP } from "@/content/site";
 
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },
