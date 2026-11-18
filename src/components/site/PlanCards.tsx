@@ -13,6 +13,6 @@ export function PlanCards({ compact = false, preview = false }: { compact?: bool
     <p className="mt-5 border-y border-border py-3 text-sm font-medium text-azure">Clients Included · Trades Included</p>
     <ul className="my-5 flex-1 space-y-2.5">{(compact ? tier.features.slice(0, 4) : tier.features).map(feature => <li key={feature} className="flex items-start gap-2 text-sm text-secondary-foreground"><Check className="mt-0.5 size-4 shrink-0 text-azure" />{feature}</li>)}</ul>
     <Button asChild variant={tier.featured ? 'default' : 'outline'}><Link to={preview || compact ? '/pricing' : '/login/register'}>{preview ? 'View plan details' : compact ? 'Compare Plans' : 'Start Free Trial'}</Link></Button>
-    {!compact && !preview && <Button asChild variant="ghost" className="mt-2"><Link to="/contact" search={{ enquiry: 'demo' }}>Book Demo</Link></Button>}
+    {!compact && !preview && <Button asChild variant="ghost" className="mt-2"><Link to="/contact" search={{ enquiry: 'demo' }}>Book</Link></Button>}
   </article>)}</div>;
 }

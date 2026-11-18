@@ -33,7 +33,7 @@ export function SiteHeader() {
             <Link to="/login">Login</Link>
           </Button>
           <Button asChild size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Link to="/contact">Book a Demo</Link>
+            <Link to="/contact">Book</Link>
           </Button>
         </div>
 
@@ -63,7 +63,7 @@ export function SiteHeader() {
                 </Button>
                 <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
                   <Link to="/contact" onClick={() => setOpen(false)}>
-                    Book a Demo
+                    Book
                   </Link>
                 </Button>
               </div>

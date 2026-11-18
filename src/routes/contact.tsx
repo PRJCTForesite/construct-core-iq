@@ -107,7 +107,7 @@ function ContactPage() {
           <form onSubmit={handleSubmit} noValidate className="rounded-xl border border-border bg-card p-7 shadow-panel">
             <div className="mb-6">
               <Label htmlFor="enquiry">Enquiry type</Label>
-              <select id="enquiry" className="mt-2 w-full rounded-md border border-input bg-background p-2 text-sm" value={intent} onChange={e => setIntent(e.target.value as "sales" | "demo" | "advisory")}><option value="sales">Software pricing</option><option value="demo">Book Demo</option><option value="advisory">Advisory Consultation</option></select>
+              <select id="enquiry" className="mt-2 w-full rounded-md border border-input bg-background p-2 text-sm" value={intent} onChange={e => setIntent(e.target.value as "sales" | "demo" | "advisory")}><option value="sales">Software pricing</option><option value="demo">Book</option><option value="advisory">Advisory Consultation</option></select>
               {search.service && <p className="mt-2 text-sm text-azure">{search.service}</p>}
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
@@ -142,7 +142,7 @@ function ContactPage() {
             </div>
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <Button type="submit" className="bg-azure text-azure-foreground hover:bg-azure/90">{intent === 'advisory' ? 'Request Advisory Consultation' : intent === 'demo' ? 'Book Demo' : 'Contact Sales'}</Button>
+              <Button type="submit" className="bg-azure text-azure-foreground hover:bg-azure/90">{intent === 'advisory' ? 'Request Advisory Consultation' : intent === 'demo' ? 'Book' : 'Contact Sales'}</Button>
               <p className="w-full text-xs text-muted-foreground">Preview only · requests are not sent.</p>
             </div>
           </form>

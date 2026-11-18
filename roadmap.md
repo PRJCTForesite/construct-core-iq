@@ -69,3 +69,8 @@
 - [x] Rework communication entry with common apps and searchable See More
 - [ ] Connect personal Gmail, Outlook, Teams and Slack accounts — blocked by verified authentication and secure per-user storage pending the user's backend contracts
 - [x] Verify communication record save/readback and app draft links
+
+# Launch video and brand cleanup
+- [ ] Create a short branded motion-graphics launch video (X reference unavailable)
+- [x] Rename Book Demo buttons to Book
+- [x] Remove exterior logo backgrounds and verify across website and app

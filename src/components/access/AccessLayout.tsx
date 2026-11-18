@@ -1,14 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
-import logoAsset from "@/assets/foresite-logo-full.png.asset.json";
+import logo from "@/assets/foresite-logo-transparent.png";
 import { Button } from "@/components/ui/button";
 
 export function AccessLayout({ children }: { children: ReactNode }) {
   return <div className="access-theme min-h-screen bg-surface text-foreground">
     <header className="border-b border-border bg-background">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
-        <Link to="/" className="flex items-center gap-3" aria-label="Foresite home"><img src={logoAsset.url} width={160} height={41} alt="Foresite - Combined Construction Systems" className="h-11 w-auto" /><span className="hidden border-l border-border pl-3 text-sm text-muted-foreground sm:block">Account access</span></Link>
+        <Link to="/" className="flex min-w-0 items-center gap-3" aria-label="Foresite home"><img src={logo} width={190} height={40} alt="Foresite - Combined Construction Systems" className="h-auto w-[170px] max-w-full sm:w-[190px]" /><span className="hidden border-l border-border pl-3 text-sm text-muted-foreground sm:block">Account access</span></Link>
         <Button asChild variant="ghost" size="sm"><Link to="/"><ArrowLeft /> Back to website</Link></Button>
       </div>
     </header>

@@ -98,7 +98,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Consistent structure across every delivery team",
       "Portfolio roll-up for executives and directors",
     ],
-    cta: { label: "Book a Demo", to: "/contact" },
+    cta: { label: "Book", to: "/contact" },
     panel: {
       label: "Project Register",
       rows: [
@@ -170,7 +170,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Searchable history for claims and disputes",
       "No critical decisions lost in personal inboxes",
     ],
-    cta: { label: "Book a Demo", to: "/contact" },
+    cta: { label: "Book", to: "/contact" },
     panel: {
       label: "Recent Activity",
       rows: [
@@ -194,7 +194,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Drawing, specification and contract registers",
       "One place to find the latest approved set",
     ],
-    cta: { label: "Book a Demo", to: "/contact" },
+    cta: { label: "Book", to: "/contact" },
     panel: {
       label: "Document Register",
       rows: [
@@ -242,7 +242,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Portfolio heat map for leadership",
       "Consistent basis for reporting to clients",
     ],
-    cta: { label: "Book a Demo", to: "/contact" },
+    cta: { label: "Book", to: "/contact" },
     panel: {
       label: "Project Health Score",
       rows: [
@@ -266,7 +266,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Prioritised actions for delivery teams",
       "Foundation for forecasting and claims analysis",
     ],
-    cta: { label: "Book a Demo", to: "/contact" },
+    cta: { label: "Book", to: "/contact" },
     panel: {
       label: "Intelligence Feed",
       rows: [

@@ -18,7 +18,7 @@ export function CTABand({
         </div>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg" className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Link to="/contact">Book a Demo</Link>
+            <Link to="/contact">Book</Link>
           </Button>
           <Button
             asChild

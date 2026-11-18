@@ -36,7 +36,7 @@ function CTAButtons({ light }: { light?: boolean }) {
         <Link to="/login/register">Start Free Trial <ArrowRight /></Link>
       </Button>
       <Button asChild size="lg" variant="outline" className={light ? "border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" : ""}>
-        <Link to="/contact">Book Demo</Link>
+        <Link to="/contact">Book</Link>
       </Button>
     </div>
   );
