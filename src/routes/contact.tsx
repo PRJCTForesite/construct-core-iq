@@ -56,7 +56,7 @@ function ContactPage() {
       const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ _subject: subject, _template: 'table', _replyto: data.email, _captcha: 'false', ...fields }),
+        body: JSON.stringify({ _subject: subject, _template: 'table', _replyto: data.email, _captcha: 'false', _autoresponse: buildAutoResponse(data.name), ...fields }),
       });
       const json: unknown = await response.json().catch(() => null);
       const ok = response.ok && typeof json === 'object' && json !== null && 'success' in json && (json.success === true || json.success === 'true');
@@ -106,4 +106,27 @@ function ContactPage() {
       </aside>
     </div></Section>
   </>;
+}
+
+function buildAutoResponse(name: string) {
+  const first = name.trim().split(/\s+/)[0] || "there";
+  return `Hey ${first},
+
+Thanks for applying to join the Foresite Private Beta.
+
+We've received your project details and team size. Because Jordan and I are personally managing the setup and workspace configuration for every founding builder, we're onboarding builders in small, capped cohorts across Victoria.
+
+What happens next:
+1. We're reviewing your current project volume and existing software setup.
+2. One of us will reach out by phone or email within 1 business day to run through your active sites and confirm your beta access date.
+3. We'll set up your live workspace together in a quick 20-minute onboarding session.
+
+If you've got an active project kicking off or hitting lockup this month and need early access sooner, reply directly to this email or call me on 0437 722 552.
+
+Speak soon,
+
+Lachlan R. Davies
+Co-Founder, Foresite
+M: 0437 722 552 | E: admin@foresiteos.com.au
+foresiteos.com.au`;
 }
