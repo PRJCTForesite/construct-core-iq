@@ -86,3 +86,8 @@
 - [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form in admin@foresiteos.com.au and confirms a subsequent test arrives; publish updated recipient before live use
 - [x] Verify supplied SORCI 2025 PDF and replace interim source links (21.5% Australian respondents on p. 57; 87.4% Australian fixed-price contracts on p. 9; source links verified in the website)
 - [x] Verify validation, desktop/mobile pages and public metadata
+
+# SEO finding reconciliation
+- [x] List stored failures and check scanner freshness
+- [x] Verify heading order, actual website contact submission and published sitemap/robots
+- [x] Record verified stale failures as fixed pending the next SEO scan; no site code changes required
