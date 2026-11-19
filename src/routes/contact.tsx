@@ -1,8 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
 import { useState, type FormEvent } from "react";
-import { useServerFn } from '@tanstack/react-start';
-import { submitBetaApplication } from '@/lib/beta-application.functions';
 import { Section } from "@/components/site/Section";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,11 +22,11 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const search = Route.useSearch();
-  const submitApplication = useServerFn(submitBetaApplication);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [painPoints, setPainPoints] = useState<string[]>([]);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
   const [deliveryError, setDeliveryError] = useState('');
+  const [fallbackLink, setFallbackLink] = useState('');
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (status === 'sending') return;
@@ -39,14 +37,37 @@ function ContactPage() {
     }
     setErrors({});
     setDeliveryError('');
+    setFallbackLink('');
     setStatus('sending');
+    const data = result.data;
+    const label = data.enquiry === 'beta' ? 'Beta Application' : data.enquiry === 'demo' ? 'Demo Request' : data.enquiry === 'advisory' ? 'Advisory Enquiry' : 'Software Pricing';
+    const fields: Record<string, string> = {
+      name: data.name, company: data.company, email: data.email, phone: data.phone,
+      'State / territory': data.state, Role: data.role, 'Internal staff': data.size,
+      'Active projects': data.projects, Sectors: data.sectors.join(', '),
+      'Current tools': data.tools, 'Pain points': data.painPoints.join(', '),
+      'Heard about Foresite': data.source, Comments: data.comments,
+      'Enquiry type': data.enquiry, 'Advisory service': data.service,
+    };
+    const subject = `Foresite ${label} — ${data.company}`;
+    const mailBody = Object.entries(fields).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join('\n');
+    const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailBody)}`;
     try {
-      const response = await submitApplication({ data: result.data });
-      if (response.accepted) setStatus('success');
-      else { setStatus('idle'); setDeliveryError(response.error); }
+      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ _subject: subject, _template: 'table', _replyto: data.email, _captcha: 'false', ...fields }),
+      });
+      const json: unknown = await response.json().catch(() => null);
+      const ok = response.ok && typeof json === 'object' && json !== null && 'success' in json && (json.success === true || json.success === 'true');
+      if (ok) { setStatus('success'); return; }
+      setStatus('idle');
+      setFallbackLink(mailto);
+      setDeliveryError('We could not send your application online just now. Use the button below to email it to us instead — your answers are already filled in.');
     } catch {
       setStatus('idle');
-      setDeliveryError('Your application could not be submitted. Please try again or contact us directly.');
+      setFallbackLink(mailto);
+      setDeliveryError('We could not send your application online just now. Use the button below to email it to us instead — your answers are already filled in.');
     }
   }
   const selectClass = "mt-2 h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground";
@@ -73,7 +94,7 @@ function ContactPage() {
         <fieldset className="border-t border-border pt-7"><legend className="pr-3 text-lg font-semibold">Biggest pain points right now</legend><p className="mb-4 text-sm text-muted-foreground">Select up to three</p><div className="space-y-3">{PAIN_POINTS.map(value => <label key={value} className="flex items-start gap-2 text-sm text-secondary-foreground"><input className="mt-1 accent-azure" type="checkbox" name="painPoints" value={value} checked={painPoints.includes(value)} disabled={painPoints.length >= 3 && !painPoints.includes(value)} onChange={e => setPainPoints(previous => e.target.checked ? [...previous, value] : previous.filter(item => item !== value))} />{value}</label>)}</div>{error('painPoints')}</fieldset>
         <div><Label htmlFor="source">How did you hear about Foresite?</Label><select id="source" name="source" className={selectClass} defaultValue=""><option value="">Select (optional)</option>{SOURCES.map(value => <option key={value}>{value}</option>)}</select>{error('source')}</div>
         <div><Label htmlFor="comments">Anything else you want us to know</Label><Textarea id="comments" name="comments" rows={5} maxLength={2000} className="mt-2" defaultValue={search.service ? `I would like to discuss ${search.service}.` : ''} />{error('comments')}</div>
-        {deliveryError && <p role="alert" className="text-sm text-destructive">{deliveryError}</p>}
+        {deliveryError && <div role="alert" className="space-y-3"><p className="text-sm text-destructive">{deliveryError}</p>{fallbackLink && <a href={fallbackLink} className="inline-block text-sm font-medium text-azure underline">Email my application to {CONTACT_EMAIL}</a>}</div>}
         <Button type="submit" size="lg" disabled={status === 'sending'} className="h-auto min-h-11 whitespace-normal">{status === 'sending' ? 'Submitting…' : 'Apply for Beta Access'}</Button>
         <p className="text-xs text-muted-foreground">Applications are forwarded to the Foresite team through FormSubmit.</p>
       </form>}
