@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_LINK, STATES, ROLES, SIZES, PROJECT_COUNTS, SECTORS, PAIN_POINTS, SOURCES, applicationFromForm } from "@/content/beta-registration";
 
 const title = "Apply for Beta Access — Foresite";
-const description = "Apply for Foresite’s limited beta for Australian builders, trades and project teams. Contact admin@foresite.com.au or call 0437 722 552.";
+const description = `Apply for Foresite’s limited beta for Australian builders, trades and project teams. Contact ${CONTACT_EMAIL} or call ${CONTACT_PHONE}.`;
 export const Route = createFileRoute("/contact")({
   staticData: { sitemap: true },
   validateSearch: (search: Record<string, unknown>): { enquiry?: "sales" | "demo" | "advisory" | undefined; service?: string | undefined } => ({

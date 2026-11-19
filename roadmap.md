@@ -82,7 +82,7 @@
 # Website final beta and contact pass
 - [x] Update public contacts, beta intake and public CTA destinations
 - [x] Apply supplied homepage, features, pricing, founder and industry copy corrections
-- [x] Connect FormSubmit beta application delivery to admin@foresite.com.au and test through the page
-- [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form email sent to admin@foresite.com.au; provider returned activation-required
+- [x] Update FormSubmit and public contacts to corrected admin@foresiteos.com and repeat the application check (nine tests pass; website submission returns activation-required)
+- [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form in admin@foresiteos.com and confirms a subsequent test arrives; publish updated recipient before live use
 - [ ] Replace interim SORCI links with source pages for supplied 21.5% and 87% claims — user authorised figures now and will supply sources shortly
 - [x] Verify validation, desktop/mobile pages and public metadata

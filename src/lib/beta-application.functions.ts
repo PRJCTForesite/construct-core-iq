@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start';
-import { betaApplicationSchema, CONTACT_EMAIL } from '@/content/beta-registration';
+import { betaApplicationSchema, CONTACT_EMAIL, CONTACT_PHONE } from '@/content/beta-registration';
 
 export const submitBetaApplication = createServerFn({ method: 'POST' })
   .inputValidator((input: unknown) => betaApplicationSchema.parse(input))
@@ -27,7 +27,7 @@ export const submitBetaApplication = createServerFn({ method: 'POST' })
       }
       const result: unknown = await response.json();
       if (typeof result === 'object' && result !== null && 'message' in result && typeof result.message === 'string' && result.message.toLowerCase().includes('activation')) {
-        return { accepted: false, error: 'Online applications are awaiting email activation. Please contact admin@foresite.com.au or call 0437 722 552. Your application has not been delivered.' };
+        return { accepted: false, error: `Online applications are awaiting email activation. Please contact ${CONTACT_EMAIL} or call ${CONTACT_PHONE}. Your application has not been delivered.` };
       }
       if (typeof result !== 'object' || result === null || !('success' in result) || (result.success !== true && result.success !== 'true')) {
         return { accepted: false, error: 'The email service did not accept your application. Please try again or contact us directly.' };

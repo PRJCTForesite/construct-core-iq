@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { betaApplicationSchema } from './beta-registration';
+import { betaApplicationSchema, CONTACT_EMAIL } from './beta-registration';
 
 const valid = { name: 'Test Builder', company: 'Example Construction', email: 'test@example.test', phone: '0437722552', state: 'VIC' };
 describe('Beta application qualification', () => {
+  it('directs enquiries to the corrected Microsoft 365 recipient', () => {
+    expect(CONTACT_EMAIL).toBe('admin@foresiteos.com');
+  });
   it.each(['name', 'company', 'email', 'phone', 'state'])('requires %s', field => {
     expect(betaApplicationSchema.safeParse({ ...valid, [field]: '' }).success).toBe(false);
   });
