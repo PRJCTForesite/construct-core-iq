@@ -91,3 +91,5 @@
 - [x] List stored failures and check scanner freshness
 - [x] Verify heading order, actual website contact submission and published sitemap/robots
 - [x] Record verified stale failures as fixed pending the next SEO scan; no site code changes required
+- [x] Sweep public pages, alternate views, shared navigation, contact modes and private sitemap exclusions; correct pricing/directory heading gaps and feature/mobile demo request links
+- [x] Verify all seven public heading sequences, services pricing, expanded trade profile and mobile demo navigation; 40 relevant tests pass

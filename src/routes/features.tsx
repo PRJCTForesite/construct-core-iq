@@ -92,7 +92,7 @@ function FeaturesPage() {
               </ul>
               <div className="mt-8">
                 <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
-                  <Link to={feature.cta.to}>{feature.cta.label}</Link>
+                  <Link to={feature.cta.to} search={{ enquiry: "demo" }}>{feature.cta.label}</Link>
                 </Button>
               </div>
             </div>

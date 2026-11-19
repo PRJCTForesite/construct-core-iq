@@ -73,7 +73,7 @@ export function TradeDirectoryDemo() {
             return (
               <article key={t.id} className="rounded-xl border border-border bg-card p-5 shadow-[var(--shadow-panel)]">
                 <div className="flex items-start justify-between gap-2">
-                  <div><h4 className="font-semibold text-foreground">{t.name}</h4><p className="text-xs text-muted-foreground">{t.trade}</p></div>
+                  <div><h3 className="font-semibold text-foreground">{t.name}</h3><p className="text-xs text-muted-foreground">{t.trade}</p></div>
                   <span className={cn("rounded-full px-2.5 py-1 text-xs font-semibold", availTone[a])}>{a}</span>
                 </div>
                 <div className="mt-2"><Stars rating={t.rating} /></div>
@@ -116,7 +116,7 @@ function Profile({ trade: t, onClose }: { trade: DirectoryTrade; onClose: () => 
   return (
     <section aria-label={`${t.name} profile`} className="mt-5 rounded-xl border border-azure/40 bg-card p-6 shadow-[var(--shadow-raised)]">
       <div className="flex items-start justify-between gap-3">
-        <div><h4 className="text-xl font-semibold text-foreground">{t.name}</h4><p className="mt-1 text-sm text-secondary-foreground">{t.overview}</p></div>
+        <div><h3 className="text-xl font-semibold text-foreground">{t.name}</h3><p className="mt-1 text-sm text-secondary-foreground">{t.overview}</p></div>
         <Button size="icon" variant="ghost" onClick={onClose} aria-label="Close profile"><X /></Button>
       </div>
       <dl className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">

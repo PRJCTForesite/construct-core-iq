@@ -59,10 +59,10 @@ export function SiteHeader() {
               ))}
               <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
                 <Button asChild variant="outline">
-                  <Link to="/contact">Apply for Beta Access</Link>
+                  <Link to="/contact" onClick={() => setOpen(false)}>Apply for Beta Access</Link>
                 </Button>
                 <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
-                  <Link to="/contact" onClick={() => setOpen(false)}>
+                  <Link to="/contact" search={{ enquiry: "demo" }} onClick={() => setOpen(false)}>
                     Book a Demo
                   </Link>
                 </Button>
