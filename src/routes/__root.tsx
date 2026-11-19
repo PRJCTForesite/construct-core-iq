@@ -84,11 +84,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "google-site-verification", content: "0hWMnwkQVw5WKcOXkn4JApg3_cOZaFUpXmpK_59ebmY" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Foresite — The Operating Combined Construction System" },
+      { title: "Foresite — Combined Construction Systems" },
       {
         name: "description",
         content:
-          "Foresite is the operating combined construction system for projects, tasks, defects, documents, communications and financial performance.",
+          "Projects, tasks, defects, documents, communications and financial performance in one platform — Foresite, Combined Construction Systems.",
       },
       { name: "author", content: "Foresite" },
       { property: "og:site_name", content: "Foresite" },
@@ -115,7 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Foresite",
-          description: "The Operating Combined Construction System for modern construction businesses.",
+          description: "Combined Construction Systems for modern construction businesses.",
           url: "/",
         }),
       },

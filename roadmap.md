@@ -95,4 +95,4 @@
 - [x] Verify all seven public heading sequences, services pricing, expanded trade profile and mobile demo navigation; 40 relevant tests pass
 
 # Brand descriptor
-- [x] Use "The Operating Combined Construction System" as the supporting brand statement across public pages, access screens, metadata and structured data; logo artwork unchanged
+- [x] Use "Combined Construction Systems" as the supporting brand statement across public pages, access screens, metadata and structured data; logo artwork unchanged

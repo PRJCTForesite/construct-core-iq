@@ -5,7 +5,7 @@
  */
 
 export const BRAND = "Foresite" as const;
-export const POSITIONING = "The Operating Combined Construction System" as const;
+export const POSITIONING = "Combined Construction Systems" as const;
 export const TAGLINE = ["Construction Intelligence.", "One Platform.", "Complete Control."] as const;
 export const HERO_SUBHEADING =
   "Manage projects, tasks, defects, documents, communications and financial performance from a single operating system.";

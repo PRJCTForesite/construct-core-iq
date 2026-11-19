@@ -13,6 +13,6 @@ export function AccessLayout({ children }: { children: ReactNode }) {
       </div>
     </header>
     <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-12">{children}</main>
-    <footer className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-6 text-xs text-muted-foreground sm:px-8"><span>Foresite · The Operating Combined Construction System</span><span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Beta preview · No live authentication or billing</span></footer>
+    <footer className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 border-t border-border px-5 py-6 text-xs text-muted-foreground sm:px-8"><span>Foresite · Combined Construction Systems</span><span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Beta preview · No live authentication or billing</span></footer>
   </div>;
 }

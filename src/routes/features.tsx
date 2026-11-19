@@ -13,13 +13,13 @@ export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Features — Foresite Operating Combined Construction System" },
+      { title: "Features — Foresite | Combined Construction Systems" },
       {
         name: "description",
         content:
           "Projects, tasks, defects, communications, documents, financials, project health and AI-assisted intelligence in one construction platform.",
       },
-      { property: "og:title", content: "Features — Foresite Operating Combined Construction System" },
+      { property: "og:title", content: "Features — Foresite | Combined Construction Systems" },
       {
         property: "og:description",
         content:
