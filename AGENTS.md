@@ -31,3 +31,4 @@
 - Keep communication app choices and safe draft links in a browser-safe catalogue; personal inbox integration stays setup-needed until verified auth and server-side per-user credential storage exist, preventing shared-account exposure.
 - Use the shared transparent logo assets across public and application surfaces and derive the favicon from the same mark; this keeps exterior backgrounds consistent without CSS masking.
 - Maintain the router-derived sitemap through required staticData.sitemap decisions, excluding private subtrees and omitting unauthoritative lastmod dates; this keeps public discovery aligned with routes.
+- Keep beta application validation and contact constants in a browser-safe shared module; submission must report success only after the chosen delivery service accepts it, preventing silently lost leads.

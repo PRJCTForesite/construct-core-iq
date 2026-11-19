@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { CTABand } from "@/components/site/CTABand";
 import { Section, SectionHeading } from "@/components/site/Section";
@@ -93,6 +93,15 @@ function AboutPage() {
       </Section>
 
       <Section>
+        <SectionHeading title="Built by people who have been on site" />
+        <div className="mt-6 max-w-3xl space-y-4 text-base leading-relaxed text-secondary-foreground">
+          <p>Foresite was built by Lachlan R. Davies and Jordan Messina — two construction professionals who spent years dealing with the exact problems this platform solves.</p>
+          <p>Lachlan brings experience across commercial construction and the legal side of the industry, including hands-on work with contract claims, variations and extensions of time.</p>
+          <p>Both identified the same gap: construction teams managing critical project information across emails, text messages, spreadsheets and disconnected apps, with no single source of truth. Foresite started as a tool they built to solve their own problems. When they saw the same issues across other trades and builders, they rebuilt it for the industry.</p>
+        </div>
+      </Section>
+
+      <Section>
         <SectionHeading eyebrow="Roadmap" title="Where the platform is heading" />
         <ol className="mt-10 space-y-0 border-l border-border">
           {ROADMAP.map((stage) => (
@@ -104,6 +113,7 @@ function AboutPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-construction">{stage.period}</p>
               <h3 className="mt-2 text-lg font-semibold text-foreground">{stage.title}</h3>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-secondary-foreground">{stage.detail}</p>
+              {stage.title === 'Project health and intelligence' && <Link to="/contact" className="mt-3 inline-block text-sm font-semibold text-azure">Apply for beta access to use Project Health on your current projects.</Link>}
             </li>
           ))}
         </ol>

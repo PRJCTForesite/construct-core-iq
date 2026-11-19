@@ -15,7 +15,7 @@ describe("trade directory", () => {
   });
   test("electrician, Melbourne, 20km, heights, available", () => {
     const r = filterDirectory(DIRECTORY, { ...base, trade: "Electrician", location: "Melbourne", radiusKm: 20, compliance: ["Working At Heights"], availableOnly: true });
-    assert.deepEqual(r.map((t) => t.name), ["ABC Electrical"]);
+    assert.deepEqual(r.map((t) => t.id), ["abc-electrical"]);
   });
   test("recommendations exclude Trades- warnings", () => {
     assert.equal(recommendTrades(DIRECTORY, "Electrician").some((t) => t.preferred === "minus"), false);

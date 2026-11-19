@@ -34,6 +34,7 @@ function LoginPage() {
     void navigate({ to: "/login/workspaces" });
   }
   return <>
+    <div className="mb-5 text-center"><Button variant="link" className="text-xs text-muted-foreground" onClick={() => { window.sessionStorage.setItem('foresite.beta-preview', 'true'); startDemoSession('developer@example.test', false); void navigate({ to: '/app' }); }}>Developer / Beta Login</Button><p className="text-xs text-muted-foreground">Internal testing only · mock-data environment</p></div>
     <div className="mb-8 text-center"><p className="text-xs font-semibold uppercase tracking-widest text-azure">One platform. One login.</p><h1 className="mt-3 text-3xl font-semibold sm:text-4xl">Your Foresite account</h1><p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">Owners, clients and trades. One account, multiple permission-based experiences.</p></div>
     <div className="grid gap-4 md:grid-cols-3">{ACCESS_VIEWS.map((view, i) => {
       const Icon = [Building2, Eye, HardHat][i] ?? Building2;

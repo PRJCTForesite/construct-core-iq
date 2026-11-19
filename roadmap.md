@@ -78,3 +78,11 @@
 # Google Search Console setup
 - [x] Check Google connection and verified property access
 - [x] Complete site verification and submit the published sitemap, with approval before any required publish
+
+# Website final beta and contact pass
+- [x] Update public contacts, beta intake and public CTA destinations
+- [x] Apply supplied homepage, features, pricing, founder and industry copy corrections
+- [x] Connect FormSubmit beta application delivery to admin@foresite.com.au and test through the page
+- [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form email sent to admin@foresite.com.au; provider returned activation-required
+- [ ] Replace interim SORCI links with source pages for supplied 21.5% and 87% claims — user authorised figures now and will supply sources shortly
+- [x] Verify validation, desktop/mobile pages and public metadata

@@ -30,10 +30,10 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <Button asChild variant="ghost" size="sm">
-            <Link to="/login">Login</Link>
+            <Link to="/contact">Apply for Beta Access</Link>
           </Button>
           <Button asChild size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Link to="/contact">Book</Link>
+            <Link to="/contact" search={{ enquiry: "demo" }}>Book a Demo</Link>
           </Button>
         </div>
 
@@ -59,11 +59,11 @@ export function SiteHeader() {
               ))}
               <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
                 <Button asChild variant="outline">
-                  <Link to="/login">Login</Link>
+                  <Link to="/contact">Apply for Beta Access</Link>
                 </Button>
                 <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
                   <Link to="/contact" onClick={() => setOpen(false)}>
-                    Book
+                    Book a Demo
                   </Link>
                 </Button>
               </div>

@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { DIRECTORY, recommendTrades } from "@/content/trade-directory";
 
 const TITLE = "Foresite — Reduce Delays. Protect Profit. Keep Projects Moving.";
-const DESC = "Manage trades, variations, client approvals and defects with Foresite. Built for construction businesses that need project visibility, accountability and control.";
+const DESC = "Foresite is a construction operating system for Australian builders — manage projects, trades, clients, defects and financials from one platform. Apply for beta access.";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -34,10 +34,10 @@ function CTAButtons({ light }: { light?: boolean }) {
   return (
     <div className="flex flex-wrap gap-3">
       <Button asChild size="lg" className="bg-azure text-azure-foreground hover:bg-azure/90">
-        <Link to="/login/register">Start Free Trial <ArrowRight /></Link>
+        <Link to="/contact">Apply for Beta Access <ArrowRight /></Link>
       </Button>
       <Button asChild size="lg" variant="outline" className={light ? "border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" : ""}>
-        <Link to="/contact">Book</Link>
+        <Link to="/contact" search={{ enquiry: 'demo' }}>Book a Demo</Link>
       </Button>
     </div>
   );
@@ -76,7 +76,7 @@ const HEALTH = [
 const AI_EXAMPLES = ["Project Risks", "Forecasting", "Document Summaries", "Communication Summaries", "Recommended Actions", "Trade Recommendations"];
 const INDUSTRIES = ["Residential Builders", "Commercial Builders", "Civil Contractors", "Subcontractors", "Project Management Firms"];
 
-const TRIAL_STEPS = ["Create Account", "Add Organisation Details", "Provide Billing Information", "Access Full Functionality", "30 Day Trial", "Automatic Plan Assignment Based On Usage"];
+
 
 function Chips({ items }: { items: string[] }) {
   return <ul className="mt-6 flex flex-wrap gap-2">{items.map((i) => <li key={i} className="rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium text-foreground">{i}</li>)}</ul>;
@@ -112,14 +112,11 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-surface py-10" aria-label="Platform scale placeholders">
-        <div className="container-page text-center">
-          <h2 className="text-xl font-semibold text-foreground sm:text-2xl">Built For Builders, Trades and Clients.</h2>
-          <p className="mt-2 text-xs text-muted-foreground">Illustrative sample figures · not live customer statistics</p>
-          <dl className="mt-7 grid grid-cols-2 gap-6 sm:grid-cols-4">
-            {[{ label: "Projects Managed", value: "120" }, { label: "Defects Tracked", value: "1,850" }, { label: "Trades Connected", value: "340" }, { label: "Documents Managed", value: "6,200" }].map(({ label, value }) => (
-              <div key={label}><dd className="text-3xl font-semibold text-foreground">{value}</dd><dt className="mt-1 text-sm text-muted-foreground">{label}</dt></div>
-            ))}
+      <section className="border-b border-border bg-surface py-10" aria-label="Industry challenges">
+        <div className="container-page">
+          <h2 className="text-center text-xl font-semibold text-foreground sm:text-2xl">The problems Foresite exists to solve.</h2>
+          <dl className="mt-7 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+            {[{ value: "32%", label: "of builders spend more than 10 hours a week on paperwork and admin", source: "HIA 2026", href: "https://hia.com.au/our-industry/advocacy/small-business-conditions-survey" }, { value: "21.5%", label: "of builders say subcontractor delays are their number one project challenge", source: "SORCI 2025", href: "https://blog.associationofprofessionalbuilders.com/sorci-2025-announcement" }, { value: "87%", label: "of Australian builders operate on fixed-price contracts, putting cost risk directly on them", source: "SORCI 2025", href: "https://blog.associationofprofessionalbuilders.com/sorci-2025-announcement" }, { value: "3,472", label: "construction businesses became insolvent in 2025–26", source: "ASIC · FY2025–26", href: "https://theconversation.com/australia-has-a-housing-shortage-so-why-are-bathla-and-other-home-builders-collapsing-291029" }].map(item => <div key={item.value} className="border-l-2 border-azure pl-4"><dd className="text-3xl font-semibold text-foreground">{item.value}</dd><dt className="mt-3 text-sm leading-relaxed text-secondary-foreground">{item.label}</dt><a href={item.href} target="_blank" rel="noreferrer" className="mt-3 inline-block text-xs text-azure">{item.source}</a></div>)}
           </dl>
         </div>
       </section>
@@ -242,7 +239,7 @@ function HomePage() {
           <div className="rounded-xl border border-border bg-card p-6">
             <h3 className="text-lg font-semibold text-foreground">Verified Ratings</h3>
             <p className="mt-3 text-3xl font-semibold text-foreground"><span className="text-construction">★★★★★</span> 4.9</p>
-            <p className="mt-1 text-sm text-secondary-foreground">42 Verified Reviews · 89 Completed Projects</p>
+            <p className="mt-1 text-sm text-secondary-foreground">31 Verified Reviews · 67 Completed Projects</p>
             <p className="mt-4 text-sm text-muted-foreground">Public ratings from verified projects only. Only organisations that have engaged and worked with a trade can leave reviews.</p>
           </div>
           <div className="rounded-xl border border-border bg-card p-6">
@@ -295,23 +292,9 @@ function HomePage() {
         <div className="mt-6"><Button asChild variant="outline"><Link to="/pricing">Explore Pricing &amp; Advisory Services <ArrowRight className="size-4" /></Link></Button></div>
       </Section>
 
-      {/* Trial */}
       <Section>
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div>
-            <SectionHeading eyebrow="Free trial" title="Try Foresite Free For 30 Days." />
-            <ol className="mt-6 space-y-3">
-              {TRIAL_STEPS.map((s, i) => <li key={s} className="flex items-center gap-3 text-foreground"><span className="grid size-7 place-items-center rounded-full bg-azure text-xs font-semibold text-azure-foreground">{i + 1}</span>{s}</li>)}
-            </ol>
-          </div>
-          <div className="space-y-3 self-center">
-            {[{ i: Mail, t: "Email Reminder", d: "Your trial ends in 7 days." }, { i: MessageSquare, t: "SMS Reminder", d: "3 days left on your Foresite trial." }, { i: CreditCard, t: "Billing Notification", d: "Professional plan assigned based on usage." }, { i: Bell, t: "Upgrade / Downgrade Options", d: "Change plans any time from Settings." }].map((n) => (
-              <div key={n.t} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 shadow-[var(--shadow-panel)]">
-                <n.i className="mt-0.5 size-5 text-azure" /><div><p className="font-semibold text-foreground">{n.t}</p><p className="text-sm text-muted-foreground">{n.d}</p></div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SectionHeading eyebrow="Private beta" title="Private Beta Program Now Open" description="Foresite is currently inviting a limited number of builders, trades and project teams to participate in the beta release." />
+        <div className="mt-7"><CTAButtons /></div>
       </Section>
 
       {/* Final CTA */}

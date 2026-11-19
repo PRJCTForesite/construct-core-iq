@@ -25,7 +25,7 @@ export function PlatformShowcase() {
       <div id="showcase-workspace" className="mt-8 overflow-hidden rounded-lg border border-border bg-card shadow-[var(--shadow-raised)]">
         <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-2.5">
           <span className="size-2.5 rounded-full bg-destructive/60" /><span className="size-2.5 rounded-full bg-construction/70" /><span className="size-2.5 rounded-full bg-azure/60" />
-          <span className="ml-3 truncate text-xs text-muted-foreground">app.foresite.com / {view.label.toLowerCase()}</span>
+          <span className="ml-3 truncate text-xs text-muted-foreground">app.foresiteos.com.au / {view.label.toLowerCase()}</span>
         </div>
         <div className="grid md:grid-cols-[200px_1fr]">
           <nav className="flex gap-1 overflow-x-auto border-b border-border bg-primary p-2 md:flex-col md:border-b-0" aria-label={`${view.label} sections`}>

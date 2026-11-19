@@ -18,7 +18,7 @@ export function OperationalWorkspace() {
         </aside>
         <div className="p-3 text-left sm:p-5">
           <div className="flex items-center justify-between gap-2">
-            <div><h2 className="text-sm font-semibold sm:text-lg">Smith Residence</h2><p className="hidden text-xs text-muted-foreground sm:block">Melbourne, VIC · Lock-up stage</p></div>
+            <div><h2 className="text-sm font-semibold sm:text-lg">Bayside Townhouses Stage 2</h2><p className="hidden text-xs text-muted-foreground sm:block">Melbourne, VIC · Lock-up stage</p></div>
             <span className="flex items-center gap-1 text-xs font-medium text-health-good"><CheckCircle2 className="size-3.5" />On track</span>
           </div>
           <div className="mt-3 grid grid-cols-3 gap-2 sm:mt-4 sm:gap-3">
@@ -38,13 +38,13 @@ export function OperationalWorkspace() {
             <div>
               <h3 className="flex items-center gap-2 text-xs font-semibold"><HardHat className="size-4 text-azure" />Trade Activity</h3>
               <ul className="mt-2 divide-y divide-border text-xs">
-                <li className="flex justify-between gap-2 py-2"><span>Electrical rough-in <span className="hidden text-muted-foreground lg:inline">· Apex Electrical</span></span><span className="shrink-0 text-health-good">Complete</span></li>
+                <li className="flex justify-between gap-2 py-2"><span>Electrical rough-in <span className="hidden text-muted-foreground lg:inline">· Summit Electrical Services</span></span><span className="shrink-0 text-health-good">Complete</span></li>
                 <li className="flex justify-between gap-2 py-2"><span>Plasterboard installation</span><span className="shrink-0 text-azure">In progress</span></li>
                 <li className="hidden justify-between gap-2 py-2 sm:flex"><span>Waterproofing inspection</span><span className="text-muted-foreground">Tomorrow</span></li>
               </ul>
             </div>
             <div>
-              <img src={projectPhoto} alt="Smith Residence at lock-up with roofing, windows and brickwork completed" className="mb-2 hidden h-20 w-full rounded-md object-cover sm:block" />
+              <img src={projectPhoto} alt="Bayside Townhouses Stage 2 at lock-up with roofing, windows and brickwork completed" className="mb-2 hidden h-20 w-full rounded-md object-cover sm:block" />
               <div className="flex items-center justify-between text-xs"><h3 className="font-semibold">Project Progress</h3><span className="font-semibold text-azure">64%</span></div>
               <div role="progressbar" aria-label="Project progress" aria-valuenow={64} aria-valuemin={0} aria-valuemax={100} className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted"><div className="h-full w-[64%] bg-azure" /></div>
               <p className="mt-2 hidden items-center gap-1 text-[11px] text-muted-foreground sm:flex">Next milestone: internal fit-out <ArrowUpRight className="size-3" /></p>

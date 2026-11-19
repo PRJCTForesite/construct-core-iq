@@ -98,14 +98,14 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Consistent structure across every delivery team",
       "Portfolio roll-up for executives and directors",
     ],
-    cta: { label: "Book", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Project Register",
       rows: [
-        { name: "Riverside Office Complex", value: "62% · On Track", tone: "good" },
-        { name: "Northpoint Residences", value: "48% · At Risk", tone: "warn" },
-        { name: "Harborview Plaza", value: "25% · On Track", tone: "good" },
-        { name: "Lakeside Retail Centre", value: "10% · Delayed", tone: "bad" },
+        { name: "Docklands Commercial Stage 3", value: "62% · On Track", tone: "good" },
+        { name: "Southbank Residences", value: "48% · At Risk", tone: "warn" },
+        { name: "Harbourview Mixed Use", value: "25% · On Track", tone: "good" },
+        { name: "Riverside Retail Precinct", value: "10% · Delayed", tone: "bad" },
       ],
     },
   },
@@ -122,7 +122,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Overdue and blocked work surfaced immediately",
       "No manual percentage-complete guesswork",
     ],
-    cta: { label: "See it in action", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Open Tasks",
       rows: [
@@ -146,7 +146,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Accountability by subcontractor and trade",
       "Trend reporting on recurring quality issues",
     ],
-    cta: { label: "Talk to us", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Defect Register",
       rows: [
@@ -170,7 +170,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Searchable history for claims and disputes",
       "No critical decisions lost in personal inboxes",
     ],
-    cta: { label: "Book", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Recent Activity",
       rows: [
@@ -194,7 +194,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Drawing, specification and contract registers",
       "One place to find the latest approved set",
     ],
-    cta: { label: "Book", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Document Register",
       rows: [
@@ -218,7 +218,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Early warning on margin erosion",
       "Financial health scoring per project",
     ],
-    cta: { label: "Contact Sales", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Financial Summary",
       rows: [
@@ -242,7 +242,7 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Portfolio heat map for leadership",
       "Consistent basis for reporting to clients",
     ],
-    cta: { label: "Book", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Project Health Score",
       rows: [
@@ -266,14 +266,14 @@ export const FEATURE_DETAILS: FeatureDetail[] = [
       "Prioritised actions for delivery teams",
       "Foundation for forecasting and claims analysis",
     ],
-    cta: { label: "Book", to: "/contact" },
+    cta: { label: "Book a Demo", to: "/contact" },
     panel: {
       label: "Intelligence Feed",
       rows: [
-        { name: "Programme slippage detected", value: "Northpoint", tone: "warn" },
+        { name: "Programme slippage detected", value: "Southbank Residences", tone: "warn" },
         { name: "Defect rate above baseline", value: "Façade trade", tone: "warn" },
-        { name: "Margin trending down", value: "Lakeside", tone: "bad" },
-        { name: "Approvals ahead of plan", value: "Harborview", tone: "good" },
+        { name: "Margin trending down", value: "Riverside Retail Precinct", tone: "bad" },
+        { name: "Approvals ahead of plan", value: "Harbourview Mixed Use", tone: "good" },
       ],
     },
   },
@@ -308,7 +308,7 @@ export const MOBILE_HIGHLIGHTS: string[] = [
 ];
 
 export const MOBILE_PANEL_ROWS: { name: string; meta: string; value: string; tone?: "good" | "warn" | "bad" }[] = [
-  { name: "Northpoint Residences", meta: "Level 4 · Framing", value: "48%", tone: "warn" },
+  { name: "Southbank Residences", meta: "Level 4 · Framing", value: "48%", tone: "warn" },
   { name: "Defect 214 — Façade", meta: "Assigned to you", value: "Open", tone: "bad" },
   { name: "Concrete Pour — L3", meta: "Due Friday", value: "High", tone: "warn" },
   { name: "Site Safety Walk", meta: "Completed today", value: "Done", tone: "good" },
@@ -342,14 +342,14 @@ export const INDUSTRIES: Industry[] = [
     title: "Civil Construction",
     description:
       "Roads, bridges, earthworks and utilities where quantities, quality records and programme performance drive payment.",
-    points: ["Quantity and progress claims support", "ITP and quality evidence capture", "Programme versus work progress"],
+    points: ["Progress claims tracking · in development", "ITP and quality evidence capture", "Programme versus work progress"],
   },
   {
     id: "government",
     title: "Government Projects",
     description:
       "Public sector delivery with strict reporting obligations, auditability and probity requirements from tender to close-out.",
-    points: ["Full audit trail of decisions", "Standardised reporting formats", "Contract and notice management ready"],
+    points: ["Full audit trail of decisions", "Standardised reporting formats", "Contract and notice management · coming soon"],
   },
   {
     id: "maintenance",
@@ -370,7 +370,7 @@ export const ROADMAP: { period: string; title: string; detail: string }[] = [
     detail: "Projects, tasks, defects, document control, communications and financial oversight.",
   },
   {
-    period: "Next",
+    period: "Now live · Beta members only",
     title: "Project health and intelligence",
     detail: "Composite health scoring, risk detection and AI-assisted project insights across the portfolio.",
   },

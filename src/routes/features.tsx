@@ -78,6 +78,7 @@ function FeaturesPage() {
               </span>
               <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-azure">{feature.eyebrow}</p>
               <h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">{feature.title}</h2>
+              {feature.id === 'health' && <div className="mt-4 border-l-2 border-azure bg-azure/10 p-4 text-sm text-secondary-foreground"><p><strong>Beta members only</strong> · Due to strong early demand, Project Health is currently available exclusively to Foresite beta members.</p><Link to="/contact" className="mt-2 inline-block font-semibold text-azure">Apply for beta access to get early access.</Link></div>}
               <p className="mt-4 text-base leading-relaxed text-secondary-foreground md:text-lg">
                 {feature.description}
               </p>

@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { PORTAL_URL } from "@/content/site";
 
 export function CTABand({
   title = "Ready to run construction on one platform?",
@@ -18,7 +17,7 @@ export function CTABand({
         </div>
         <div className="flex flex-wrap gap-3">
           <Button asChild size="lg" className="bg-azure text-azure-foreground hover:bg-azure/90">
-            <Link to="/contact">Book</Link>
+            <Link to="/contact" search={{ enquiry: "demo" }}>Book a Demo</Link>
           </Button>
           <Button
             asChild
@@ -26,7 +25,7 @@ export function CTABand({
             variant="outline"
             className="border-primary-foreground/25 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
           >
-            <a href={`${PORTAL_URL}/register`}>Get Started</a>
+            <Link to="/contact">Apply for Beta Access</Link>
           </Button>
         </div>
       </div>

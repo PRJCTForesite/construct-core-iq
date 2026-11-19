@@ -59,6 +59,6 @@ export const PRICING_FAQ = [
   { question: 'Do clients and trades cost extra?', answer: 'No. All plans include unlimited clients, trades and external users. Only internal users are paid.' },
   { question: 'How is Enterprise priced?', answer: 'Enterprise is $10,000 per year including 20 internal users, unlimited projects and unlimited active jobs. Additional internal users are $50 per user per month.' },
   { question: 'Are advisory services included in my subscription?', answer: 'No. Advisory services and service packages are optional and separately priced. Software subscriptions remain separate; package scope is agreed during consultation.' },
-  { question: 'What are the future target prices?', answer: 'Starter’s future target is $100 per user per month and Professional’s is $200 per user per month. These are not current charges; no change date is specified.' },
+  { question: 'Will pricing change after the beta?', answer: 'Beta pricing is in effect for founding members. Rates will be confirmed at full launch.' },
   { question: 'Is implementation included?', answer: 'Starter includes self-service setup. Professional offers optional onboarding up to $5,000 depending on requirements. Enterprise dedicated implementation starts at $5,000+.' },
 ];

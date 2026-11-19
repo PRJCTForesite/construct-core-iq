@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import mark from "@/assets/foresite-mark-transparent.png";
-import { BRAND, POSITIONING, PORTAL_URL } from "@/content/site";
+import { BRAND, POSITIONING } from "@/content/site";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_LINK } from "@/content/beta-registration";
 
 const COLUMNS = [
   {
@@ -59,21 +60,25 @@ export function SiteFooter() {
           <h3 className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/50">Platform</h3>
           <ul className="mt-4 space-y-2.5">
             <li>
-              <a
-                href={PORTAL_URL}
+              <Link
+                to="/contact"
                 className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
               >
-                Login
-              </a>
+                Apply for Beta Access
+              </Link>
             </li>
             <li>
-              <a
-                href={`${PORTAL_URL}/register`}
+              <Link
+                to="/contact"
+                search={{ enquiry: 'demo' }}
                 className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
               >
-                Create Account
-              </a>
+                Book a Demo
+              </Link>
             </li>
+            <li><a className="break-all text-sm text-primary-foreground/80" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+            <li><a className="text-sm text-primary-foreground/80" href={CONTACT_PHONE_LINK}>{CONTACT_PHONE}</a></li>
+            <li><Link to="/login" className="text-xs text-primary-foreground/50">Developer / Beta Login</Link></li>
           </ul>
         </div>
       </div>

@@ -39,8 +39,8 @@ export function availabilityFor(activeJobs: number, capacity: number, override?:
 
 export const DIRECTORY: DirectoryTrade[] = [
   {
-    id: "abc-electrical", name: "ABC Electrical", trade: "Electrician", location: "Melbourne", region: "Melbourne Metro",
-    distanceKm: 8, rating: 4.9, reviews: 42, completed: 89, activeJobs: 3, capacity: 8,
+    id: "abc-electrical", name: "Meridian Electrical Co.", trade: "Electrician", location: "Melbourne", region: "Melbourne Metro",
+    distanceKm: 8, rating: 4.9, reviews: 31, completed: 67, activeJobs: 3, capacity: 8,
     licence: "REC 28431", licenceVerified: true, insuranceVerified: true,
     tickets: ["Working At Heights", "White Card", "EWP"], serviceAreas: ["Melbourne CBD", "Inner East", "Bayside"],
     overview: "Residential and light commercial electrical contractor specialising in new builds and switchboard upgrades.",
@@ -66,16 +66,16 @@ export const DIRECTORY: DirectoryTrade[] = [
     reviewQuotes: [{ by: "Coastline Homes", text: "Good work but insurance renewal was late." }],
   },
   {
-    id: "abc-roofing", name: "ABC Roofing", trade: "Roofer", location: "Melbourne", region: "Melbourne Metro",
+    id: "abc-roofing", name: "Ridgeline Roofing", trade: "Roofer", location: "Melbourne", region: "Melbourne Metro",
     distanceKm: 12, rating: 4.8, reviews: 33, completed: 71, activeJobs: 2, capacity: 6,
     licence: "DB-L 4421", licenceVerified: true, insuranceVerified: true,
     tickets: ["Working At Heights", "White Card"], serviceAreas: ["Melbourne Metro", "Mornington"],
     overview: "Metal and tile roofing, leak investigation and rectification.",
     contact: { name: "Mia Clarke", phone: "0400 777 888", email: "quotes@abcroofing.example" }, preferred: "plus",
-    reviewQuotes: [{ by: "Smith Residence", text: "Found and fixed the leak within 48 hours." }],
+    reviewQuotes: [{ by: "Bayside Townhouses Stage 2", text: "Found and fixed the leak within 48 hours." }],
   },
   {
-    id: "elite-roofing", name: "Elite Roofing", trade: "Roofer", location: "Melbourne", region: "Melbourne East",
+    id: "elite-roofing", name: "Summit Roof Co.", trade: "Roofer", location: "Melbourne", region: "Melbourne East",
     distanceKm: 19, rating: 4.7, reviews: 18, completed: 40, activeJobs: 4, capacity: 5,
     licence: "DB-L 5120", licenceVerified: true, insuranceVerified: true,
     tickets: ["Working At Heights", "EWP"], serviceAreas: ["Box Hill", "Ringwood"],
