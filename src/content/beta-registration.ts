@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const CONTACT_EMAIL = 'admin@foresiteos.com';
+export const CONTACT_EMAIL = 'admin@foresiteos.com.au';
 export const CONTACT_PHONE = '0437 722 552';
 export const CONTACT_PHONE_LINK = 'tel:+61437722552';
 export const STATES = ['VIC', 'NSW', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT'] as const;

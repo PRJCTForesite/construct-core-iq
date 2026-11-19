@@ -82,7 +82,7 @@
 # Website final beta and contact pass
 - [x] Update public contacts, beta intake and public CTA destinations
 - [x] Apply supplied homepage, features, pricing, founder and industry copy corrections
-- [x] Update FormSubmit and public contacts to corrected admin@foresiteos.com and repeat the application check (nine tests pass; website submission returns activation-required)
-- [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form in admin@foresiteos.com and confirms a subsequent test arrives; publish updated recipient before live use
-- [ ] Replace interim SORCI links with source pages for supplied 21.5% and 87% claims — user authorised figures now and will supply sources shortly
+- [x] Update FormSubmit and public contacts to confirmed admin@foresiteos.com.au and repeat the application check (nine tests pass; website submission returns activation-required)
+- [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form in admin@foresiteos.com.au and confirms a subsequent test arrives; publish updated recipient before live use
+- [x] Verify supplied SORCI 2025 PDF and replace interim source links (21.5% Australian respondents on p. 57; 87.4% Australian fixed-price contracts on p. 9; source links verified in the website)
 - [x] Verify validation, desktop/mobile pages and public metadata
