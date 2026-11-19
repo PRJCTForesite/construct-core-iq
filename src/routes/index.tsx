@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { DIRECTORY, recommendTrades } from "@/content/trade-directory";
 
 const TITLE = "Foresite — Reduce Delays. Protect Profit. Keep Projects Moving.";
-const DESC = "Foresite is a construction operating system for Australian builders — manage projects, trades, clients, defects and financials from one platform. Apply for beta access.";
+const DESC = "Foresite is the operating combined construction system for Australian builders — manage projects, trades, clients, defects and financials from one platform. Apply for beta access.";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -89,7 +89,7 @@ function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-surface">
         <div className="container-page relative pb-5 pt-6 text-center sm:pb-8 sm:pt-10 md:pt-12">
-          <p className="text-sm font-semibold text-azure">Foresite <span className="mx-2 text-border">/</span><span className="font-medium text-muted-foreground">The Construction Operating System</span></p>
+          <p className="text-sm font-semibold text-azure">Foresite <span className="mx-2 text-border">/</span><span className="font-medium text-muted-foreground">The Operating Combined Construction System</span></p>
           <h1 className="mx-auto mt-4 max-w-5xl text-3xl font-bold leading-[1.12] text-foreground sm:mt-5 sm:text-5xl lg:text-6xl">Reduce Delays. <span className="text-azure">Protect Profit.</span><br className="hidden sm:block" /> Keep Projects Moving.</h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-secondary-foreground sm:mt-5 sm:text-lg">
             Foresite connects projects, trades, clients, defects, documents and project intelligence into a single platform built for modern construction businesses.

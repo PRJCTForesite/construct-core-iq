@@ -84,11 +84,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "google-site-verification", content: "0hWMnwkQVw5WKcOXkn4JApg3_cOZaFUpXmpK_59ebmY" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Foresite — The Construction Operating System" },
+      { title: "Foresite — The Operating Combined Construction System" },
       {
         name: "description",
         content:
-          "Foresite is the construction operating system for projects, tasks, defects, documents, communications and financial performance.",
+          "Foresite is the operating combined construction system for projects, tasks, defects, documents, communications and financial performance.",
       },
       { name: "author", content: "Foresite" },
       { property: "og:site_name", content: "Foresite" },
@@ -115,7 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Foresite",
-          description: "The Construction Operating System for modern construction businesses.",
+          description: "The Operating Combined Construction System for modern construction businesses.",
           url: "/",
         }),
       },

@@ -20,7 +20,7 @@ export const Route = createFileRoute("/industries")({
       {
         property: "og:description",
         content:
-          "Residential, commercial, civil, government and maintenance delivery teams run on the Foresite construction operating system.",
+          "Residential, commercial, civil, government and maintenance delivery teams run on the Foresite operating combined construction system.",
       },
       { property: "og:url", content: "/industries" },
       { property: "og:type", content: "website" },

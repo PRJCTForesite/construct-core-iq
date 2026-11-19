@@ -9,13 +9,13 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "About Foresite — Why We Built a Construction OS" },
+      { title: "About Foresite — Why We Built an Operating Combined Construction System" },
       {
         name: "description",
         content:
           "Foresite exists to give construction businesses one operating system for delivery, quality, documents and commercial performance.",
       },
-      { property: "og:title", content: "About Foresite — Why We Built a Construction OS" },
+      { property: "og:title", content: "About Foresite — Why We Built an Operating Combined Construction System" },
       {
         property: "og:description",
         content: "Our mission, vision, why Foresite exists and where the platform is heading.",

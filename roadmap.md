@@ -83,7 +83,7 @@
 - [x] Update public contacts, beta intake and public CTA destinations
 - [x] Apply supplied homepage, features, pricing, founder and industry copy corrections
 - [x] Update FormSubmit and public contacts to confirmed admin@foresiteos.com.au and repeat the application check (nine tests pass; website submission returns activation-required)
-- [ ] Confirm FormSubmit inbox delivery — blocked until user clicks Activate Form in admin@foresiteos.com.au and confirms a subsequent test arrives; publish updated recipient before live use
+- [x] Confirm FormSubmit inbox delivery — user confirmed the test application arrived in admin@foresiteos.com.au; form now submits from the visitor's browser — blocked until user clicks Activate Form in admin@foresiteos.com.au and confirms a subsequent test arrives; publish updated recipient before live use
 - [x] Verify supplied SORCI 2025 PDF and replace interim source links (21.5% Australian respondents on p. 57; 87.4% Australian fixed-price contracts on p. 9; source links verified in the website)
 - [x] Verify validation, desktop/mobile pages and public metadata
 
@@ -93,3 +93,6 @@
 - [x] Record verified stale failures as fixed pending the next SEO scan; no site code changes required
 - [x] Sweep public pages, alternate views, shared navigation, contact modes and private sitemap exclusions; correct pricing/directory heading gaps and feature/mobile demo request links
 - [x] Verify all seven public heading sequences, services pricing, expanded trade profile and mobile demo navigation; 40 relevant tests pass
+
+# Brand descriptor
+- [x] Use "The Operating Combined Construction System" as the supporting brand statement across public pages, access screens, metadata and structured data; logo artwork unchanged
