@@ -32,3 +32,6 @@
 - Use the shared transparent logo assets across public and application surfaces and derive the favicon from the same mark; this keeps exterior backgrounds consistent without CSS masking.
 - Maintain the router-derived sitemap through required staticData.sitemap decisions, excluding private subtrees and omitting unauthoritative lastmod dates; this keeps public discovery aligned with routes.
 - Keep beta application validation and contact constants in a browser-safe shared module; submission must report success only after the chosen delivery service accepts it, preventing silently lost leads.
+- Keep dashboard layouts and guide completion in versioned account-scoped browser preferences, separate from mock business records; no backend contracts exist for durable user settings yet.
+- Use handle-based dnd-kit sorting with keyboard and explicit move controls for dashboard widgets; this supports touch and accessible movement without changing operational data.
+- Keep tab walkthrough copy in a browser-safe path catalogue and render one non-modal guide in the shared app shell; guide visits cannot mutate record state or permissions.

@@ -26,6 +26,7 @@ import { APP_NAV, DEMO_USER } from "@/content/app";
 import { hasSession, endDemoSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { previewPortal } from '@/lib/services/permissionsService';
+import { WorkflowGuide } from './WorkflowGuide';
 
 function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const { role } = usePlatform();
@@ -162,6 +163,7 @@ function TopBar({
       <div className="hidden min-w-0 lg:block">{!clientSurface && <GlobalSearch />}</div>
 
       <div className="flex shrink-0 items-center gap-2">
+        <WorkflowGuide />
         {!clientSurface && (
           <>
             <div className="lg:hidden">

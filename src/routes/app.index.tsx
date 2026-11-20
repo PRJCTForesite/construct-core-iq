@@ -1,6 +1,7 @@
+import { DashboardWidgets, type DashboardWidget } from "@/components/app/DashboardWidgets";
 import { ProjectHealth } from "@/components/platform/ProjectExpansion";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Download, Filter, Flag, Sparkles, X } from "lucide-react";
+import { Flag, Sparkles, X } from "lucide-react";
 
 import { AppIcon } from "@/components/app/AppIcon";
 import {
@@ -78,26 +79,8 @@ function Sparkline() {
 }
 
 function DashboardPage() {
-  return (
-    <div className="space-y-6">
-      <ProjectHealth />
-      <PageHeading
-        title={`Good morning, ${DEMO_USER.firstName}.`}
-        meta={`${TODAY_LABEL} · 7 active projects · 3 items need your attention`}
-        actions={
-          <>
-            <Button variant="outline" size="sm">
-              <Filter className="h-4 w-4" /> Filter
-            </Button>
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4" /> <span className="hidden sm:inline">Export Report</span>
-            </Button>
-          </>
-        }
-      />
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)]">
-        <Panel title="Business Health Score" action={<span className="text-chart-5">↑ {HEALTH_SCORE.delta}</span>}>
+  const widgets: DashboardWidget[] = [
+    { id: 'health', title: 'Business Health Score', content: (<Panel title="Business Health Score" action={<span className="text-chart-5">↑ {HEALTH_SCORE.delta}</span>}>
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center">
             <Ring value={HEALTH_SCORE.score} label={String(HEALTH_SCORE.score)} sub="out of 100" />
             <ul className="grid flex-1 gap-4 sm:grid-cols-2">
@@ -112,9 +95,8 @@ function DashboardPage() {
               ))}
             </ul>
           </div>
-        </Panel>
-
-        <Panel title="Critical Alerts" action="View all" bodyClassName="space-y-2.5">
+        </Panel>) },
+    { id: 'alerts', title: 'Critical Alerts', content: (<Panel title="Critical Alerts" action="View all" bodyClassName="space-y-2.5">
           {CRITICAL_ALERTS.map((alert) => (
             <div
               key={alert.title}
@@ -124,17 +106,9 @@ function DashboardPage() {
               <p className="mt-1 text-xs text-muted-foreground">{alert.meta}</p>
             </div>
           ))}
-        </Panel>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {DASHBOARD_KPIS.map((kpi) => (
-          <StatTile key={kpi.label} {...kpi} />
-        ))}
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)]">
-        <Panel title="Today's Priorities" action={<span className="text-muted-foreground">5 actions</span>} bodyClassName="p-0 sm:p-0">
+        </Panel>) },
+    ...DASHBOARD_KPIS.map((kpi) => ({ id: ({ 'Outstanding Invoices': 'invoices', 'Active Projects': 'projects-count', 'Open Defects': 'defects-count', 'Monthly Cashflow': 'cashflow-count' } as const)[kpi.label as 'Outstanding Invoices' | 'Active Projects' | 'Open Defects' | 'Monthly Cashflow'], title: kpi.label, size: 'small' as const, content: <StatTile {...kpi} /> })),
+    { id: 'priorities', title: "Today's Priorities", content: (<Panel title="Today's Priorities" action={<span className="text-muted-foreground">5 actions</span>} bodyClassName="p-0 sm:p-0">
           <ul className="divide-y divide-border">
             {TODAYS_PRIORITIES.map((item) => (
               <li key={item.title} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3.5 sm:px-5">
@@ -147,9 +121,8 @@ function DashboardPage() {
               </li>
             ))}
           </ul>
-        </Panel>
-
-        <Panel title="Upcoming Today" bodyClassName="space-y-4">
+        </Panel>) },
+    { id: 'upcoming', title: 'Upcoming Today', content: (<Panel title="Upcoming Today" bodyClassName="space-y-4">
           {UPCOMING_TODAY.map((item) => (
             <div key={item.title} className="grid grid-cols-[auto_minmax(0,1fr)] gap-3">
               <span
@@ -163,11 +136,8 @@ function DashboardPage() {
               </span>
             </div>
           ))}
-        </Panel>
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.9fr)_minmax(0,1fr)]">
-        <Panel title="Projects Requiring Attention" action="Columns" bodyClassName="p-0 sm:p-0">
+        </Panel>) },
+    { id: 'projects', title: 'Projects Requiring Attention', size: 'wide', content: (<Panel title="Projects Requiring Attention" action="Columns" bodyClassName="p-0 sm:p-0">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[46rem] text-sm">
               <thead>
@@ -213,10 +183,8 @@ function DashboardPage() {
               </tbody>
             </table>
           </div>
-        </Panel>
-
-        <div className="space-y-4">
-          <Panel
+        </Panel>) },
+    { id: 'insights', title: 'AI Insights', content: (<Panel
             title={
               <span className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-azure" /> AI Insights
@@ -234,9 +202,8 @@ function DashboardPage() {
                 <button className="mt-2 text-xs font-semibold text-azure">→ {card.action}</button>
               </div>
             ))}
-          </Panel>
-
-          <Panel title="Quick Actions" bodyClassName="grid grid-cols-2 gap-3">
+          </Panel>) },
+    { id: 'quick-actions', title: 'Quick Actions', content: (<Panel title="Quick Actions" bodyClassName="grid grid-cols-2 gap-3">
             {QUICK_ACTIONS.map((action) => (
               <button
                 key={action.label}
@@ -246,11 +213,8 @@ function DashboardPage() {
                 {action.label}
               </button>
             ))}
-          </Panel>
-        </div>
-      </div>
-
-      <Panel
+          </Panel>) },
+    { id: 'cashflow', title: 'Cashflow', size: 'wide', content: (      <Panel
         title="Cashflow — Last 6 Months"
         subtitle="Net surplus grew 31% since January"
         action={
@@ -265,7 +229,8 @@ function DashboardPage() {
         }
       >
         <Sparkline />
-      </Panel>
-    </div>
-  );
+      </Panel>) },
+    { id: 'project-health', title: 'Project health breakdown', size: 'wide', content: (<ProjectHealth />) },
+  ];
+  return <div className="space-y-6"><PageHeading title={`Good morning, ${DEMO_USER.firstName}.`} meta={`${TODAY_LABEL} · Sample workspace`} /><DashboardWidgets widgets={widgets} /></div>;
 }

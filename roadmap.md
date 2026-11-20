@@ -96,3 +96,9 @@
 
 # Brand descriptor
 - [x] Use "Combined Construction Systems" as the supporting brand statement across public pages, access screens, metadata and structured data; logo artwork unchanged
+
+# Dashboard customisation and tab guides
+- [x] Add movable, hideable dashboard widgets with account-specific browser preferences
+- [x] Add short first-visit guides with skip and reopen controls for every application tab
+- [x] Verify dashboard saving, mobile movement and guide dismissal/reopening
+- [ ] Beta production access, record retention, invitations and uploads — blocked by confirmed backend contracts
