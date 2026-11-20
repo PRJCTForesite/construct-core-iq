@@ -6,3 +6,7 @@ export function replayForScope(scope: string, replay?: { scope: string; token: s
 export function walkthroughSteps<T extends { id: string }>(steps: T[], seen: string[], replay?: string, consumedReplay?: string) {
   return replay && replay !== consumedReplay ? steps : unseenSteps(steps, seen);
 }
+export function pageWalkthroughSteps<T extends { id: string }>(steps: T[], seen: string[], replay?: string, consumedReplay?: string) {
+  if (replay && replay !== consumedReplay) return steps;
+  return seen.includes('__finished__') || (steps.length > 0 && steps.every(step => seen.includes(step.id))) ? [] : steps;
+}

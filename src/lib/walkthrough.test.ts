@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { recordShown, replayForScope, unseenSteps, walkthroughKey, walkthroughSteps } from './walkthrough';
+import { recordShown, replayForScope, unseenSteps, walkthroughKey, walkthroughSteps, pageWalkthroughSteps } from './walkthrough';
 it('never automatically repeats a shown step', () => {
   const seen = recordShown([], 'title');
   expect(unseenSteps([{id:'title'}, {id:'project'}], seen)).toEqual([{id:'project'}]);
@@ -26,4 +26,13 @@ it('consumes form help once even when conditional document fields change', () =>
 });
 it('allows a new explicit field help request to replay shown fields', () => {
   expect(walkthroughSteps([{id:'title'}], ['title'], 'help-2', 'help-1')).toEqual([{id:'title'}]);
+});
+it('restarts an interrupted page walkthrough from the beginning', () => {
+  expect(pageWalkthroughSteps([{id:'first'}, {id:'last'}], ['first'])).toEqual([{id:'first'}, {id:'last'}]);
+});
+it('does not restart a skipped or fully completed page walkthrough', () => {
+  expect(pageWalkthroughSteps([{id:'first'}], ['__finished__'])).toEqual([]);
+});
+it('can explicitly replay a completed page walkthrough', () => {
+  expect(pageWalkthroughSteps([{id:'first'}], ['__finished__'], 'help-1')).toEqual([{id:'first'}]);
 });

@@ -3,10 +3,10 @@ import { createPortal } from 'react-dom';
 import { CircleHelp, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { authService } from '@/lib/services/authService';
-import { recordShown, walkthroughSteps, walkthroughKey } from '@/lib/walkthrough';
+import { recordShown, walkthroughSteps, walkthroughKey, pageWalkthroughSteps } from '@/lib/walkthrough';
 
 export type ProgramStep = { id: string; target: HTMLElement; title: string; text: string };
-export function ProgramWalkthrough({ scope, steps, replay, onClose }: { scope: string; steps: ProgramStep[]; replay?: string | undefined; onClose?: () => void }) {
+export function ProgramWalkthrough({ scope, steps, replay, onClose, pageGuide = false }: { scope: string; steps: ProgramStep[]; replay?: string | undefined; onClose?: () => void; pageGuide?: boolean }) {
   const [session, setSession] = useState<{ scope: string; queue: ProgramStep[] }>({ scope, queue: [] });
   const [index, setIndex] = useState(0);
   const [position, setPosition] = useState<{left:number;top:number; width:number}>();
@@ -22,17 +22,19 @@ export function ProgramWalkthrough({ scope, steps, replay, onClose }: { scope: s
     key.current = walkthroughKey(account.id, scope);
     try { const value = JSON.parse(localStorage.getItem(key.current) || '[]'); seen.current = Array.isArray(value) ? value.filter(id => typeof id === 'string') : []; } catch { seen.current = []; }
     const request = replay ? `${scope}:${replay}` : undefined;
-    setSession({ scope, queue: walkthroughSteps(steps, seen.current, request, consumedReplay.current) }); setIndex(0);
+    setSession({ scope, queue: (pageGuide ? pageWalkthroughSteps : walkthroughSteps)(steps, seen.current, request, consumedReplay.current) }); setIndex(0);
     if (request) consumedReplay.current = request;
-  }, [scope, steps, replay]);
+  }, [scope, steps, replay, pageGuide]);
   useEffect(() => {
     if (!current) return;
-    seen.current = recordShown(seen.current, current.id);
-    try { localStorage.setItem(key.current, JSON.stringify(seen.current)); } catch { /* Browser-only preference. */ }
+    if (!pageGuide) {
+      seen.current = recordShown(seen.current, current.id);
+      try { localStorage.setItem(key.current, JSON.stringify(seen.current)); } catch { /* Browser-only preference. */ }
+    }
     current.target.classList.add('program-walkthrough-target');
     current.target.scrollIntoView({ block: 'nearest', behavior: 'instant' });
     return () => current.target.classList.remove('program-walkthrough-target');
-  }, [current]);
+  }, [current, pageGuide]);
   useLayoutEffect(() => {
     if (!current) return;
     function place() {
@@ -58,10 +60,15 @@ export function ProgramWalkthrough({ scope, steps, replay, onClose }: { scope: s
   if (!current) return null;
   const container = current.target.closest<HTMLElement>('[data-record-form-dialog]') ?? document.body;
   function close() { setSession({ scope, queue: [] }); onClose?.(); }
+  function finish() {
+    seen.current = [...new Set([...seen.current, ...queue.map(step => step.id), ...(pageGuide ? ['__finished__'] : [])])];
+    try { localStorage.setItem(key.current, JSON.stringify(seen.current)); } catch { /* Browser-only preference. */ }
+    close();
+  }
   return createPortal(<div ref={tip} role="dialog" aria-modal="false" aria-label="Program walkthrough" style={{ ...position, position: container === document.body ? 'fixed' : 'absolute', visibility: position ? 'visible' : 'hidden' }} className="z-[70] rounded-lg border border-azure/40 bg-card p-4 text-card-foreground shadow-raised">
     <div className="flex items-start justify-between gap-2"><div><p className="text-xs font-medium text-azure">Program walkthrough · {index + 1}/{queue.length}</p><h3 className="mt-1 text-sm font-semibold">{current.title}</h3></div><Button type="button" variant="ghost" size="icon-xs" title="Close walkthrough" aria-label="Close walkthrough" onClick={close}><X /></Button></div>
     <p className="my-3 text-xs leading-relaxed text-muted-foreground">{current.text}</p>
-    <div className="flex justify-between gap-2"><Button type="button" variant="ghost" size="sm" onClick={() => { seen.current = recordShown(seen.current, current.id); const all = [...new Set([...seen.current, ...queue.map(step => step.id)])]; try { localStorage.setItem(key.current,JSON.stringify(all)); } catch {} close(); }}>Skip walkthrough</Button><Button type="button" size="sm" onClick={() => index + 1 < queue.length ? setIndex(index + 1) : close()}>{index + 1 < queue.length ? 'Next' : 'Done'}</Button></div>
+    <div className="flex justify-between gap-2"><Button type="button" variant="ghost" size="sm" onClick={finish}>Skip walkthrough</Button><Button type="button" size="sm" onClick={() => index + 1 < queue.length ? setIndex(index + 1) : finish()}>{index + 1 < queue.length ? 'Next' : 'Done'}</Button></div>
   </div>, container);
 }
 

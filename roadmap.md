@@ -123,3 +123,8 @@
 - [x] Check shared page guides, record-form guides, field help and all widget movement paths
 - [x] Prevent consumed help requests replaying after conditional form fields change
 - [x] Verify all 18 guided tabs, conditional document fields, task field help and original desktop/mobile dragging; preserve existing records and permissions
+
+# Interrupted tab walkthroughs
+- [x] Cancel on navigation and start destination guide when its content mounts
+- [x] Restart interrupted page guides; suppress only skipped or completed guides
+- [x] Verify tab switching, return, completion, skip and help replay; all 18 tab guides and conditional field regression checks pass
