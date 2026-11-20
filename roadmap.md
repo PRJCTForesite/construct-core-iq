@@ -132,3 +132,10 @@
 # Specific field help
 - [x] Retain field question marks and replace their replay prompts with item-only explanations and extra context
 - [x] Verify field switching, dismissal and conditional fields on desktop/mobile; retain separate page guides (ten regression tests and browser checks pass)
+
+# Personal connected apps
+- [x] Add category-specific Communications, Financials and Documents directories and complete Settings catalogue
+- [ ] Real personal connections — blocked by supplied external FastAPI sign-in/storage contracts and Google/Microsoft developer clients (external backend retained)
+- [ ] Xero per-customer connections — custom consent approved; blocked by external sign-in/storage contracts and Xero developer registration
+- [x] Verify category filtering, setup states and desktop/mobile screens (five tests and browser checks pass)
+- [ ] Verify live personal consent and account readback — blocked by external authentication/storage contracts and configured provider clients

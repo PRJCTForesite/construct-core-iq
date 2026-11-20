@@ -39,3 +39,4 @@
 - Consume each explicit help request once across field rescans and key form guides by record identity; give standalone selectors their own help wrapper so conditional fields cannot replay old prompts or overlap other help controls.
 - Page walkthroughs persist terminal completion only on Skip or Done; navigation cancels immediately and interrupted pages restart from step one. Collect targets when route content mounts rather than after a fixed delay; field guides retain per-field shown tracking.
 - Field question marks open item-only popovers with extra context, not walkthrough replays; opening one ends the active form guide to prevent overlapping help, while the page-header guide remains separate.
+- Share contextual app catalogues; gate personal connections on verified external auth and encrypted per-user storage, never demo IDs or shared credentials — prevents account exposure.

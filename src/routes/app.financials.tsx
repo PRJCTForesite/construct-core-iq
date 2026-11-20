@@ -1,3 +1,4 @@
+import { ConnectAppsButton } from '@/components/app/ConnectedApps';
 import { usePlatform } from "@/components/platform/PlatformProvider";
 import { LiveRegister } from "@/components/platform/ModuleFrame";
 import { createFileRoute } from "@tanstack/react-router";
@@ -67,6 +68,7 @@ function FinancialsPage() {
         meta="FY25 · 7 active projects · updated 5 minutes ago"
         actions={
           <>
+            <ConnectAppsButton category="Financials"/>
             <Button variant="outline" size="sm">
               <Download className="h-4 w-4" /> <span className="hidden sm:inline">Export</span>
             </Button>

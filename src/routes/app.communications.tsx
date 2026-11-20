@@ -1,3 +1,4 @@
+import { ConnectAppsButton } from '@/components/app/ConnectedApps';
 import { usePlatform } from "@/components/platform/PlatformProvider";
 import { LiveRegister } from "@/components/platform/ModuleFrame";
 import { createFileRoute } from "@tanstack/react-router";
@@ -33,9 +34,9 @@ function CommunicationsPage() {
         title="Communications"
         meta="Email · SMS · Calls · Internal — 7 unread"
         actions={
-          <Button onClick={()=>store.create("Communication")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+          <><ConnectAppsButton category="Communications"/><Button onClick={()=>store.create("Communication")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             <Reply className="h-4 w-4" /> Add Communication
-          </Button>
+          </Button></>
         }
       />
       <LiveRegister kind="Communication" title="RFIs, site instructions & messages" module="Communications" detail={r=>`${r.category} · ${r.person}`} />
