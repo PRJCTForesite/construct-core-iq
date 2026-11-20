@@ -134,6 +134,7 @@
 - [x] Verify field switching, dismissal and conditional fields on desktop/mobile; retain separate page guides (ten regression tests and browser checks pass)
 
 # Personal connected apps
+- [x] Expand supplied catalogue to 134 apps across 16 categories, with provider icons, dropdown filters and five-app previews with See More; preserve setup-only connections (14 tests and desktop/mobile browser checks pass; unavailable BidContender logo uses initials)
 - [x] Prepare asynchronous email/password, future Microsoft/Google OAuth, JWT session and scoped connection adapter interfaces without assumed endpoints or storage schemas
 - [x] Verify adapter delegation and blocked unverified connections; retain demo sign-in and check Xero setup on desktop/mobile (18 tests and browser checks pass)
 - [x] Add category-specific Communications, Financials and Documents directories and complete Settings catalogue
