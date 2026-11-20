@@ -235,3 +235,23 @@
 .homepage-outcomes h3 {
   letter-spacing: 0;
 }
+
+@keyframes dashboard-widget-wiggle {
+  from { rotate: -0.3deg; }
+  to { rotate: 0.3deg; }
+}
+.dashboard-widget-edit {
+  animation: dashboard-widget-wiggle 240ms ease-in-out infinite alternate;
+}
+[data-widget]:nth-child(even) .dashboard-widget-edit {
+  animation-delay: -120ms;
+}
+.dashboard-widget-lifted {
+  animation: none;
+  rotate: 0deg;
+  scale: 1.015;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-widget-edit { animation: none; }
+  .dashboard-widget-lifted { scale: 1; }
+}
