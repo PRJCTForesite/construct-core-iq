@@ -255,3 +255,9 @@
   .dashboard-widget-edit { animation: none; }
   .dashboard-widget-lifted { scale: 1; }
 }
+
+.program-walkthrough-target {
+  outline: 2px solid var(--azure);
+  outline-offset: 4px;
+  scroll-margin: 110px;
+}

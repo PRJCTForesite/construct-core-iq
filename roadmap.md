@@ -102,3 +102,9 @@
 - [x] Add short first-visit guides with skip and reopen controls for every application tab
 - [x] Verify dashboard saving, mobile movement and guide dismissal/reopening
 - [ ] Beta production access, record retention, invitations and uploads — blocked by confirmed backend contracts
+
+# Program walkthrough
+- [x] Anchor page prompts to actions and widgets
+- [x] Add brief record-form field prompts and field help buttons
+- [x] Ask Yes/No before replay; remember shown steps per account in this browser
+- [x] Verify task creation, replay, dismissal and mobile positioning

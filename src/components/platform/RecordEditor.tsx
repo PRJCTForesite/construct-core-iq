@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { RecordWalkthrough } from '@/components/app/RecordWalkthrough';
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export function RecordEditor() {
   const { editing, edit, save, records, can, role } = usePlatform();
   const { users } = useUsers();
   const [draft, setDraft] = useState<PlatformRecord | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => setDraft(editing), [editing]);
   if (!draft) return null;
   const module = {
@@ -73,13 +75,14 @@ export function RecordEditor() {
             ];
   return (
     <Dialog open={Boolean(editing)} onOpenChange={(v) => !v && edit(null)}>
-      <DialogContent className="max-h-[85vh] max-w-[calc(100vw-1rem)] overflow-y-auto sm:max-w-xl">
+      <DialogContent data-record-form-dialog className="max-h-[85vh] max-w-[calc(100vw-1rem)] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>
             {draft.kind === 'Communication' ? records.some(r => r.id === draft.id) ? 'Edit Communication' : 'Add Communication' : `${records.some(r => r.id === draft.id) ? 'Edit' : 'New'} ${draft.kind.toLowerCase()}`}
           </DialogTitle>
         </DialogHeader>
         <form
+          ref={formRef}
           className="min-w-0 space-y-4 [&_label]:min-w-0"
           onSubmit={(e) => {
             e.preventDefault();
@@ -213,6 +216,7 @@ export function RecordEditor() {
             </Button>
           </div>
         </form>
+        <RecordWalkthrough formRef={formRef} kind={draft.kind} scanKey={`${draft.kind}:${draft.category}:${draft.shareWithClient}`} />
       </DialogContent>
     </Dialog>
   );
