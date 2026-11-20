@@ -261,3 +261,21 @@
   outline-offset: 4px;
   scroll-margin: 110px;
 }
+
+.widget-preset { --widget-background: var(--card); --widget-ink: var(--foreground); --widget-muted: var(--muted-foreground); }
+.widget-colour-navy { --widget-background: var(--sidebar); --widget-ink: var(--sidebar-foreground); --widget-muted: var(--sidebar-foreground); }
+.widget-colour-slate { --widget-background: var(--secondary-foreground); --widget-ink: var(--background); --widget-muted: var(--background); }
+.widget-colour-azure { --widget-background: var(--azure); --widget-ink: var(--azure-foreground); --widget-muted: var(--azure-foreground); }
+.widget-colour-orange { --widget-background: var(--construction); --widget-ink: var(--construction-foreground); --widget-muted: var(--construction-foreground); }
+.widget-content { border-radius: inherit; background: var(--widget-background); }
+.widget-preset:not(.widget-colour-default) .widget-content {
+  --card: var(--widget-background);
+  --foreground: var(--widget-ink);
+  --muted-foreground: var(--widget-muted);
+  --secondary-foreground: var(--widget-ink);
+  --surface: color-mix(in oklch, var(--widget-background), var(--widget-ink) 7%);
+  --border: color-mix(in oklch, var(--widget-background), var(--widget-ink) 25%);
+}
+.widget-preset:not(.widget-colour-default) .widget-content .text-azure,
+.widget-preset:not(.widget-colour-default) .widget-content .text-chart-5 { color: var(--widget-ink); }
+.widget-content h2 { white-space: normal; overflow: visible; }

@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { defaultLayout, moveWidget, normaliseLayout, preferenceKey, WIDGET_IDS } from './workspace-preferences';
 describe('dashboard preferences', () => {
+  it('restores preset widget sizes and brand colours', () => {
+    expect(normaliseLayout({options:{health:{size:'small',colour:'orange'},alerts:{size:'giant',colour:'pink'}}}).options).toEqual({health:{size:'small',colour:'orange'},alerts:{}});
+    expect(normaliseLayout({order:['alerts']}).options).toEqual({});
+  });
   it('moves widgets without losing visibility choices', () => {
     const layout = { ...defaultLayout(), hidden: ['alerts'] as const };
     const moved = moveWidget({ ...layout, hidden: [...layout.hidden] }, 'alerts', 'health');

@@ -108,3 +108,8 @@
 - [x] Add brief record-form field prompts and field help buttons
 - [x] Ask Yes/No before replay; remember shown steps per account in this browser
 - [x] Verify task creation, replay, dismissal and mobile positioning
+
+# Widget sizing and appearance
+- [x] Compact mixed-size widgets without empty row space
+- [x] Preset sizes, brand colour menu, hide and reset options
+- [x] Verify saved appearance, compact placement and desktop/mobile dragging

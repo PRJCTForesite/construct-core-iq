@@ -34,4 +34,5 @@
 - Keep beta application validation and contact constants in a browser-safe shared module; submission must report success only after the chosen delivery service accepts it, preventing silently lost leads.
 - Keep dashboard layouts and guide completion in versioned account-scoped browser preferences, separate from mock business records; no backend contracts exist for durable user settings yet.
 - Use full-widget dnd-kit drag surfaces in dashboard edit mode with mouse, delayed touch and keyboard sensors; inert content prevents accidental record actions while arranging widgets.
+- Pack dashboard widgets with measured CSS grid row spans and dense placement; persist validated size and brand-tone presets with existing account layouts, keeping widget content scrollable at compact sizes.
 - Anchor program walkthroughs to rendered page actions and record inputs, with account-scoped shown-step preferences and explicit Yes/No replay; mount form tips inside their dialog to preserve focus and scrolling without changing record state.
