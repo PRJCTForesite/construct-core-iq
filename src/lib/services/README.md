@@ -21,3 +21,23 @@ loading/error handling when connecting those adapters; current synchronous reads
 and writes are intentionally for in-memory mocks only. Do not add guessed paths.
 Real authentication, organisation scoping and authorisation must be validated by
 the backend. Export only `getRealRecords()` when migrating session records.
+
+## Pending account and integration adapters
+
+`access-contracts.ts` contains browser-safe frontend operations, not proposed
+FastAPI payloads. `createAccessServices(authentication, integrations)` accepts
+reviewed adapters; `accessService` explicitly uses the demo adapter today.
+The shared sign-in form calls its asynchronous email/password operation with
+loading and error handling. Microsoft and Google OAuth are defined but disabled.
+The existing synchronous session facade remains demo-only for legacy guards and
+beta onboarding; migrate those callers together when verified auth is supplied.
+
+Verified adapters must map confirmed account memberships to the six account
+roles, manage JWT retrieval/expiry/refresh/sign-out, and perform provider consent
+through the reviewed FastAPI service. The frontend does not decode JWT claims
+to grant roles or persist passwords, access tokens or provider credentials.
+Integration operations require a verified session and a selected membership;
+this UI check never replaces backend role/organisation enforcement. PostgreSQL
+storage, callback URLs, OAuth scopes, HTTP endpoints and token persistence remain
+the external backend's responsibility and are intentionally unspecified here.
+No connected records, live sync or successful consent are fabricated.

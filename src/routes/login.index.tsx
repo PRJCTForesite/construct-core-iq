@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ACCESS_VIEWS, validateDemoLogin } from "@/content/access";
 import { startDemoSession } from "@/lib/session";
+import { accessService } from "@/lib/services/accessService";
 
 export const Route = createFileRoute("/login/")({
   staticData: { sitemap: false },
@@ -23,15 +24,23 @@ function LoginPage() {
   const [remember, setRemember] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [forgot, setForgot] = useState(false);
-  function submit(event: FormEvent) {
+  const [submitting, setSubmitting] = useState(false);
+  async function submit(event: FormEvent) {
     event.preventDefault();
+    if (submitting) return;
     const issue = validateDemoLogin(email, password);
     setError(issue);
     if (issue) return;
     window.sessionStorage.removeItem("foresite.beta-preview");
     window.sessionStorage.removeItem("foresite.onboarding-preview");
-    startDemoSession(email.trim(), remember);
-    void navigate({ to: "/login/workspaces" });
+    setSubmitting(true);
+    try {
+      await accessService.signInWithPassword({ email: email.trim(), password, remember });
+      setPassword("");
+      await navigate({ to: "/login/workspaces" });
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Sign-in could not be completed. Please try again.");
+    } finally { setSubmitting(false); }
   }
   return <>
     <div className="mb-5 text-center"><Button variant="link" className="text-xs text-muted-foreground" onClick={() => { window.sessionStorage.setItem('foresite.beta-preview', 'true'); startDemoSession('developer@example.test', false); void navigate({ to: '/app' }); }}>Developer / Beta Login</Button><p className="text-xs text-muted-foreground">Internal testing only · mock-data environment</p></div>
@@ -52,7 +61,7 @@ function LoginPage() {
         <div className="space-y-2"><Label htmlFor="email">Email</Label><div className="relative"><Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><Input ref={emailRef} id="email" type="email" autoComplete="username" className="h-10 pl-9" value={email} onChange={e => setEmail(e.target.value)} /></div></div>
         <div className="space-y-2"><Label htmlFor="password">Password</Label><div className="relative"><Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><Input id="password" type="password" autoComplete="current-password" className="h-10 pl-9" value={password} onChange={e => setPassword(e.target.value)} /></div></div>
         <div className="flex items-center justify-between gap-2"><label className="flex items-center gap-2 text-sm"><Checkbox checked={remember} onCheckedChange={v => setRemember(v === true)} />Remember Me</label><Button type="button" variant="link" className="h-auto px-0 text-azure" onClick={() => setForgot(true)}>Forgot Password</Button></div>
-        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}<Button type="submit" className="h-10 w-full bg-azure text-azure-foreground hover:bg-azure/90">Sign In <ArrowRight /></Button>
+        {error && <p role="alert" className="text-sm text-destructive">{error}</p>}<Button type="submit" disabled={submitting} className="h-10 w-full bg-azure text-azure-foreground hover:bg-azure/90">{submitting ? "Signing in…" : "Sign In"} <ArrowRight /></Button>
       </form><div className="my-5 flex items-center gap-3"><span className="h-px flex-1 bg-border" /><span className="text-xs text-muted-foreground">Connected sign-in · Coming soon</span><span className="h-px flex-1 bg-border" /></div><div className="grid gap-2">{[{name:"Microsoft", icon:Grid2X2}, {name:"Google", icon:null}, {name:"Apple", icon:Apple}].map(({name,icon:Icon}) => <Button key={name} disabled variant="outline" className="h-10 w-full">{Icon ? <Icon /> : <span aria-hidden="true" className="font-semibold">G</span>}Sign in with {name}</Button>)}</div></div>
     </section>
     <Dialog open={forgot} onOpenChange={setForgot}><DialogContent><DialogTitle>Password recovery</DialogTitle><DialogDescription>Password recovery will be available when live authentication is connected. This prototype does not store or verify passwords and cannot send reset emails.</DialogDescription><Button onClick={() => setForgot(false)}>Back to sign in</Button></DialogContent></Dialog>

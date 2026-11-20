@@ -134,6 +134,8 @@
 - [x] Verify field switching, dismissal and conditional fields on desktop/mobile; retain separate page guides (ten regression tests and browser checks pass)
 
 # Personal connected apps
+- [x] Prepare asynchronous email/password, future Microsoft/Google OAuth, JWT session and scoped connection adapter interfaces without assumed endpoints or storage schemas
+- [x] Verify adapter delegation and blocked unverified connections; retain demo sign-in and check Xero setup on desktop/mobile (18 tests and browser checks pass)
 - [x] Add category-specific Communications, Financials and Documents directories and complete Settings catalogue
 - [ ] Real personal connections — blocked by supplied external FastAPI sign-in/storage contracts and Google/Microsoft developer clients (external backend retained)
 - [ ] Xero per-customer connections — custom consent approved; blocked by external sign-in/storage contracts and Xero developer registration

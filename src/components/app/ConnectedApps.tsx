@@ -12,13 +12,12 @@ function AppSetup({ app, onClose }: { app: ConnectedApp; onClose: () => void }) 
   return <section aria-label={`${app.name} connection setup`} className="space-y-4">
     <Button variant="ghost" size="sm" onClick={onClose}>← All apps</Button>
     <div><h3 className="text-lg font-semibold">Connect {app.name}</h3><p className="mt-2 text-sm text-muted-foreground">{app.data}</p></div>
-    <div role="status" className="flex gap-3 border-y border-border py-4"><LockKeyhole className="h-5 w-5 shrink-0 text-construction"/><div><p className="text-sm font-semibold">Not connected · setup required</p><p className="mt-1 text-sm text-muted-foreground">Foresite currently has demo sign-in only. Your personal account cannot be linked until verified sign-in and secure account storage are connected to your external service.</p></div></div>
+    <div role="status" className="flex gap-3 border-y border-border py-4"><LockKeyhole className="h-5 w-5 shrink-0 text-construction"/><div><p className="text-sm font-semibold">Not connected · awaiting account setup</p><p className="mt-1 text-sm text-muted-foreground">Foresite currently has demo sign-in only. Personal connections are unavailable while the external account service is being reviewed. No account access is requested here.</p></div></div>
     <ol className="list-decimal space-y-3 pl-5 text-sm text-secondary-foreground">
       <li>Connect Foresite’s real sign-in and secure personal-account storage.</li>
-      <li>{app.personalConnector ? 'Create and link the provider’s developer registration in workspace App User Connectors settings, with offline access enabled.' : 'Complete a dedicated per-customer consent integration with this provider. A shared company connection is not used for personal accounts.'}</li>
+      <li>Complete this provider’s account consent setup once Foresite’s external account service is ready. A shared company connection is not used for personal accounts.</li>
       <li>Authorise your account, then verify an account read before showing it as connected.</li>
     </ol>
-    {app.personalConnector && <p className="break-words text-xs text-muted-foreground">Provider callback: https://connector-gateway.lovable.dev/api/v1/app-users/oauth2/callback</p>}
     <Button asChild variant="outline" size="sm"><a href={app.setupUrl} target="_blank" rel="noopener noreferrer">Provider setup <ExternalLink className="h-4 w-4"/></a></Button>
     <p className="text-xs text-muted-foreground">No account access has been granted. No messages, files or financial records have been imported.</p>
   </section>;
