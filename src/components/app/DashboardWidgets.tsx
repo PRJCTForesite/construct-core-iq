@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
-import { SortableContext, useSortable, sortableKeyboardCoordinates, rectSortingStrategy } from '@dnd-kit/sortable';
+import { SortableContext, useSortable, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Check, Eye, Minus, MoreHorizontal, LayoutDashboard, RotateCcw, X } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuItem } from '@/components/ui/dropdown-menu';
@@ -18,11 +18,12 @@ function SortableWidget({ widget, editing, options, onOptions, onHide }: { widge
   const [rows,setRows] = useState(1);
   useLayoutEffect(() => {
     const element = measure.current; if (!element) return;
-    const observer = new ResizeObserver(() => setRows(Math.ceil((element.getBoundingClientRect().height + 16) / 24)));
+    // Measure layout height, not the animated/scaled visual bounding box.
+    const observer = new ResizeObserver(() => setRows(Math.ceil((element.offsetHeight + 16) / 24)));
     observer.observe(element); return () => observer.disconnect();
   }, []);
-  return <div ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition, gridRowEnd: `span ${rows}` }} data-widget={widget.id} data-size={size} data-colour={options.colour ?? 'default'} className={cn('relative min-w-0', size === 'large' ? 'md:col-span-2 xl:col-span-4' : size === 'small' ? '' : 'md:col-span-2', isDragging && 'z-30')}>
-    <div ref={measure} className={cn('relative rounded-xl widget-preset', `widget-colour-${options.colour ?? 'default'}`, editing && 'outline outline-1 outline-azure/40', isDragging && 'dashboard-widget-lifted shadow-raised ring-2 ring-azure')}>
+  return <div ref={setNodeRef} style={{ transform: CSS.Translate.toString(transform), transition, gridRowEnd: `span ${rows}` }} data-widget={widget.id} data-size={size} data-colour={options.colour ?? 'default'} className={cn('relative min-w-0', size === 'large' ? 'md:col-span-2 xl:col-span-4' : size === 'small' ? '' : 'md:col-span-2', isDragging && 'z-30')}>
+    <div ref={measure} className={cn('relative rounded-xl widget-preset', `widget-colour-${options.colour ?? 'default'}`, editing && 'outline outline-1 outline-azure/40', isDragging && 'shadow-raised ring-2 ring-azure')}>
       <div inert={editing || undefined} className={cn('widget-content', size === 'small' ? 'max-h-48 overflow-auto' : size === 'medium' ? 'max-h-96 overflow-auto' : 'max-h-[40rem] overflow-auto', editing && !isDragging && 'dashboard-widget-edit')}>{widget.content}</div>
       {editing && <>
         <Button variant="ghost" className={cn('absolute inset-0 z-10 h-full w-full rounded-xl p-0 hover:bg-transparent focus-visible:ring-2 focus-visible:ring-azure select-none', isDragging ? 'cursor-grabbing' : 'cursor-grab')} aria-label={`Drag ${widget.title}`} title={`Move ${widget.title}`} {...attributes} {...listeners} />
@@ -67,7 +68,8 @@ export function DashboardWidgets({ widgets }: { widgets: DashboardWidget[] }) {
     {editing && layout.hidden.length > 0 && <div className="flex flex-wrap gap-2" aria-label="Hidden widgets">{layout.hidden.map(id => <Button key={id} variant="outline" size="sm" onClick={() => setLayout(current => ({ ...current, hidden: current.hidden.filter(item => item !== id) }))}><Eye />{widgets.find(widget => widget.id === id)?.title}</Button>)}</div>}
     <p role="status" className={cn('text-xs text-muted-foreground', !status && 'sr-only')}>{status}</p>
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => { if (over && active.id !== over.id) setLayout(current => moveWidget(current, active.id as WidgetId, over.id as WidgetId)); }}>
-      <SortableContext items={visible.map(widget => widget.id)} strategy={rectSortingStrategy}>
+      {/* Mixed-size tiles stay in their slots until drop; only the active tile translates. */}
+      <SortableContext items={visible.map(widget => widget.id)} strategy={() => null}>
         <div className="grid grid-flow-row-dense auto-rows-[8px] grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">{visible.map(widget => <SortableWidget key={widget.id} widget={widget} editing={editing} options={layout.options?.[widget.id] ?? {}} onOptions={options => setLayout(current => ({...current,options:{...current.options,[widget.id]:options}}))} onHide={() => setLayout(current => ({ ...current, hidden: [...current.hidden, widget.id] }))} />)}</div>
       </SortableContext>
     </DndContext>

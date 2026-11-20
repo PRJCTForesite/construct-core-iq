@@ -113,3 +113,8 @@
 - [x] Compact mixed-size widgets without empty row space
 - [x] Preset sizes, brand colour menu, hide and reset options
 - [x] Verify saved appearance, compact placement and desktop/mobile dragging
+
+# Walkthrough and drag regressions
+- [x] Isolate page walkthrough targets and explicit replay requests across tab changes
+- [x] Keep all widget dimensions and neighbouring slots stable during drag
+- [x] Verify navigation, help replay, mixed-size dragging and saved layout (desktop/mobile, touch and keyboard; eight regression tests)

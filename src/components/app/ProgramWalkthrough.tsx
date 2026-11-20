@@ -61,7 +61,8 @@ export function ProgramWalkthrough({ scope, steps, replay, onClose }: { scope: s
   </div>, container);
 }
 
-export function WalkthroughHelp({ onYes, label = 'Page walkthrough' }: { onYes: () => void; label?: string }) {
+export function WalkthroughHelp({ onYes, label = 'Page walkthrough', resetKey }: { onYes: () => void; label?: string; resetKey?: string }) {
   const [ask, setAsk] = useState(false);
+  useEffect(() => { setAsk(false); }, [resetKey]);
   return <span className="relative inline-flex"><Button type="button" variant="ghost" size="icon-xs" title={label} aria-label={label} onClick={() => setAsk(value => !value)}><CircleHelp /></Button>{ask && <span role="dialog" aria-label="Walkthrough confirmation" className="absolute right-0 top-full z-[80] mt-1 w-56 rounded-lg border border-border bg-card p-3 text-card-foreground shadow-panel"><span className="block text-xs font-medium">Do you need a page walkthrough?</span><span className="mt-2 flex justify-end gap-2"><Button type="button" size="sm" variant="ghost" onClick={() => setAsk(false)}>No</Button><Button type="button" size="sm" onClick={() => {setAsk(false);onYes();}}>Yes</Button></span></span>}</span>;
 }
