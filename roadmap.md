@@ -128,3 +128,7 @@
 - [x] Cancel on navigation and start destination guide when its content mounts
 - [x] Restart interrupted page guides; suppress only skipped or completed guides
 - [x] Verify tab switching, return, completion, skip and help replay; all 18 tab guides and conditional field regression checks pass
+
+# Specific field help
+- [x] Retain field question marks and replace their replay prompts with item-only explanations and extra context
+- [x] Verify field switching, dismissal and conditional fields on desktop/mobile; retain separate page guides (ten regression tests and browser checks pass)
