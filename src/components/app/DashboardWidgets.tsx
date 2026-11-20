@@ -53,7 +53,8 @@ export function DashboardWidgets({ widgets }: { widgets: DashboardWidget[] }) {
   function save() {
     try {
       if (!storageKey) throw new Error('No account');
-      localStorage.setItem(storageKey, JSON.stringify(layout)); setSaved(layout); setEditing(false); setStatus('Layout saved for this account in this browser.');
+      const upgraded = normaliseLayout(layout);
+      localStorage.setItem(storageKey, JSON.stringify(upgraded)); setLayout(upgraded); setSaved(upgraded); setEditing(false); setStatus('Layout saved for this account in this browser.');
     } catch { setStatus('Could not save your layout. Browser storage may be unavailable; try again.'); }
   }
   return <div className="space-y-4">
@@ -67,7 +68,7 @@ export function DashboardWidgets({ widgets }: { widgets: DashboardWidget[] }) {
     <p role="status" className={cn('text-xs text-muted-foreground', !status && 'sr-only')}>{status}</p>
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => { if (over && active.id !== over.id) setLayout(current => moveWidget(current, active.id as WidgetId, over.id as WidgetId)); }}>
       <SortableContext items={visible.map(widget => widget.id)} strategy={rectSortingStrategy}>
-        <div className="grid grid-flow-row-dense auto-rows-[8px] grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">{visible.map(widget => <SortableWidget key={widget.id} widget={widget} editing={editing} options={layout.options[widget.id] ?? {}} onOptions={options => setLayout(current => ({...current,options:{...current.options,[widget.id]:options}}))} onHide={() => setLayout(current => ({ ...current, hidden: [...current.hidden, widget.id] }))} />)}</div>
+        <div className="grid grid-flow-row-dense auto-rows-[8px] grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">{visible.map(widget => <SortableWidget key={widget.id} widget={widget} editing={editing} options={layout.options?.[widget.id] ?? {}} onOptions={options => setLayout(current => ({...current,options:{...current.options,[widget.id]:options}}))} onHide={() => setLayout(current => ({ ...current, hidden: [...current.hidden, widget.id] }))} />)}</div>
       </SortableContext>
     </DndContext>
     {!visible.length && <p className="py-10 text-center text-sm text-muted-foreground">No widgets selected.</p>}
