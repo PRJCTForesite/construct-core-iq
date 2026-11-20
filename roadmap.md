@@ -118,3 +118,8 @@
 - [x] Isolate page walkthrough targets and explicit replay requests across tab changes
 - [x] Keep all widget dimensions and neighbouring slots stable during drag
 - [x] Verify navigation, help replay, mixed-size dragging and saved layout (desktop/mobile, touch and keyboard; eight regression tests)
+
+# App-wide walkthrough sweep
+- [x] Check shared page guides, record-form guides, field help and all widget movement paths
+- [x] Prevent consumed help requests replaying after conditional form fields change
+- [x] Verify all 18 guided tabs, conditional document fields, task field help and original desktop/mobile dragging; preserve existing records and permissions

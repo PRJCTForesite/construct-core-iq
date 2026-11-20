@@ -158,12 +158,12 @@ export function RecordEditor() {
             input("amount", "Amount (AUD)", "number")}
           {draft.kind === "Document" && (
             <>
-              <Choice
+              <div className="relative"><Choice
                 label="Category"
                 value={draft.category}
                 options={DOCUMENT_CATEGORIES}
                 onChange={(v) => update("category", v)}
-              />
+              /></div>
               {input("revision", "Current revision")}
               {input("tags", "Tags")}
               <label className="flex items-center justify-between text-sm">
@@ -175,17 +175,17 @@ export function RecordEditor() {
                 />
               </label>
               {draft.shareWithClient && (
-                <Choice
+                <div className="relative"><Choice
                   label="Client document category"
                   value={draft.portalCategory || "Drawings"}
                   options={DOCUMENT_PORTAL_CATEGORIES}
                   onChange={(v) => update("portalCategory", v)}
-                />
+                /></div>
               )}
             </>
           )}
           {draft.kind === "Event" && (
-            <Choice
+            <div className="relative"><Choice
               label="Event type"
               value={draft.category}
               options={[
@@ -197,7 +197,7 @@ export function RecordEditor() {
                 "Permit Expiration",
               ]}
               onChange={(v) => update("category", v)}
-            />
+            /></div>
           )}
           <label className="grid gap-1.5 text-xs">
             {draft.kind === 'Communication' ? 'Message / communication details' : 'Notes'}
@@ -216,7 +216,7 @@ export function RecordEditor() {
             </Button>
           </div>
         </form>
-        <RecordWalkthrough formRef={formRef} kind={draft.kind} scanKey={`${draft.kind}:${draft.category}:${draft.shareWithClient}`} />
+        <RecordWalkthrough key={`${draft.kind}:${draft.id}`} formRef={formRef} kind={draft.kind} scanKey={`${draft.kind}:${draft.category}:${draft.shareWithClient}`} />
       </DialogContent>
     </Dialog>
   );

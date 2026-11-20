@@ -27,21 +27,22 @@ export function RecordWalkthrough({ formRef, kind, scanKey }: { formRef: RefObje
   useEffect(() => {
     const form = formRef.current; if (!form) return;
     const elements = Array.from(form.querySelectorAll<HTMLElement>('input:not([type="hidden"]),textarea,[role="combobox"],[role="switch"]'));
-    const hosts: HTMLElement[] = []; const wrappers: HTMLElement[] = []; const found: ProgramStep[] = [];
+    const hosts: HTMLElement[] = []; const wrappers: HTMLElement[] = []; const padded: HTMLElement[] = []; const found: ProgramStep[] = [];
     for (const element of elements) {
       const wrapper = element.closest<HTMLElement>('label') ?? element.parentElement;
       if (!wrapper || wrappers.includes(wrapper)) continue;
-      const label = element.getAttribute('aria-label') ?? wrapper.textContent?.trim().split('\n')[0]?.trim() ?? 'Details';
+      const label = element.getAttribute('aria-label') ?? (Array.from(wrapper.childNodes).filter(node => node.nodeType === Node.TEXT_NODE).map(node => node.textContent).join(' ').trim() || 'Details');
       const id = label.replace(/\s+/g,'-').toLowerCase();
       if (found.some(step => step.id === id)) continue;
       wrapper.classList.add('relative');
+      if (!wrapper.classList.contains('pr-7')) { wrapper.classList.add('pr-7'); padded.push(wrapper); }
       const host = document.createElement('span'); host.className = 'absolute right-0 top-0 z-10'; wrapper.appendChild(host); hosts.push(host); wrappers.push(wrapper);
       found.push({ id, target: element, title: label, text: FIELD_HINTS[label] ?? `Enter or choose the ${label.toLowerCase()}.` });
     }
     const save = form.querySelector<HTMLElement>('button[type="submit"]');
     if (save) found.push({ id:'save', target:save, title:'Save', text:'Save the record for this session. Real shared storage is not connected yet.' });
     setSteps(found); setHelps(hosts.map((target,index) => ({ id: found[index]?.id ?? '', target })));
-    return () => hosts.forEach(host => host.remove());
+    return () => { hosts.forEach(host => host.remove()); padded.forEach(wrapper => wrapper.classList.remove('pr-7')); };
   }, [formRef, kind, scanKey]);
   return <>{helps.map(help => createPortal(<WalkthroughHelp label={`Help with ${steps.find(step => step.id === help.id)?.title ?? 'field'}`} onYes={() => { setStartAt(help.id); setReplay(String(Date.now())); }} />,help.target,help.id))}<ProgramWalkthrough scope={`form:${kind}`} steps={orderedSteps} replay={replay} /></>;
 }

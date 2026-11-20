@@ -3,23 +3,27 @@ import { createPortal } from 'react-dom';
 import { CircleHelp, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { authService } from '@/lib/services/authService';
-import { recordShown, unseenSteps, walkthroughKey } from '@/lib/walkthrough';
+import { recordShown, walkthroughSteps, walkthroughKey } from '@/lib/walkthrough';
 
 export type ProgramStep = { id: string; target: HTMLElement; title: string; text: string };
 export function ProgramWalkthrough({ scope, steps, replay, onClose }: { scope: string; steps: ProgramStep[]; replay?: string | undefined; onClose?: () => void }) {
-  const [queue, setQueue] = useState<ProgramStep[]>([]);
+  const [session, setSession] = useState<{ scope: string; queue: ProgramStep[] }>({ scope, queue: [] });
   const [index, setIndex] = useState(0);
   const [position, setPosition] = useState<{left:number;top:number; width:number}>();
   const tip = useRef<HTMLDivElement>(null);
   const seen = useRef<string[]>([]);
   const key = useRef('');
-  const current = queue[index];
+  const consumedReplay = useRef<string | undefined>(undefined);
+  const queue = session.scope === scope ? session.queue : [];
+  const current = queue[index]?.target.isConnected ? queue[index] : undefined;
   useEffect(() => {
     const account = authService.getCurrentUser();
     if (!account) return;
     key.current = walkthroughKey(account.id, scope);
     try { const value = JSON.parse(localStorage.getItem(key.current) || '[]'); seen.current = Array.isArray(value) ? value.filter(id => typeof id === 'string') : []; } catch { seen.current = []; }
-    setQueue(replay ? steps : unseenSteps(steps, seen.current)); setIndex(0);
+    const request = replay ? `${scope}:${replay}` : undefined;
+    setSession({ scope, queue: walkthroughSteps(steps, seen.current, request, consumedReplay.current) }); setIndex(0);
+    if (request) consumedReplay.current = request;
   }, [scope, steps, replay]);
   useEffect(() => {
     if (!current) return;
@@ -53,7 +57,7 @@ export function ProgramWalkthrough({ scope, steps, replay, onClose }: { scope: s
   }, [current]);
   if (!current) return null;
   const container = current.target.closest<HTMLElement>('[data-record-form-dialog]') ?? document.body;
-  function close() { setQueue([]); onClose?.(); }
+  function close() { setSession({ scope, queue: [] }); onClose?.(); }
   return createPortal(<div ref={tip} role="dialog" aria-modal="false" aria-label="Program walkthrough" style={{ ...position, position: container === document.body ? 'fixed' : 'absolute', visibility: position ? 'visible' : 'hidden' }} className="z-[70] rounded-lg border border-azure/40 bg-card p-4 text-card-foreground shadow-raised">
     <div className="flex items-start justify-between gap-2"><div><p className="text-xs font-medium text-azure">Program walkthrough · {index + 1}/{queue.length}</p><h3 className="mt-1 text-sm font-semibold">{current.title}</h3></div><Button type="button" variant="ghost" size="icon-xs" title="Close walkthrough" aria-label="Close walkthrough" onClick={close}><X /></Button></div>
     <p className="my-3 text-xs leading-relaxed text-muted-foreground">{current.text}</p>
