@@ -15,6 +15,7 @@ import {
   type PlatformRecord,
 } from "@/content/platform";
 import { usePlatform } from "./PlatformProvider";
+import { isLiveKind } from '@/lib/services/liveRecordService';
 import { clampWeight, weightedProgress, canSignOff } from '@/content/workflow';
 import { HealthBadge } from '@/components/app/WorkflowControls';
 import { DefectPhoto } from '@/components/app/DefectPhoto';
@@ -25,7 +26,7 @@ import { prepareRecordForSave } from '@/content/record-editing';
 import { CommunicationApps } from './CommunicationApps';
 import { COMMUNICATION_APPS, communicationDraftLink } from '@/content/communication-apps';
 export function RecordEditor() {
-  const { editing, edit, save, records, can, role } = usePlatform();
+  const { editing, edit, save, records, can, role, liveData } = usePlatform();
   const { users } = useUsers();
   const [draft, setDraft] = useState<PlatformRecord | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -44,6 +45,8 @@ export function RecordEditor() {
   }[draft.kind];
   const update = (key: keyof PlatformRecord, value: string | number | boolean) =>
     setDraft((d) => (d ? { ...d, [key]: value } : d));
+  // Database mode: only fields stored by the Foresite server are offered, so nothing is silently lost.
+  const inDatabase = isLiveKind(draft.kind) && (liveData.status === 'live' || (liveData.status === 'error' && Boolean(liveData.lastSynced)));
   const communicationApp = COMMUNICATION_APPS.find(app => app.name === draft.category);
   const draftLink = communicationApp ? communicationDraftLink(communicationApp.id, communicationApp.type === 'Email' ? draft.email : draft.phone, draft.title, draft.notes) : null;
   const input = (key: keyof PlatformRecord, label: string, type = "text") => (
@@ -92,11 +95,12 @@ export function RecordEditor() {
               return;
             }
             save(prepareRecordForSave(draft));
-            toast.success(`${draft.kind} saved in demonstration`);
+            if (!inDatabase) toast.success(`${draft.kind} saved in demonstration`);
           }}
         >
           {draft.kind === 'Communication' && <CommunicationApps value={draft.category} onSelect={app => update('category', app.name)} />}
           {input("title", draft.kind === 'Communication' ? 'Subject / title' : 'Title / name')}
+          {inDatabase && <p role="note" className="rounded-md border border-azure/30 bg-azure/5 px-3 py-2 text-xs text-muted-foreground">Saved to your Foresite database. Only the fields your database stores are shown here.</p>}
           {draft.kind === 'Communication' && <div className="space-y-4">
             {communicationApp?.type === 'Email' ? input('email', 'Recipient email', 'email') : communicationApp && ['sms', 'whatsapp', 'call'].includes(communicationApp.id) ? input('phone', 'Recipient phone (international format)', 'tel') : input('responsible', 'Recipient / participants')}
             <p className="text-xs text-muted-foreground">Personal account syncing is not connected. Saving logs this communication for the session; it does not send a message.</p>
@@ -111,7 +115,7 @@ export function RecordEditor() {
                 value={draft.project}
                 options={[
                   ...new Set([
-                    ...PROJECT_NAMES,
+                    ...(inDatabase ? [] : PROJECT_NAMES),
                     ...records.filter((r) => r.kind === "Project").map((r) => r.title),
                     draft.project,
                   ]),
@@ -128,16 +132,21 @@ export function RecordEditor() {
                 onChange={(v) => update("status", v)}
               />
             </label>
-            {['Task','Defect'].includes(draft.kind) ? <label className="grid gap-1.5 text-xs">Assign user, trade or supervisor<Choice label="Assign user, trade or supervisor" value={draft.person} options={[...new Set([draft.person,'Unassigned',...users.filter(u=>!['Client','Guest'].includes(u.role)).map(u=>u.name),...records.filter(r=>r.kind==='Trade').map(r=>r.title)])]} onChange={v=>update('person',v)}/></label> : <AssignedPartyPicker value={draft.person} onChange={v=>update('person',v)} />}
-            {input("date", "Date", "date")}
+            {inDatabase && draft.kind === 'Project' ? null : ['Task','Defect'].includes(draft.kind) ? <label className="grid gap-1.5 text-xs">Assign user, trade or supervisor<Choice label="Assign user, trade or supervisor" value={draft.person} options={[...new Set([draft.person,'Unassigned',...users.filter(u=>!['Client','Guest'].includes(u.role)).map(u=>u.name),...records.filter(r=>r.kind==='Trade').map(r=>r.title)])]} onChange={v=>update('person',v)}/></label> : <AssignedPartyPicker value={draft.person} onChange={v=>update('person',v)} />}
+            {input("date", inDatabase ? (draft.kind === 'Project' ? 'Expected completion' : 'Due date') : "Date", "date")}
+            {inDatabase && draft.kind === 'Task' && <label className="grid gap-1.5 text-xs">Priority<Choice label="Priority" value={draft.priority || 'Medium'} options={[...new Set(['Low', 'Medium', 'High', 'Critical', ...(draft.priority ? [draft.priority] : [])])]} onChange={(v) => update('priority', v)} /></label>}
+            {inDatabase && draft.kind === 'Project' && <>{input('startDate', 'Start date', 'date')}{input('progress', 'Work progress (%)', 'number')}</>}
           </div>
+          {inDatabase && draft.kind === 'Project' && <label className="grid gap-1.5 text-xs font-medium">Site address<Input value={draft.address ?? ''} onChange={(e) => update('address', e.target.value)} /></label>}
           {draft.kind === "Task" && (
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2 space-y-2"><label className="grid gap-1.5 text-xs font-medium">Weight (%)<div className="flex gap-2"><Button type="button" variant="outline" size="icon" aria-label="Decrease weight" disabled={!can('Tasks','Edit')} onClick={()=>{const next={...draft,weight:clampWeight(draft.weight-1)};setDraft(next);if(records.some(r=>r.id===draft.id))save(next,true)}}><Minus/></Button><Input type="number" min={0} max={100} aria-label="Weight (%)" value={draft.weight} disabled={!can('Tasks','Edit')} onChange={e=>{const next={...draft,weight:clampWeight(Number(e.target.value))};setDraft(next);if(records.some(r=>r.id===draft.id))save(next,true)}}/><Button type="button" variant="outline" size="icon" aria-label="Increase weight" disabled={!can('Tasks','Edit')} onClick={()=>{const next={...draft,weight:clampWeight(draft.weight+1)};setDraft(next);if(records.some(r=>r.id===draft.id))save(next,true)}}><Plus/></Button></div></label><p className="text-xs text-muted-foreground">Project weighted progress: {weightedProgress([...records.filter(r=>r.kind==='Task'&&r.project===draft.project&&r.id!==draft.id),draft])}%</p></div>
+              {!inDatabase && <>
               {input("progress", "Progress (%)", "number")}
               {input("dependencies", "Dependencies")}
               {input("responsible", "Responsible parties")}
               {input("notified", "Notified parties")}
+              </>}
             </div>
           )}
           {["Client", "Trade"].includes(draft.kind) && (
@@ -199,20 +208,20 @@ export function RecordEditor() {
               onChange={(v) => update("category", v)}
             /></div>
           )}
-          <label className="grid gap-1.5 text-xs">
-            {draft.kind === 'Communication' ? 'Message / communication details' : 'Notes'}
+          {!(inDatabase && draft.kind === 'Project') && <label className="grid gap-1.5 text-xs">
+            {draft.kind === 'Communication' ? 'Message / communication details' : inDatabase ? 'Description' : 'Notes'}
             <Textarea value={draft.notes} onChange={(e) => update("notes", e.target.value)} />
-          </label>
+          </label>}
           <div className="flex flex-wrap justify-end gap-2">
             {draft.kind === 'Communication' && communicationApp && !['record', 'setup'].includes(communicationApp.mode) && <Button type="button" variant="outline" disabled={!draftLink} onClick={() => { if (!draftLink) return; window.open(draftLink, '_blank', 'noopener,noreferrer'); }}>Open {communicationApp.name}</Button>}
             <Button type="button" variant="outline" onClick={() => edit(null)}>
               Cancel
             </Button>
             <Button
-              disabled={!can(module, records.some((r) => r.id === draft.id) ? "Edit" : "Create")}
+              disabled={(inDatabase && liveData.saving) || !can(module, records.some((r) => r.id === draft.id) ? "Edit" : "Create")}
               type="submit"
             >
-              {draft.kind === 'Communication' ? 'Save Communication' : 'Save'}
+              {draft.kind === 'Communication' ? 'Save Communication' : inDatabase && liveData.saving ? 'Saving…' : 'Save'}
             </Button>
           </div>
         </form>

@@ -15,6 +15,10 @@ export interface RecordService {
   deleteRecord(id: string): PlatformRecord[];
   isSample(id: string): boolean;
   getRealRecords(): PlatformRecord[];
+  /** Swaps every record of these kinds for live records (never treated as samples). */
+  replaceKinds(kinds: readonly RecordKind[], records: PlatformRecord[]): PlatformRecord[];
+  /** Puts this store's original sample records of these kinds back. */
+  restoreSamples(kinds: readonly RecordKind[]): PlatformRecord[];
 }
 export interface ModuleService {
   getRecords(): PlatformRecord[];

@@ -29,6 +29,16 @@ export type RecordKind =
   | "Client"
   | "Trade"
   | "Event";
+/** Backend identifiers for records read from the Foresite API; absent on sample/session records. */
+export type RemoteRef = {
+  source: "foresite-api";
+  id: string | number;
+  organisationId?: string | number | null;
+  clientId?: string | number | null;
+  programmeProgress?: number | null;
+  completedDate?: string | null;
+  createdAt?: string | null;
+};
 export type PlatformRecord = {
   id: string;
   kind: RecordKind;
@@ -57,6 +67,10 @@ export type PlatformRecord = {
   fileSize?: string;
   shareWithClient?: boolean;
   portalCategory?: string;
+  address?: string;
+  startDate?: string;
+  priority?: string;
+  remote?: RemoteRef;
 };
 export const PROJECT_NAMES = PROJECT_ROWS.map((p) => p.name);
 export function makeRecord(

@@ -23,5 +23,13 @@ export function createMockRecordService(seed = INITIAL_RECORDS): RecordService {
       return { records: structuredClone(records), clearedSamples: result.clearedSamples };
     },
     deleteRecord(id) { records = records.filter(record => record.id !== id); return structuredClone(records); },
+    replaceKinds(kinds, next) {
+      records = [...structuredClone(next), ...records.filter(record => !kinds.includes(record.kind))];
+      return structuredClone(records);
+    },
+    restoreSamples(kinds) {
+      records = [...seed.filter(record => kinds.includes(record.kind)).map(record => structuredClone(record)), ...records.filter(record => !kinds.includes(record.kind))];
+      return structuredClone(records);
+    },
   };
 }

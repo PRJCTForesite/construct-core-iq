@@ -16,6 +16,7 @@ import {
 } from "@/components/app/primitives";
 import { Button } from "@/components/ui/button";
 import { PROJECT_DETAIL, PROJECT_ROWS } from "@/content/app";
+import { money } from "@/content/platform";
 
 export const Route = createFileRoute("/app/projects/$projectId")({
   staticData: { sitemap: false },
@@ -34,13 +35,28 @@ export const Route = createFileRoute("/app/projects/$projectId")({
   notFoundComponent: () => <p className="text-sm text-muted-foreground">Project not found.</p>,
 });
 
+const formatDay = (value: string) => {
+  const date = new Date(`${value}T00:00:00`);
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+};
+
 function ProjectDetailPage() {
   const { projectId } = Route.useParams();
   const store = usePlatform();
   const [tab,setTab] = useState("Overview");
   const live = store.records.find(r=>r.kind==="Project" && r.id===projectId);
   const row = PROJECT_ROWS.find((item) => item.id === projectId);
-  const project = { ...PROJECT_DETAIL, completion: live?.progress ?? row?.progress ?? PROJECT_DETAIL.completion, name: live?.title ?? row?.name ?? PROJECT_DETAIL.name, status: live?.status ?? row?.status ?? PROJECT_DETAIL.status };
+  const base = { ...PROJECT_DETAIL, completion: live?.progress ?? row?.progress ?? PROJECT_DETAIL.completion, name: live?.title ?? row?.name ?? PROJECT_DETAIL.name, status: live?.status ?? row?.status ?? PROJECT_DETAIL.status };
+  // Database projects show their own address, dates and value; other panels remain illustrative.
+  const remote = live?.remote;
+  const project = remote && live ? {
+    ...base,
+    initials: live.title.split(/\s+/).map((part) => part[0] ?? "").join("").slice(0, 2).toUpperCase() || "P",
+    address: live.address || "No site address",
+    client: remote.clientId != null ? `Client #${remote.clientId}` : "No client linked",
+    dates: [live.startDate && `Starts ${formatDay(live.startDate)}`, live.date && `Due ${formatDay(live.date)}`].filter(Boolean).join(" · ") || "No dates set",
+    contract: `${money(live.amount)} project value`,
+  } : base;
 
   return (
     <div className="space-y-6">
@@ -79,6 +95,7 @@ function ProjectDetailPage() {
         </nav>
       </div>
 
+      {remote && tab === "Overview" && <p role="note" className="rounded-md border border-border bg-surface px-4 py-2.5 text-sm text-muted-foreground">Name, status, progress, address, dates and value come from your Foresite database. Health, budget and activity panels below still show sample figures.</p>}
       {tab !== "Overview" ? <ProjectTab project={project.name} tab={tab} /> : <>
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)]">
         <Panel title="Completion">

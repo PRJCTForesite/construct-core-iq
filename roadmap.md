@@ -37,7 +37,8 @@
 - [x] Module-by-module sample removal on first real record, with sample notices
 - [x] Mock-only connection boundary for future FastAPI/PostgreSQL service (real records only)
 - [x] Live Variations/claims and RFI/site instruction registers; New Invoice and Compose open forms
-- [ ] Connect FastAPI service and real authentication — deferred until confirmed backend contracts are supplied
+- [x] Connect Projects and Tasks to the FastAPI service (load, create, update, delete; samples fall back when unreachable)
+- [ ] Real authentication and remaining modules — waiting on backend endpoints
 
 # Mock service integration preparation
 - [x] Remove assumed endpoints and introduce replaceable record and module service interfaces

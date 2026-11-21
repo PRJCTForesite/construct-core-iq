@@ -1,7 +1,11 @@
 # Frontend service boundary
 
-All services currently use mock data. No URL, HTTP endpoint, request payload,
-credentials, or live backend contract is assumed. Existing forms and portals
+Projects and Tasks can load from and save to the FastAPI service (see
+`liveRecordService.ts`, `src/lib/api/`). The address comes only from
+`VITE_API_URL`; serializers follow the validated SQLAlchemy fields with
+`project_id`/`task_id` as identifiers. Live rows replace only Project/Task
+samples; every other module stays on mock data. No other URL, endpoint,
+payload, credential or auth route is assumed. Existing forms and portals
 retain their session-only behaviour. Refreshing restores sample records.
 
 - `contracts.ts` describes frontend domain interfaces, not transport schemas.

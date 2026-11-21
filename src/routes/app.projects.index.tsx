@@ -7,6 +7,7 @@ import { Plus, Search } from "lucide-react";
 import { Avatar, Meter, PageHeading, Panel, Pill, StatusPill, type Tone } from "@/components/app/primitives";
 import { Button } from "@/components/ui/button";
 import { PROJECT_ROWS } from "@/content/app";
+import { LiveDataNotice } from "@/components/platform/LiveDataPanel";
 
 export const Route = createFileRoute("/app/projects/")({
   staticData: { sitemap: false },
@@ -29,18 +30,22 @@ const STATUS_TONE: Record<string, Tone | undefined> = { "At Risk": "warn", Delay
 function ProjectsPage() {
  const store=usePlatform();
  const [search,setSearch]=useState("");
- const rows=store.records.filter(r=>r.kind==="Project" && r.title.toLowerCase().includes(search.toLowerCase())).map(r=>({...PROJECT_ROWS.find(x=>x.id===r.id),id:r.id,name:r.title,status:r.status,progress:r.progress,budget:store.can("Financials")?money(r.amount):"Access Restricted",milestone:r.notes}));
+ const rows=store.records.filter(r=>r.kind==="Project" && r.title.toLowerCase().includes(search.toLowerCase())).map(r=>({...PROJECT_ROWS.find(x=>x.id===r.id),id:r.id,name:r.title,status:r.status,progress:r.progress,budget:store.can("Financials")?money(r.amount):"Access Restricted",milestone:r.notes,address:r.address??""}));
+ const all=store.records.filter(r=>r.kind==="Project");
+ const tally=(status:string)=>all.filter(r=>r.status===status).length;
   return (
     <div className="space-y-6">
       <PageHeading
         title="Projects"
-        meta="7 active · 2 at risk · 2 delayed"
+        meta={`${all.length} ${all.length===1?"project":"projects"} · ${tally("At Risk")} at risk · ${tally("Delayed")} delayed`}
         actions={
           <Button onClick={()=>store.create("Project")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
             <Plus className="h-4 w-4" /> New Project
           </Button>
         }
       />
+
+      <LiveDataNotice />
 
       <label className="relative block max-w-md">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -62,7 +67,7 @@ function ProjectsPage() {
                 <Avatar initials={row.name.split(" ").map((p) => p[0]).join("").slice(0, 2)} className="h-10 w-10 text-xs" />
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-semibold text-foreground">{row.name}</span>
-                  <span className="block truncate text-xs text-muted-foreground">Next: {row.milestone}</span>
+                  <span className="block truncate text-xs text-muted-foreground">{row.milestone ? `Next: ${row.milestone}` : row.address || "No milestone set"}</span>
                 </span>
                 <StatusPill tone={STATUS_TONE[row.status] ?? "muted"}>{row.status}</StatusPill>
               </div>
@@ -83,6 +88,7 @@ function ProjectsPage() {
           </Link>
         ))}
       </div>
+      {!rows.length && <p className="py-10 text-center text-sm text-muted-foreground">{search ? "No matching projects" : "No projects yet. Use New Project to add your first one."}</p>}
     </div>
   );
 }

@@ -2,7 +2,21 @@ import { createContext } from 'react';
 import type { PlatformRecord, RecordKind } from '@/content/platform';
 import type { PermissionMap, Role } from '@/content/permissions';
 
+export type LiveDataStatus = 'unconfigured' | 'off' | 'connecting' | 'live' | 'error';
+export type LiveDataState = {
+  status: LiveDataStatus;
+  baseUrl: string | null;
+  message: string;
+  lastSynced: string | null;
+  counts: { projects: number; tasks: number };
+  saving: boolean;
+};
+
 export type PlatformStore = {
+  liveData: LiveDataState;
+  connectLiveData: () => void;
+  disconnectLiveData: () => void;
+  refreshLiveData: () => void;
   records: PlatformRecord[];
   loadSamples: (records: PlatformRecord[]) => void;
   role: Role;

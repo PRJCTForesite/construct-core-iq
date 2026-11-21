@@ -220,10 +220,21 @@ export function UpcomingTile({ size }: { size: WidgetSize }) {
 }
 
 /* ------------------------- Projects requiring attention ------------------------- */
-function ProjectList() {
+type ProjectTileRow = { id: string; name: string; status: string; progress: number; budget: string; milestone: string; flag?: { label: string; tone: Tone } | undefined };
+/** Projects come from the shared store, so database projects replace the samples here too. */
+function useProjectRows(): ProjectTileRow[] {
+  const { records } = usePlatform();
+  return records.filter((record) => record.kind === "Project").map((record) => {
+    const sample = PROJECT_ROWS.find((row) => row.id === record.id);
+    return { id: record.id, name: record.title, status: record.status, progress: record.progress, budget: sample?.budget ?? compactCurrency(record.amount), milestone: record.notes || record.address || "—", flag: sample?.flag };
+  });
+}
+
+function ProjectList({ rows }: { rows: ProjectTileRow[] }) {
+  if (!rows.length) return <p className="px-4 py-6 text-sm text-muted-foreground">No projects yet.</p>;
   return (
     <ul className="divide-y divide-border">
-      {PROJECT_ROWS.map((row) => (
+      {rows.map((row) => (
         <li key={row.id} className="space-y-1.5 px-3 py-2.5 sm:px-4">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
             <Link to="/app/projects/$projectId" params={{ projectId: row.id }} className="truncate text-sm font-medium text-foreground hover:text-azure">{row.name}</Link>
@@ -241,21 +252,22 @@ function ProjectList() {
 }
 
 export function ProjectsTile({ size }: { size: WidgetSize }) {
-  const tally = (status: string) => PROJECT_ROWS.filter((row) => row.status === status).length;
+  const rows = useProjectRows();
+  const tally = (status: string) => rows.filter((row) => row.status === status).length;
   if (size === "small") {
     return (
-      <MiniTile label="Projects flagged" icon="projects" value={PROJECT_ROWS.length} sub={`${tally("Delayed")} delayed · ${tally("At Risk")} at risk`}>
+      <MiniTile label="Projects flagged" icon="projects" value={rows.length} sub={`${tally("Delayed")} delayed · ${tally("At Risk")} at risk`}>
         <div className="mt-2 flex h-1.5 overflow-hidden rounded-full" aria-hidden="true">
-          {PROJECT_ROWS.map((row) => <span key={row.id} className={cn("flex-1", DOT_TONE[STATUS_TONE[row.status] ?? "muted"])} />)}
+          {rows.map((row) => <span key={row.id} className={cn("flex-1", DOT_TONE[STATUS_TONE[row.status] ?? "muted"])} />)}
         </div>
       </MiniTile>
     );
   }
-  if (size === "medium") return <Panel title="Projects Requiring Attention" action="Columns" bodyClassName="p-0 sm:p-0"><ProjectList /></Panel>;
+  if (size === "medium") return <Panel title="Projects Requiring Attention" action="Columns" bodyClassName="p-0 sm:p-0"><ProjectList rows={rows} /></Panel>;
   return (
     <Panel title="Projects Requiring Attention" subtitle={`${tally("On Track")} on track · ${tally("At Risk")} at risk · ${tally("Delayed")} delayed`} action="Columns" bodyClassName="p-0 sm:p-0">
       <div className="@container">
-        <div className="@min-[46rem]:hidden"><ProjectList /></div>
+        <div className="@min-[46rem]:hidden"><ProjectList rows={rows} /></div>
         <table className="hidden w-full text-sm @min-[46rem]:table">
           <thead>
             <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -268,7 +280,7 @@ export function ProjectsTile({ size }: { size: WidgetSize }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {PROJECT_ROWS.map((row) => (
+            {rows.map((row) => (
               <tr key={row.id} className="hover:bg-surface">
                 <td className="px-5 py-3.5 font-medium text-foreground"><Link to="/app/projects/$projectId" params={{ projectId: row.id }} className="hover:text-azure">{row.name}</Link></td>
                 <td className="px-3 py-3.5"><StatusPill tone={STATUS_TONE[row.status] ?? "muted"}>{row.status}</StatusPill></td>
