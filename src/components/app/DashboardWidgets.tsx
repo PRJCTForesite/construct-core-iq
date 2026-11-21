@@ -9,7 +9,7 @@ import { authService } from '@/lib/services/authService';
 import { defaultLayout, moveWidget, normaliseLayout, preferenceKey, type DashboardLayout, type WidgetId, type WidgetOptions, type WidgetSize, type WidgetColour } from '@/lib/workspace-preferences';
 import { cn } from '@/lib/utils';
 
-export type DashboardWidget = { id: WidgetId; title: string; size?: 'small' | 'wide'; content: ReactNode };
+export type DashboardWidget = { id: WidgetId; title: string; size?: 'small' | 'wide'; content: ReactNode | ((size: WidgetSize) => ReactNode) };
 const COLOURS: {id:WidgetColour; label:string; swatch:string}[] = [{id:'default',label:'White / default',swatch:'bg-card'}, {id:'navy',label:'Deep navy',swatch:'bg-primary'}, {id:'slate',label:'Slate',swatch:'bg-secondary-foreground'}, {id:'azure',label:'Azure blue',swatch:'bg-azure'}, {id:'orange',label:'Construction orange',swatch:'bg-construction'}];
 function SortableWidget({ widget, editing, options, onOptions, onHide }: { widget: DashboardWidget; editing: boolean; options: WidgetOptions; onOptions: (options: WidgetOptions) => void; onHide: () => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: widget.id, disabled: !editing });
@@ -25,7 +25,7 @@ function SortableWidget({ widget, editing, options, onOptions, onHide }: { widge
   }, []);
   return <div ref={setNodeRef} style={{ transform: CSS.Translate.toString(transform), transition, gridRowEnd: `span ${rows}` }} data-widget={widget.id} data-size={size} data-colour={options.colour ?? 'default'} className={cn('relative min-w-0', size === 'large' ? 'col-span-2 xl:col-span-4' : size === 'small' ? '' : 'col-span-2', isDragging && 'z-30')}>
     <div ref={measure} className={cn('relative rounded-xl widget-preset', `widget-colour-${options.colour ?? 'default'}`, editing && 'outline outline-1 outline-azure/40', isDragging && 'shadow-raised ring-2 ring-azure')}>
-      <div inert={editing || undefined} className={cn('widget-content', size === 'small' ? 'max-h-36 md:max-h-48' : size === 'medium' ? 'max-h-56 md:max-h-96' : 'max-h-72 md:max-h-[40rem]', editing && !isDragging && 'dashboard-widget-edit')}>{widget.content}</div>
+      <div inert={editing || undefined} className={cn('widget-content', size === 'small' ? 'max-h-36 md:max-h-48' : size === 'medium' ? 'max-h-56 md:max-h-96' : 'max-h-80 md:max-h-[40rem]', editing && !isDragging && 'dashboard-widget-edit')}>{typeof widget.content === 'function' ? widget.content(size) : widget.content}</div>
       {editing && <>
         <Button variant="ghost" className={cn('absolute inset-0 z-10 h-full w-full rounded-xl p-0 hover:bg-transparent focus-visible:ring-2 focus-visible:ring-azure select-none', isDragging ? 'cursor-grabbing' : 'cursor-grab')} aria-label={`Drag ${widget.title}`} title={`Move ${widget.title}`} {...attributes} {...listeners} />
         <Button variant="secondary" size="icon-xs" className="absolute -left-2 -top-2 z-20 rounded-full border border-border shadow-panel" aria-label={`Hide ${widget.title}`} title="Hide widget" onClick={onHide}><Minus /></Button>

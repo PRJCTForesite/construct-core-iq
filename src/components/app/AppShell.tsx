@@ -40,7 +40,7 @@ function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
             to={item.to}
             activeOptions={{ exact: item.to === "/app" }}
             onClick={onNavigate}
-            className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
+            className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
             activeProps={{ className: "bg-sidebar-accent text-sidebar-foreground" }}
           >
             <AppIcon name={item.icon} className="h-[1.05rem] w-[1.05rem] shrink-0" />
@@ -64,19 +64,12 @@ function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   );
 }
 
-function SidebarBody({
-  onNavigate,
-  showThemeToggle = false,
-}: {
-  onNavigate?: (() => void) | undefined;
-  showThemeToggle?: boolean;
-}) {
+function SidebarBody({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   return (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 items-center gap-2.5 px-4">
         <img src={mark} alt="" width={28} height={28} className="h-7 w-7 rounded-md" />
         <span className="text-[0.9375rem] font-semibold tracking-tight">Foresite OS</span>
-        {showThemeToggle && <ThemeToggle className="ml-auto border-sidebar-border bg-transparent text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground" />}
       </div>
       <div className="flex-1 overflow-y-auto pb-4">
         <NavList onNavigate={onNavigate} />
@@ -152,7 +145,7 @@ function TopBar({
   const clientSurface = pathname === "/app/client-portal" || role === "Client";
 
   return (
-    <header className="sticky top-0 z-40 grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border bg-background/90 px-4 backdrop-blur-md lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_auto] lg:px-6">
+    <header className="sticky top-0 z-40 grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-b-2xl border-b border-border bg-background/90 px-3 backdrop-blur-md sm:gap-3 sm:px-4 lg:rounded-none lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_auto] lg:px-6">
       <div className="flex min-w-0 items-center gap-2">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild className="lg:hidden">
@@ -160,9 +153,9 @@ function TopBar({
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[17rem] border-sidebar-border bg-sidebar p-0">
+          <SheetContent side="left" className="w-[17rem] overflow-hidden border-sidebar-border bg-sidebar p-0 [&>button]:text-sidebar-foreground">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
-            <SidebarBody onNavigate={() => setOpen(false)} showThemeToggle />
+            <SidebarBody onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
         <div className="min-w-0 truncate text-sm text-muted-foreground">{crumb}</div>
@@ -171,7 +164,7 @@ function TopBar({
       <div className="hidden min-w-0 lg:block">{!clientSurface && <GlobalSearch />}</div>
 
       <div className="flex shrink-0 items-center gap-2">
-        <ThemeToggle className="hidden sm:inline-flex" />
+        <ThemeToggle />
         <WorkflowGuide />
         {!clientSurface && (
           <>
@@ -187,7 +180,7 @@ function TopBar({
             </Button>
           </>
         )}
-        <Avatar initials={role === "Client" ? "SM" : DEMO_USER.initials} />
+        <Avatar initials={role === "Client" ? "SM" : DEMO_USER.initials} className="hidden sm:grid" />
       </div>
     </header>
   );

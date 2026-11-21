@@ -12,7 +12,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 rounded-b-2xl border-b border-border bg-background/85 backdrop-blur-md lg:rounded-none">
       <div className="container-page flex h-16 items-center justify-between gap-6">
         <Logo />
 
@@ -54,17 +54,17 @@ export function SiteHeader() {
                   key={link.to}
                   to={link.to}
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  className="rounded-xl px-3 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary hover:text-foreground"
                   activeProps={{ className: "bg-secondary text-foreground" }}
                 >
                   {link.label}
                 </Link>
               ))}
               <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" className="rounded-xl">
                   <Link to="/contact" onClick={() => setOpen(false)}>Apply for Beta Access</Link>
                 </Button>
-                <Button asChild className="bg-azure text-azure-foreground hover:bg-azure/90">
+                <Button asChild className="rounded-xl bg-azure text-azure-foreground hover:bg-azure/90">
                   <Link to="/contact" search={{ enquiry: "demo" }} onClick={() => setOpen(false)}>
                     Book a Demo
                   </Link>

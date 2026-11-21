@@ -126,18 +126,26 @@ export function Meter({ value, tone = "info", className }: { value: number; tone
   );
 }
 
-export function Ring({ value, label, sub }: { value: number; label: string; sub?: string }) {
+const RING_SIZE = {
+  default: { box: "h-32 w-32", label: "text-2xl" },
+  sm: { box: "h-12 w-12", label: "text-sm" },
+  md: { box: "h-24 w-24 md:h-32 md:w-32", label: "text-xl md:text-2xl" },
+  lg: { box: "h-28 w-28 md:h-36 md:w-36", label: "text-2xl md:text-3xl" },
+} as const;
+
+export function Ring({ value, label, sub, size = "default" }: { value: number; label: string; sub?: string; size?: keyof typeof RING_SIZE }) {
   const circumference = 2 * Math.PI * 44;
+  const dims = RING_SIZE[size];
   return (
-    <div className="widget-ring relative grid h-32 w-32 shrink-0 place-items-center">
-      <svg viewBox="0 0 100 100" className="h-32 w-32 -rotate-90">
-        <circle cx="50" cy="50" r="44" fill="none" strokeWidth="8" className="stroke-muted" />
+    <div className={cn("relative grid shrink-0 place-items-center", dims.box)}>
+      <svg viewBox="0 0 100 100" className={cn("-rotate-90", dims.box)}>
+        <circle cx="50" cy="50" r="44" fill="none" strokeWidth={size === "sm" ? 10 : 8} className="stroke-muted" />
         <circle
           cx="50"
           cy="50"
           r="44"
           fill="none"
-          strokeWidth="8"
+          strokeWidth={size === "sm" ? 10 : 8}
           strokeLinecap="round"
           className="stroke-azure"
           strokeDasharray={circumference}
@@ -145,8 +153,8 @@ export function Ring({ value, label, sub }: { value: number; label: string; sub?
         />
       </svg>
       <div className="absolute text-center">
-        <p className="text-2xl font-semibold tabular-nums text-foreground">{label}</p>
-        {sub && <p className="text-[0.6875rem] text-muted-foreground">{sub}</p>}
+        <p className={cn("font-semibold tabular-nums text-foreground", dims.label)}>{label}</p>
+        {sub && size !== "sm" && <p className="text-[0.6875rem] text-muted-foreground">{sub}</p>}
       </div>
     </div>
   );

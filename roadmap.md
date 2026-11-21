@@ -149,3 +149,8 @@
 - [x] Remove sideways page scrolling: tables, calendar, permissions, plans and tabs switch to stacked cards on narrow screens (25 pages at 390/768px, earlier at 360/1024px)
 - [x] One-click beta entry visible only on devices unlocked with the private team passcode (server-checked signed device token, 180-day expiry)
 - [x] Verify phone dragging/saving, theme persistence and system preference, team access unlock/forgery rejection (tests and browser checks pass)
+
+# Menu, corners and tile sizes
+- [x] Remove the appearance switch from the phone menus so it no longer overlaps the close button; keep it in every page header
+- [x] Soften the corners of the slide-out menus, menu links and top headers on phone and tablet
+- [x] Give every dashboard tile its own small (short figures, fits without cropping), medium and large (extra detail) view; checked on phone and desktop
