@@ -120,8 +120,24 @@ function FinancialsPage() {
       </div>
 
       <Panel title="Outstanding Invoices" action="Filter" bodyClassName="p-0 sm:p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[52rem] text-sm">
+        <div className="@container">
+          <ul className="divide-y divide-border @min-[52rem]:hidden">
+            {OUTSTANDING_INVOICES.map((invoice) => (
+              <li key={invoice.id} className="space-y-1.5 px-4 py-3">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+                  <span className="min-w-0 truncate text-sm font-medium text-foreground">{invoice.id} · {invoice.client}</span>
+                  <span className="shrink-0 text-sm font-semibold tabular-nums text-foreground">{invoice.amount}</span>
+                </div>
+                <p className="truncate text-xs text-muted-foreground">{invoice.project} · Due {invoice.due}</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Pill tone={STATUS_TONE[invoice.status] ?? "muted"}>{invoice.status}</Pill>
+                  <Pill tone={RISK_TONE[invoice.risk] ?? "muted"}>{invoice.risk}</Pill>
+                  <button className="ml-auto text-xs font-semibold text-azure">{invoice.action}</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <table className="hidden w-full text-sm @min-[52rem]:table">
             <thead>
               <tr className="border-b border-border text-left text-xs text-muted-foreground">
                 {["Invoice", "Client", "Project", "Amount", "Issued", "Due", "Status", "Risk", ""].map((head) => (

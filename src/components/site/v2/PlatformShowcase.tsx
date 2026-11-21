@@ -28,9 +28,9 @@ export function PlatformShowcase() {
           <span className="ml-3 truncate text-xs text-muted-foreground">app.foresiteos.com.au / {view.label.toLowerCase()}</span>
         </div>
         <div className="grid md:grid-cols-[200px_1fr]">
-          <nav className="flex gap-1 overflow-x-auto border-b border-border bg-primary p-2 md:flex-col md:border-b-0" aria-label={`${view.label} sections`}>
+          <nav className="flex flex-wrap gap-1 border-b border-border bg-primary p-2 md:flex-col md:flex-nowrap md:border-b-0" aria-label={`${view.label} sections`}>
             {view.sections.map((item, index) => (
-              <Button key={item.label} variant="ghost" aria-pressed={item === section} aria-controls="showcase-content" onClick={() => setSelection({ viewId: view.id, sectionIndex: index })} className={cn("h-auto justify-start whitespace-nowrap rounded-md px-3 py-2 text-left text-sm", item === section ? "bg-azure text-azure-foreground hover:bg-azure hover:text-azure-foreground" : "text-primary-foreground/75 hover:bg-primary-foreground/10 hover:text-primary-foreground")}>
+              <Button key={item.label} variant="ghost" aria-pressed={item === section} aria-controls="showcase-content" onClick={() => setSelection({ viewId: view.id, sectionIndex: index })} className={cn("h-auto justify-start whitespace-nowrap rounded-md px-2.5 py-1.5 text-left text-xs sm:px-3 sm:py-2 sm:text-sm", item === section ? "bg-azure text-azure-foreground hover:bg-azure hover:text-azure-foreground" : "text-primary-foreground/75 hover:bg-primary-foreground/10 hover:text-primary-foreground")}>
                 {item.label}
               </Button>
             ))}

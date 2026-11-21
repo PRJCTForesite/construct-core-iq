@@ -10,6 +10,7 @@ import {
 } from "@/components/platform/GlobalControls";
 import { usePlatform } from "@/components/platform/PlatformProvider";
 import mark from "@/assets/foresite-mark-transparent.png";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { AppIcon } from "./AppIcon";
 import { Avatar } from "./primitives";
 import { Button } from "@/components/ui/button";
@@ -63,12 +64,19 @@ function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   );
 }
 
-function SidebarBody({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
+function SidebarBody({
+  onNavigate,
+  showThemeToggle = false,
+}: {
+  onNavigate?: (() => void) | undefined;
+  showThemeToggle?: boolean;
+}) {
   return (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-16 items-center gap-2.5 px-4">
         <img src={mark} alt="" width={28} height={28} className="h-7 w-7 rounded-md" />
         <span className="text-[0.9375rem] font-semibold tracking-tight">Foresite OS</span>
+        {showThemeToggle && <ThemeToggle className="ml-auto border-sidebar-border bg-transparent text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground" />}
       </div>
       <div className="flex-1 overflow-y-auto pb-4">
         <NavList onNavigate={onNavigate} />
@@ -154,7 +162,7 @@ function TopBar({
           </SheetTrigger>
           <SheetContent side="left" className="w-[17rem] border-sidebar-border bg-sidebar p-0">
             <SheetTitle className="sr-only">Navigation</SheetTitle>
-            <SidebarBody onNavigate={() => setOpen(false)} />
+            <SidebarBody onNavigate={() => setOpen(false)} showThemeToggle />
           </SheetContent>
         </Sheet>
         <div className="min-w-0 truncate text-sm text-muted-foreground">{crumb}</div>
@@ -163,6 +171,7 @@ function TopBar({
       <div className="hidden min-w-0 lg:block">{!clientSurface && <GlobalSearch />}</div>
 
       <div className="flex shrink-0 items-center gap-2">
+        <ThemeToggle className="hidden sm:inline-flex" />
         <WorkflowGuide />
         {!clientSurface && (
           <>

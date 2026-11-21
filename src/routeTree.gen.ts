@@ -39,6 +39,7 @@ import { Route as AppWelcomeRouteImport } from './routes/app.welcome'
 import { Route as AppWorkspaceRouteImport } from './routes/app.workspace'
 import { Route as LoginIndexRouteImport } from './routes/login.index'
 import { Route as LoginRegisterRouteImport } from './routes/login.register'
+import { Route as LoginTeamRouteImport } from './routes/login.team'
 import { Route as LoginWorkspacesRouteImport } from './routes/login.workspaces'
 import { Route as AppAdministrationIndexRouteImport } from './routes/app.administration.index'
 import { Route as AppAdministrationPermissionsRouteImport } from './routes/app.administration.permissions'
@@ -197,6 +198,11 @@ const LoginRegisterRoute = LoginRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => LoginRoute,
 } as any)
+const LoginTeamRoute = LoginTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => LoginRoute,
+} as any)
 const LoginWorkspacesRoute = LoginWorkspacesRouteImport.update({
   id: '/workspaces',
   path: '/workspaces',
@@ -263,6 +269,7 @@ export interface FileRoutesByFullPath {
   '/app/welcome': typeof AppWelcomeRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/login/register': typeof LoginRegisterRoute
+  '/login/team': typeof LoginTeamRoute
   '/login/workspaces': typeof LoginWorkspacesRoute
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
@@ -298,6 +305,7 @@ export interface FileRoutesByTo {
   '/app/welcome': typeof AppWelcomeRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/login/register': typeof LoginRegisterRoute
+  '/login/team': typeof LoginTeamRoute
   '/login/workspaces': typeof LoginWorkspacesRoute
   '/app': typeof AppIndexRoute
   '/login': typeof LoginIndexRoute
@@ -338,6 +346,7 @@ export interface FileRoutesById {
   '/app/welcome': typeof AppWelcomeRoute
   '/app/workspace': typeof AppWorkspaceRoute
   '/login/register': typeof LoginRegisterRoute
+  '/login/team': typeof LoginTeamRoute
   '/login/workspaces': typeof LoginWorkspacesRoute
   '/app/': typeof AppIndexRoute
   '/login/': typeof LoginIndexRoute
@@ -379,6 +388,7 @@ export interface FileRouteTypes {
     | '/app/welcome'
     | '/app/workspace'
     | '/login/register'
+    | '/login/team'
     | '/login/workspaces'
     | '/app/'
     | '/login/'
@@ -414,6 +424,7 @@ export interface FileRouteTypes {
     | '/app/welcome'
     | '/app/workspace'
     | '/login/register'
+    | '/login/team'
     | '/login/workspaces'
     | '/app'
     | '/login'
@@ -453,6 +464,7 @@ export interface FileRouteTypes {
     | '/app/welcome'
     | '/app/workspace'
     | '/login/register'
+    | '/login/team'
     | '/login/workspaces'
     | '/app/'
     | '/login/'
@@ -689,6 +701,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRegisterRouteImport
       parentRoute: typeof LoginRoute
     }
+    '/login/team': {
+      id: '/login/team'
+      path: '/team'
+      fullPath: '/login/team'
+      preLoaderRoute: typeof LoginTeamRouteImport
+      parentRoute: typeof LoginRoute
+    }
     '/login/workspaces': {
       id: '/login/workspaces'
       path: '/workspaces'
@@ -818,12 +837,14 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface LoginRouteChildren {
   LoginRegisterRoute: typeof LoginRegisterRoute
+  LoginTeamRoute: typeof LoginTeamRoute
   LoginWorkspacesRoute: typeof LoginWorkspacesRoute
   LoginIndexRoute: typeof LoginIndexRoute
 }
 
 const LoginRouteChildren: LoginRouteChildren = {
   LoginRegisterRoute: LoginRegisterRoute,
+  LoginTeamRoute: LoginTeamRoute,
   LoginWorkspacesRoute: LoginWorkspacesRoute,
   LoginIndexRoute: LoginIndexRoute,
 }

@@ -89,17 +89,17 @@ function DownloadPage() {
         <SectionHeading title="Mobile" description="Scan the code with your device camera, or install from the store." />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {MOBILE.map((item) => (
-            <article key={item.id} className="flex gap-6 rounded-xl border border-border bg-card p-7 shadow-panel">
+            <article key={item.id} className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5 shadow-panel sm:flex-row sm:gap-6 sm:p-7 md:flex-col lg:flex-row">
               <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-muted-foreground">
                 <QrCode className="h-14 w-14" aria-hidden="true" />
                 <span className="sr-only">QR code for the {item.title} app</span>
               </div>
-              <div>
+              <div className="min-w-0">
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-construction/10 text-construction">
                   <Smartphone className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <h3 className="mt-4 text-xl font-semibold text-foreground">{item.title}</h3>
-                <Button asChild variant="outline" className="mt-4">
+                <Button asChild variant="outline" className="mt-4 h-auto max-w-full whitespace-normal py-2 text-left">
                   <a href={APP_URL}>{item.store}</a>
                 </Button>
               </div>

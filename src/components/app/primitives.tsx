@@ -129,7 +129,7 @@ export function Meter({ value, tone = "info", className }: { value: number; tone
 export function Ring({ value, label, sub }: { value: number; label: string; sub?: string }) {
   const circumference = 2 * Math.PI * 44;
   return (
-    <div className="relative grid h-32 w-32 shrink-0 place-items-center">
+    <div className="widget-ring relative grid h-32 w-32 shrink-0 place-items-center">
       <svg viewBox="0 0 100 100" className="h-32 w-32 -rotate-90">
         <circle cx="50" cy="50" r="44" fill="none" strokeWidth="8" className="stroke-muted" />
         <circle

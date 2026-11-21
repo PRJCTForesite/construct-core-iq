@@ -142,3 +142,10 @@
 - [ ] Xero per-customer connections — custom consent approved; blocked by external sign-in/storage contracts and Xero developer registration
 - [x] Verify category filtering, setup states and desktop/mobile screens (five tests and browser checks pass)
 - [ ] Verify live personal consent and account readback — blocked by external authentication/storage contracts and configured provider clients
+
+# Appearance, phone dashboard and private beta access
+- [x] Add Light / Dark / System appearance switch across website, sign-in and app (saved per device, applied before the page paints)
+- [x] Shrink every dashboard tile size on phones (two-column small tiles, shorter medium/large caps, condensed detail) while keeping desktop sizes
+- [x] Remove sideways page scrolling: tables, calendar, permissions, plans and tabs switch to stacked cards on narrow screens (25 pages at 390/768px, earlier at 360/1024px)
+- [x] One-click beta entry visible only on devices unlocked with the private team passcode (server-checked signed device token, 180-day expiry)
+- [x] Verify phone dragging/saving, theme persistence and system preference, team access unlock/forgery rejection (tests and browser checks pass)

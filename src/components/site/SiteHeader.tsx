@@ -6,6 +6,7 @@ import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { NAV_LINKS } from "@/content/site";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -29,6 +30,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <ThemeToggle />
           <Button asChild variant="ghost" size="sm">
             <Link to="/contact">Apply for Beta Access</Link>
           </Button>
@@ -37,8 +39,9 @@ export function SiteHeader() {
           </Button>
         </div>
 
+        <div className="flex items-center gap-2 lg:hidden"><ThemeToggle />
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild className="lg:hidden">
+          <SheetTrigger asChild>
             <Button variant="outline" size="icon" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </Button>
@@ -70,6 +73,7 @@ export function SiteHeader() {
             </div>
           </SheetContent>
         </Sheet>
+        </div>
       </div>
     </header>
   );

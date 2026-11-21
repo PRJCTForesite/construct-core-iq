@@ -67,7 +67,7 @@ export function TradePortal() {
         meta={`${TRADE_PROFILE.company} · Working for 3 builders across 3 projects`}
         actions={<Pill tone="info">Trade view · read-limited</Pill>}
       />
-      <nav aria-label="Trade portal sections" className="-mx-1 flex gap-1 overflow-x-auto border-b border-border pb-px">
+      <nav aria-label="Trade portal sections" className="flex flex-wrap gap-1 border-b border-border pb-px">
         {TABS.map((t) => (
           <button
             key={t}
@@ -263,9 +263,9 @@ function TasksBoard({ tasks, setTasks, compact }: { tasks: TradeTask[]; setTasks
       {/* Mobile always list; desktop follows toggle (default Kanban) */}
       <div className={cn(view === "Kanban" ? "md:hidden" : "")}><TaskList tasks={filtered} move={move} open={setSelected} /></div>
       {view === "Kanban" && (
-        <div className="hidden gap-3 overflow-x-auto md:grid md:grid-cols-5">
+        <div className="hidden gap-3 md:grid md:grid-cols-3 xl:grid-cols-5">
           {TASK_COLUMNS.map((col) => (
-            <div key={col} className="min-w-40 rounded-lg bg-muted/60 p-2">
+            <div key={col} className="min-w-0 rounded-lg bg-muted/60 p-2">
               <p className="mb-2 px-1 text-xs font-semibold text-muted-foreground">{col} · {filtered.filter((t) => t.status === col).length}</p>
               <div className="space-y-2">
                 {filtered.filter((t) => t.status === col).map((t) => (

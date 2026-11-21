@@ -40,3 +40,6 @@
 - Page walkthroughs persist terminal completion only on Skip or Done; navigation cancels immediately and interrupted pages restart from step one. Collect targets when route content mounts rather than after a fixed delay; field guides retain per-field shown tracking.
 - Field question marks open item-only popovers with extra context, not walkthrough replays; opening one ends the active form guide to prevent overlapping help, while the page-header guide remains separate.
 - Share contextual app catalogues; gate personal connections on verified external auth and encrypted per-user storage, never demo IDs or shared credentials — prevents account exposure.
+- Keep appearance preference in a browser-safe theme module with a pre-paint root script; components only toggle the root dark class so semantic tokens stay the single colour source.
+- Gate one-click beta entry behind server functions comparing a secret passcode and issuing a signed, expiring device token; the public login never renders the shortcut and the workspace stays demo-only.
+- Prefer container-query card layouts over horizontal scroll wrappers for wide data views; pages scroll vertically only and overflow scrolls inside widgets.

@@ -49,8 +49,8 @@ function ProjectDetailPage() {
       </Link>
 
       <div className="rounded-xl border border-border bg-card p-5 shadow-panel">
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-4 sm:flex sm:items-center sm:justify-between">
-          <div className="flex min-w-0 items-center gap-4">
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex w-full min-w-0 items-center gap-4 sm:w-auto">
             <Avatar initials={project.initials} className="h-12 w-12 rounded-xl text-sm" />
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
@@ -59,20 +59,20 @@ function ProjectDetailPage() {
                   {project.status}
                 </StatusPill>
               </div>
-              <p className="mt-1 flex items-center gap-1.5 truncate text-sm text-muted-foreground">
-                <MapPin className="h-3.5 w-3.5" /> {project.address} · {project.client}
+              <p className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5 shrink-0" /> <span className="truncate">{project.address} · {project.client}</span>
               </p>
               <p className="text-xs text-muted-foreground">
                 {project.dates} · {project.contract}
               </p>
             </div>
           </div>
-          <Button onClick={()=>store.create("Communication")} size="sm" className="bg-azure text-azure-foreground hover:bg-azure/90">
+          <Button onClick={()=>store.create("Communication")} size="sm" className="shrink-0 bg-azure text-azure-foreground hover:bg-azure/90">
             Update client
           </Button>
         </div>
 
-        <nav className="mt-5 -mb-1 flex gap-1 overflow-x-auto" aria-label="Project sections">
+        <nav className="mt-5 -mb-1 flex flex-wrap gap-1" aria-label="Project sections">
           {["Overview","Tasks","Programme","Communications","Documents","Financials","Variations","Defects","Photos","Timeline"].map(label => (
             <Button key={label} variant={label===tab ? "secondary" : "ghost"} size="sm" onClick={()=>setTab(label)}>{label}</Button>
           ))}

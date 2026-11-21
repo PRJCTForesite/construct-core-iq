@@ -45,8 +45,28 @@ export function PermissionGrid({
   onChange?: (module: string, action: string, enabled: boolean) => void;
 }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[640px] text-sm">
+    <div className="@container">
+      <ul className="divide-y divide-border @min-[40rem]:hidden" aria-label="Permissions by module">
+        {MODULES.map((module) => (
+          <li key={module} className="py-3">
+            <p className="text-xs font-medium">{module}</p>
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+              {ACTIONS.map((action) => (
+                <label key={action} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <Checkbox
+                    aria-label={`${module} ${action}`}
+                    checked={permissions[module]?.includes(action) ?? false}
+                    disabled={!onChange}
+                    onCheckedChange={(checked) => onChange?.(module, action, checked === true)}
+                  />
+                  {action}
+                </label>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <table className="hidden w-full text-sm @min-[40rem]:table">
         <thead>
           <tr className="border-b border-border text-xs text-muted-foreground">
             <th className="px-3 py-3 text-left font-medium">Module</th>

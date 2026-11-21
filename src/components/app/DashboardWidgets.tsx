@@ -19,12 +19,13 @@ function SortableWidget({ widget, editing, options, onOptions, onHide }: { widge
   useLayoutEffect(() => {
     const element = measure.current; if (!element) return;
     // Measure layout height, not the animated/scaled visual bounding box.
-    const observer = new ResizeObserver(() => setRows(Math.ceil((element.offsetHeight + 16) / 24)));
+    const gap = () => { const grid = element.parentElement?.parentElement; return grid ? parseFloat(getComputedStyle(grid).rowGap) || 0 : 16; };
+    const observer = new ResizeObserver(() => { const g = gap(); setRows(Math.ceil((element.offsetHeight + g) / (8 + g))); });
     observer.observe(element); return () => observer.disconnect();
   }, []);
-  return <div ref={setNodeRef} style={{ transform: CSS.Translate.toString(transform), transition, gridRowEnd: `span ${rows}` }} data-widget={widget.id} data-size={size} data-colour={options.colour ?? 'default'} className={cn('relative min-w-0', size === 'large' ? 'md:col-span-2 xl:col-span-4' : size === 'small' ? '' : 'md:col-span-2', isDragging && 'z-30')}>
+  return <div ref={setNodeRef} style={{ transform: CSS.Translate.toString(transform), transition, gridRowEnd: `span ${rows}` }} data-widget={widget.id} data-size={size} data-colour={options.colour ?? 'default'} className={cn('relative min-w-0', size === 'large' ? 'col-span-2 xl:col-span-4' : size === 'small' ? '' : 'col-span-2', isDragging && 'z-30')}>
     <div ref={measure} className={cn('relative rounded-xl widget-preset', `widget-colour-${options.colour ?? 'default'}`, editing && 'outline outline-1 outline-azure/40', isDragging && 'shadow-raised ring-2 ring-azure')}>
-      <div inert={editing || undefined} className={cn('widget-content', size === 'small' ? 'max-h-48 overflow-auto' : size === 'medium' ? 'max-h-96 overflow-auto' : 'max-h-[40rem] overflow-auto', editing && !isDragging && 'dashboard-widget-edit')}>{widget.content}</div>
+      <div inert={editing || undefined} className={cn('widget-content', size === 'small' ? 'max-h-36 md:max-h-48' : size === 'medium' ? 'max-h-56 md:max-h-96' : 'max-h-72 md:max-h-[40rem]', editing && !isDragging && 'dashboard-widget-edit')}>{widget.content}</div>
       {editing && <>
         <Button variant="ghost" className={cn('absolute inset-0 z-10 h-full w-full rounded-xl p-0 hover:bg-transparent focus-visible:ring-2 focus-visible:ring-azure select-none', isDragging ? 'cursor-grabbing' : 'cursor-grab')} aria-label={`Drag ${widget.title}`} title={`Move ${widget.title}`} {...attributes} {...listeners} />
         <Button variant="secondary" size="icon-xs" className="absolute -left-2 -top-2 z-20 rounded-full border border-border shadow-panel" aria-label={`Hide ${widget.title}`} title="Hide widget" onClick={onHide}><Minus /></Button>
@@ -70,7 +71,7 @@ export function DashboardWidgets({ widgets }: { widgets: DashboardWidget[] }) {
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => { if (over && active.id !== over.id) setLayout(current => moveWidget(current, active.id as WidgetId, over.id as WidgetId)); }}>
       {/* Mixed-size tiles stay in their slots until drop; only the active tile translates. */}
       <SortableContext items={visible.map(widget => widget.id)} strategy={() => null}>
-        <div className="grid grid-flow-row-dense auto-rows-[8px] grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">{visible.map(widget => <SortableWidget key={widget.id} widget={widget} editing={editing} options={layout.options?.[widget.id] ?? {}} onOptions={options => setLayout(current => ({...current,options:{...current.options,[widget.id]:options}}))} onHide={() => setLayout(current => ({ ...current, hidden: [...current.hidden, widget.id] }))} />)}</div>
+        <div className="grid grid-flow-row-dense auto-rows-[8px] grid-cols-2 items-start gap-3 md:gap-4 xl:grid-cols-4">{visible.map(widget => <SortableWidget key={widget.id} widget={widget} editing={editing} options={layout.options?.[widget.id] ?? {}} onOptions={options => setLayout(current => ({...current,options:{...current.options,[widget.id]:options}}))} onHide={() => setLayout(current => ({ ...current, hidden: [...current.hidden, widget.id] }))} />)}</div>
       </SortableContext>
     </DndContext>
     {!visible.length && <p className="py-10 text-center text-sm text-muted-foreground">No widgets selected.</p>}

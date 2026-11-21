@@ -7,8 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ACCESS_VIEWS, validateDemoLogin } from "@/content/access";
-import { startDemoSession } from "@/lib/session";
 import { accessService } from "@/lib/services/accessService";
+import { TeamQuickAccess } from "@/components/access/TeamAccess";
 
 export const Route = createFileRoute("/login/")({
   staticData: { sitemap: false },
@@ -43,7 +43,7 @@ function LoginPage() {
     } finally { setSubmitting(false); }
   }
   return <>
-    <div className="mb-5 text-center"><Button variant="link" className="text-xs text-muted-foreground" onClick={() => { window.sessionStorage.setItem('foresite.beta-preview', 'true'); startDemoSession('developer@example.test', false); void navigate({ to: '/app' }); }}>Developer / Beta Login</Button><p className="text-xs text-muted-foreground">Internal testing only · mock-data environment</p></div>
+    <TeamQuickAccess />
     <div className="mb-8 text-center"><p className="text-xs font-semibold uppercase tracking-widest text-azure">One platform. One login.</p><h1 className="mt-3 text-3xl font-semibold sm:text-4xl">Your Foresite account</h1><p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">Owners, clients and trades. One account, multiple permission-based experiences.</p></div>
     <div className="grid gap-4 md:grid-cols-3">{ACCESS_VIEWS.map((view, i) => {
       const Icon = [Building2, Eye, HardHat][i] ?? Building2;

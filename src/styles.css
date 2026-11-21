@@ -279,3 +279,35 @@
 .widget-preset:not(.widget-colour-default) .widget-content .text-azure,
 .widget-preset:not(.widget-colour-default) .widget-content .text-chart-5 { color: var(--widget-ink); }
 .widget-content h2 { white-space: normal; overflow: visible; }
+
+/* Scoped access and portal palettes keep navy ink in light mode only. */
+.dark .access-theme,
+.dark .client-portal-theme {
+  --primary: oklch(0.984 0.003 247.858);
+  --foreground: oklch(0.984 0.003 247.858);
+  --muted-foreground: oklch(0.72 0.03 256.8);
+}
+
+/* Dashboard widgets scroll vertically inside themselves, never sideways. */
+.widget-content { overflow-x: hidden; overflow-y: auto; }
+
+/* Phone dashboards: every size level is shorter and denser so most of the overview fits on one screen. */
+@media (max-width: 767px) {
+  .widget-content > section > header { padding: 0.5rem 0.75rem; }
+  .widget-content > section > header h2 { font-size: 0.8125rem; }
+  .widget-content > section > div:not(.p-0) { padding: 0.625rem 0.75rem; }
+  .widget-content .text-sm { font-size: 0.8125rem; line-height: 1.15rem; }
+  .widget-content .p-3 { padding: 0.5rem 0.625rem; }
+  .widget-content .space-y-3 > :not(:last-child), .widget-content .space-y-2\.5 > :not(:last-child) { margin-bottom: 0.5rem; }
+  .widget-content .widget-ring,
+  .widget-content .widget-ring svg { height: 5.5rem; width: 5.5rem; }
+  .widget-content .widget-ring .text-2xl { font-size: 1.25rem; }
+  [data-size="small"] .widget-content > div { padding: 0.625rem 0.75rem; }
+  [data-size="small"] .widget-content .text-2xl { font-size: 1.25rem; line-height: 1.6rem; margin-top: 0.25rem; }
+  [data-size="small"] .widget-content > section > header { padding: 0.375rem 0.625rem; }
+  [data-size="small"] .widget-content > section > div:not(.p-0) { padding: 0.5rem 0.625rem; }
+  [data-size="small"] .widget-content .widget-ring,
+  [data-size="small"] .widget-content .widget-ring svg { height: 4rem; width: 4rem; }
+  [data-size="small"] .widget-content .widget-ring .text-2xl { font-size: 1rem; margin-top: 0; }
+  [data-size="small"] .widget-content .widget-detail { display: none; }
+}

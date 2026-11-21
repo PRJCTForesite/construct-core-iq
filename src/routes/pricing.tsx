@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
+import { PlanComparison } from "@/components/site/PlanComparison";
 import { Check, ArrowRight, Users, HardHat, Building2 } from 'lucide-react';
 import { useState } from 'react';
 import { Section, SectionHeading } from '@/components/site/Section';
@@ -6,8 +7,7 @@ import { PlanCards } from '@/components/site/PlanCards';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { PRICING_COMPARISON, PRICING_FAQ, PRICING_TIERS, ASSURANCE_SERVICES, DELAY_SERVICES, SERVICE_PACKAGES, MOST_REQUESTED, servicePrice, type AdvisoryService } from '@/content/pricing';
+import { PRICING_FAQ, PRICING_TIERS, ASSURANCE_SERVICES, DELAY_SERVICES, SERVICE_PACKAGES, MOST_REQUESTED, servicePrice, type AdvisoryService } from '@/content/pricing';
 
 const title = 'Foresite Pricing — Software Plans & Optional Advisory Services';
 const description = 'Starter $50/user/month, Professional $100/user/month and Enterprise $10,000/year. Clients and trades included. Explore optional implementation and construction advisory services.';
@@ -40,7 +40,7 @@ function PricingPage() {
     {view === 'software' ? <div role="region" aria-label="Software Subscriptions">
       <Section className="py-12 md:py-14"><SectionHeading title="Software subscription plans" /><div className="mt-8"><PlanCards /></div><p className="mt-6 text-sm text-muted-foreground">Beta pricing is in effect for founding members. Rates will be confirmed at full launch. Implementation and advisory services are separate.</p></Section>
       <Section tone="surface"><SectionHeading title="Compare Plans" description="Choose the capabilities your internal team needs. Every plan includes unlimited external users." />
-        <div className="mt-8 overflow-x-auto rounded-lg border border-border bg-card"><Table className="min-w-[700px]"><TableHeader><TableRow><TableHead className="w-[28%]">Capability</TableHead>{PRICING_TIERS.map(tier => <TableHead key={tier.id}>{tier.name}</TableHead>)}</TableRow></TableHeader><TableBody>{PRICING_COMPARISON.map(row => <TableRow key={row.feature}><TableCell className="font-medium">{row.feature}</TableCell><TableCell>{row.starter}</TableCell><TableCell>{row.professional}</TableCell><TableCell>{row.enterprise}</TableCell></TableRow>)}</TableBody></Table></div>
+        <div className="mt-8"><PlanComparison /></div>
       </Section>
       <Section><SectionHeading title="Only Pay For Internal Users." description="Foresite is designed to connect builders, clients and trades without charging every stakeholder separately." /><div className="mt-8 grid gap-5 md:grid-cols-3">{[{ label: 'Unlimited Clients', Icon: Users }, { label: 'Unlimited Trades', Icon: HardHat }, { label: 'Unlimited External Users', Icon: Building2 }].map(({ label, Icon }) => <article key={label} className="rounded-lg border border-border p-6"><Icon className="size-6 text-azure" /><h3 className="mt-4 text-lg font-semibold">{label}</h3><p className="mt-2 text-sm text-muted-foreground">Included in every Foresite software plan.</p></article>)}</div></Section>
       <Section tone="surface"><SectionHeading eyebrow="Implementation & Onboarding" title="Implementation Options." /><div className="mt-8 grid gap-5 md:grid-cols-3">{PRICING_TIERS.map(tier => <article key={tier.id} className="rounded-lg border border-border bg-card p-6"><h3 className="text-lg font-semibold">{tier.name}</h3><p className="mt-4 text-secondary-foreground">{tier.onboarding}</p></article>)}</div><Button variant="outline" className="mt-7" onClick={() => setView('services')}>Explore Optional Advisory Services <ArrowRight /></Button></Section>

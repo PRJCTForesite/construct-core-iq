@@ -61,8 +61,8 @@ function Sparkline() {
     }).join(" ");
 
   return (
-    <div className="mt-4">
-      <svg viewBox={`0 0 ${width} ${height}`} className="h-44 w-full" role="img" aria-label="Cashflow last six months">
+    <div className="mt-2 sm:mt-4">
+      <svg viewBox={`0 0 ${width} ${height}`} className="h-28 w-full sm:h-44" role="img" aria-label="Cashflow last six months" preserveAspectRatio="none">
         {[0.25, 0.5, 0.75, 1].map((step) => (
           <line key={step} x1="0" x2={width} y1={height * step} y2={height * step} className="stroke-border" strokeWidth="1" />
         ))}
@@ -81,15 +81,15 @@ function Sparkline() {
 function DashboardPage() {
   const widgets: DashboardWidget[] = [
     { id: 'health', title: 'Business Health Score', content: (<Panel title="Business Health Score" action={<span className="text-chart-5">↑ {HEALTH_SCORE.delta}</span>}>
-          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-4 sm:gap-6">
             <Ring value={HEALTH_SCORE.score} label={String(HEALTH_SCORE.score)} sub="out of 100" />
-            <ul className="grid flex-1 gap-4 sm:grid-cols-2">
+            <ul className="grid min-w-0 flex-1 gap-2.5 sm:grid-cols-2 sm:gap-4">
               {HEALTH_SCORE.breakdown.map((item) => (
                 <li key={item.label} className="flex gap-2.5">
                   <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${DOT_TONE[item.tone]}`} aria-hidden="true" />
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-medium text-foreground">{item.label}</span>
-                    <span className="block text-xs text-muted-foreground">{item.value}</span>
+                    <span className="widget-detail block text-xs text-muted-foreground">{item.value}</span>
                   </span>
                 </li>
               ))}
@@ -103,7 +103,7 @@ function DashboardPage() {
               className={`rounded-lg border-l-2 bg-surface p-3 ${alert.tone === "bad" ? "border-destructive" : "border-construction"}`}
             >
               <p className="text-sm font-medium text-foreground">{alert.title}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{alert.meta}</p>
+              <p className="widget-detail mt-1 text-xs text-muted-foreground">{alert.meta}</p>
             </div>
           ))}
         </Panel>) },
@@ -111,11 +111,11 @@ function DashboardPage() {
     { id: 'priorities', title: "Today's Priorities", content: (<Panel title="Today's Priorities" action={<span className="text-muted-foreground">5 actions</span>} bodyClassName="p-0 sm:p-0">
           <ul className="divide-y divide-border">
             {TODAYS_PRIORITIES.map((item) => (
-              <li key={item.title} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3.5 sm:px-5">
+              <li key={item.title} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-3 py-2.5 sm:px-5 sm:py-3.5">
                 <span className={`h-9 w-1 shrink-0 rounded-full ${DOT_TONE[item.tone]}`} aria-hidden="true" />
                 <span className="min-w-0">
                   <span className="block text-sm font-medium text-foreground">{item.title}</span>
-                  <span className="block truncate text-xs text-muted-foreground">{item.meta}</span>
+                  <span className="widget-detail block truncate text-xs text-muted-foreground">{item.meta}</span>
                 </span>
                 <button className="shrink-0 text-xs font-semibold text-azure">{item.action}</button>
               </li>
@@ -132,14 +132,29 @@ function DashboardPage() {
               <span className="min-w-0">
                 <span className="block text-xs text-muted-foreground">{item.time}</span>
                 <span className="block text-sm font-medium text-foreground">{item.title}</span>
-                <span className="block truncate text-xs text-muted-foreground">{item.meta}</span>
+                <span className="widget-detail block truncate text-xs text-muted-foreground">{item.meta}</span>
               </span>
             </div>
           ))}
         </Panel>) },
     { id: 'projects', title: 'Projects Requiring Attention', size: 'wide', content: (<Panel title="Projects Requiring Attention" action="Columns" bodyClassName="p-0 sm:p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[46rem] text-sm">
+          <div className="@container">
+            <ul className="divide-y divide-border @min-[46rem]:hidden">
+              {PROJECT_ROWS.map((row) => (
+                <li key={row.id} className="space-y-1.5 px-3 py-2.5 sm:px-4">
+                  <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+                    <Link to="/app/projects/$projectId" params={{ projectId: row.id }} className="truncate text-sm font-medium text-foreground hover:text-azure">{row.name}</Link>
+                    <StatusPill tone={STATUS_TONE[row.status] ?? "muted"}>{row.status}</StatusPill>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Meter value={row.progress} className="min-w-0 flex-1" />
+                    <span className="shrink-0 tabular-nums text-xs text-muted-foreground">{row.progress}% · {row.budget}</span>
+                  </div>
+                  <p className="widget-detail truncate text-xs text-muted-foreground">{row.milestone}{row.flag ? ` · ${row.flag.label}` : ""}</p>
+                </li>
+              ))}
+            </ul>
+            <table className="hidden w-full text-sm @min-[46rem]:table">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
                   <th className="px-5 py-3 font-medium">Project Name</th>
@@ -190,7 +205,7 @@ function DashboardPage() {
                 <Sparkles className="h-4 w-4 text-azure" /> AI Insights
               </span>
             }
-            bodyClassName="space-y-3"
+            bodyClassName="space-y-2 sm:space-y-3"
           >
             {AI_INSIGHT_CARDS.map((card) => (
               <div key={card.title} className="rounded-lg border border-azure/20 bg-azure/[0.04] p-3">
@@ -198,16 +213,16 @@ function DashboardPage() {
                   <p className="text-sm font-medium text-foreground">{card.title}</p>
                   <X className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">{card.meta}</p>
+                <p className="widget-detail mt-1 text-xs text-muted-foreground">{card.meta}</p>
                 <button className="mt-2 text-xs font-semibold text-azure">→ {card.action}</button>
               </div>
             ))}
           </Panel>) },
-    { id: 'quick-actions', title: 'Quick Actions', content: (<Panel title="Quick Actions" bodyClassName="grid grid-cols-2 gap-3">
+    { id: 'quick-actions', title: 'Quick Actions', content: (<Panel title="Quick Actions" bodyClassName="grid grid-cols-3 gap-2 sm:grid-cols-2 sm:gap-3">
             {QUICK_ACTIONS.map((action) => (
               <button
                 key={action.label}
-                className="flex flex-col items-center gap-2 rounded-lg border border-border bg-surface px-3 py-4 text-xs font-medium text-secondary-foreground transition-colors hover:border-azure/40 hover:text-foreground"
+                className="flex min-w-0 flex-col items-center gap-1.5 rounded-lg border border-border bg-surface px-1.5 py-2.5 text-center text-[0.6875rem] sm:gap-2 sm:px-3 sm:py-4 sm:text-xs font-medium text-secondary-foreground transition-colors hover:border-azure/40 hover:text-foreground"
               >
                 <AppIcon name={action.icon} className="h-4 w-4 text-azure" />
                 {action.label}
