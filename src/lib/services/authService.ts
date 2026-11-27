@@ -1,4 +1,5 @@
 import { ACCESS_WORKSPACES } from '@/content/access';
+import { accountFromMe, clearLiveSession, readLiveSession } from './liveAuth';
 import type { Account, AuthService, WorkspaceMembership } from './contracts';
 
 export const SESSION_KEY = 'foresite.session';
@@ -26,9 +27,12 @@ export const authService: AuthService = {
     window.sessionStorage.removeItem('foresite.onboarding-preview');
     window.localStorage.removeItem(SESSION_KEY);
     window.sessionStorage.removeItem(SESSION_KEY);
+    clearLiveSession();
   },
   getCurrentUser() {
     if (typeof window === 'undefined') return null;
+    const live = readLiveSession();
+    if (live) return accountFromMe(live.me);
     try {
       const raw = window.localStorage.getItem(SESSION_KEY) || window.sessionStorage.getItem(SESSION_KEY);
       if (!raw) return null;

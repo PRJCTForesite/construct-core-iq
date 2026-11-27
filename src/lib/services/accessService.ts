@@ -1,4 +1,5 @@
 import { authService } from './authService';
+import { accountFromMe, liveAccessToken, liveAuthAvailable, liveSignIn, readLiveSession } from './liveAuth';
 import type { AccessSession, AuthenticationAdapter, ConnectionScope, IntegrationAdapter, LoginProvider, PasswordSignIn } from './access-contracts';
 
 export class AccessUnavailableError extends Error {
@@ -68,6 +69,37 @@ export const demoAuthenticationAdapter: AuthenticationAdapter = {
   async signOut() { authService.logout(); },
 };
 
-// Composition point: replace only after auth, token lifecycle and API contracts
-// are reviewed. No implicit fallback from a failed verified adapter to demo login.
-export const accessService = createAccessServices(demoAuthenticationAdapter);
+function liveSession(): AccessSession | null {
+  const session = readLiveSession();
+  return session ? { mode: 'verified', expiresAt: null, account: accountFromMe(session.me) as AccessSession['account'] } : null;
+}
+
+/** FastAPI sign-in: POST /auth/login then GET /auth/me (authoritative user, organisation and role). */
+export const liveAuthenticationAdapter: AuthenticationAdapter = {
+  mode: 'verified',
+  providers: [],
+  async signInWithPassword({ email, password, remember }) {
+    authService.logout();
+    await liveSignIn(email, password, remember);
+    const session = liveSession();
+    if (!session) throw new AccessUnavailableError('Sign-in could not be completed.');
+    return session;
+  },
+  async beginOAuth() { throw new AccessUnavailableError('Microsoft and Google sign-in are not available yet.'); },
+  async getSession() { return liveSession() ?? demoSession(); },
+  async getAccessToken() { return liveAccessToken(); },
+  async refreshSession() { return liveSession(); },
+  async signOut() { authService.logout(); },
+};
+
+// Live sign-in is used wherever the Foresite server is enabled for this device. A failed live
+// sign-in never silently opens a demo session; the team one-click demo entry stays as fallback.
+const useLive = () => liveAuthAvailable();
+export const accessService = {
+  ...createAccessServices(demoAuthenticationAdapter),
+  get mode() { return useLive() ? 'verified' as const : 'demo' as const; },
+  signInWithPassword: (input: PasswordSignIn) => (useLive() ? liveAuthenticationAdapter : demoAuthenticationAdapter).signInWithPassword(input),
+  getSession: () => liveAuthenticationAdapter.getSession(),
+  getAccessToken: () => liveAuthenticationAdapter.getAccessToken(),
+  signOut: () => liveAuthenticationAdapter.signOut(),
+};

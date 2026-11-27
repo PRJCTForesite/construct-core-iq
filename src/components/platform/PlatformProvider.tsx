@@ -6,6 +6,7 @@ import { makeRecord, type PlatformRecord, type RecordKind } from '@/content/plat
 import { createMockRecordService } from '@/lib/services/mockRecordService';
 import { createLiveRecordService, isLiveKind, LIVE_KINDS } from '@/lib/services/liveRecordService';
 import { createApiClient } from '@/lib/api/apiClient';
+import { liveAccessToken } from '@/lib/services/liveAuth';
 import { API_URL, liveDataEnabled, readLivePreference, writeLivePreference } from '@/lib/api/config';
 import { canUseModule } from '@/lib/services/permissionsService';
 import { rolePermissions, type Role, INITIAL_USERS } from '@/content/permissions';
@@ -26,7 +27,7 @@ export function PlatformProvider({ children }: { children: ReactNode }) {
   const recordsRef = useRef(records); recordsRef.current = records;
   const databaseMode = useRef(false);
   const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
-  const live = useMemo(() => (API_URL ? createLiveRecordService(createApiClient({ baseUrl: API_URL })) : null), []);
+  const live = useMemo(() => (API_URL ? createLiveRecordService(createApiClient({ baseUrl: API_URL, getAccessToken: liveAccessToken })) : null), []);
 
   const refreshLive = useCallback(async (quiet = false) => {
     if (!live) return;

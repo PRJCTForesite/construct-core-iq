@@ -3,7 +3,7 @@ import type { DirectoryUser, Role } from '@/content/permissions';
 
 // Frontend domain models, not HTTP request/response contracts.
 export type WorkspaceMembership = { organisationId: string; organisationName: string; roles: Role[]; projectIds: string[] };
-export type Account = { id: string; email: string; memberships: WorkspaceMembership[] };
+export type Account = { id: string; email: string; name?: string; memberships: WorkspaceMembership[] };
 export interface AuthService {
   login(email: string, remember: boolean): Account;
   logout(): void;
